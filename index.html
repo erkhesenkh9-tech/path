@@ -1,0 +1,1615 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pathway | Empowering Immigrant-Owned Businesses</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Scroll Animation -->
+    <link rel="icon" type="image/jpg" href="favicon.png">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0c12;
+            color: #eef2ff;
+            overflow-x: hidden;
+        }
+
+        /* ========== FULLSCREEN PRELOADER WITH LOGO ONLY ========== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0c12;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.18, 1);
+            transform: translateY(0);
+        }
+        .preloader.hide {
+            transform: translateY(-100%);
+        }
+        .preloader-content {
+            text-align: center;
+            animation: gentlePulse 1.2s ease-in-out infinite;
+        }
+        .preloader-logo {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffdd99, #d4af37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
+        }
+        @keyframes gentlePulse {
+            0% { opacity: 0.6; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.6; transform: scale(0.98); }
+        }
+
+        /* Glassmorphic Centered Navigation */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            max-width: 95%;
+            padding: 0.6rem 1.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.8rem;
+            z-index: 1000;
+            background: rgba(20, 25, 35, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 215, 150, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            flex-wrap: wrap;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.3s;
+        }
+        nav.visible {
+            opacity: 1;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffdd99, #d4af37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-right: 0.2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: #eef2ff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            padding: 0.4rem 0.8rem;
+            border-radius: 40px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        /* Language Selector - Styled to match nav buttons */
+        .translate-container {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 0.2rem;
+        }
+        #google_translate_element {
+            background: transparent;
+            border-radius: 40px;
+        }
+        .goog-te-gadget {
+            color: #000000 !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0rem !important;
+        }
+        .goog-te-gadget img {
+            display: none !important;
+        }
+        .goog-te-gadget .goog-te-combo {
+            background: rgba(30, 35, 45, 0.8);
+            color: #000000;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            backdrop-filter: blur(4px);
+        }
+        .goog-te-gadget .goog-te-combo:hover {
+            border-color: rgba(212, 175, 55, 0.8);
+            background: rgba(212, 175, 55, 0.15);
+            color: #d4af37;
+        }
+        /* Hide Google Translate banner */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        .skiptranslate iframe {
+            display: none !important;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            nav { width: 95%; justify-content: space-between; padding: 0.6rem 1.2rem; gap: 0.8rem; }
+            .nav-links {
+                position: fixed;
+                top: 75px;
+                left: -100%;
+                width: 85%;
+                background: rgba(15, 20, 30, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                border-radius: 28px;
+                gap: 1.2rem;
+                transition: 0.3s;
+                border: 1px solid #d4af3740;
+                z-index: 1000;
+            }
+            .nav-links.show { left: 5%; }
+            .mobile-menu-btn { display: block; }
+            .translate-container { margin-left: 0; }
+            .goog-te-gadget .goog-te-combo { padding: 0.3rem 0.8rem; font-size: 0.8rem; }
+        }
+
+        /* Pages - Centered */
+        .page {
+            display: none;
+            padding-top: 100px;
+            text-align: center;
+        }
+        .page.active-page {
+            display: block;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #d4af37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        .section-sub {
+            font-size: 1.1rem;
+            color: #aab3c2;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: rgba(25, 32, 45, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            transition: 0.25s;
+            text-align: center;
+        }
+        .grid-2 {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .grid-2 > * { flex: 1; min-width: 280px; max-width: 500px; }
+
+        /* Global Reach (Globe) */
+        .global-reach {
+            background: radial-gradient(ellipse at 30% 40%, #0a1018, #03070f);
+            border-radius: 48px;
+            margin: 2rem;
+            padding: 3rem 2rem;
+        }
+        .global-reach .container {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            text-align: left;
+        }
+        .reach-text {
+            flex: 1;
+            min-width: 260px;
+        }
+        .globe-wrapper {
+            flex: 1.3;
+            min-width: 300px;
+            height: 520px;
+            position: relative;
+        }
+        #globe-canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+        @media (max-width: 900px) {
+            .global-reach .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .reach-text {
+                order: 1;
+                text-align: center;
+            }
+            .globe-wrapper {
+                order: 2;
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1 / 1;
+                flex: none;
+                min-height: 280px;
+                max-height: 500px;
+            }
+        }
+        /* Stats Counter Row */
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffdd99, #d4af37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #bcc6d4;
+            margin-top: 0.5rem;
+        }
+
+        /* Service Trail (Step by Step) */
+        .service-trail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .trail-step {
+            background: rgba(20, 28, 40, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 1rem 2rem;
+            width: 100%;
+            max-width: 700px;
+            border-left: 4px solid #d4af37;
+            text-align: left;
+            transition: 0.2s;
+        }
+        .trail-step h3 { color: #d4af37; margin-bottom: 0.3rem; }
+        .trail-step p { color: #ccd6e0; }
+        .arrow-down {
+            font-size: 1.5rem;
+            color: #d4af37;
+            margin: 0.2rem 0;
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .faq-item {
+            background: rgba(25, 32, 45, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .faq-item:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #d4af37;
+        }
+        .faq-question i {
+            transition: transform 0.2s;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #bcc6d4;
+            line-height: 1.5;
+            margin-top: 0;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            margin-top: 0.8rem;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: #d4af37;
+            color: #0a0c12;
+            font-weight: 700;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            margin: 0 0.5rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+        }
+        .btn-outline:hover {
+            background: #d4af37;
+            color: #0a0c12;
+        }
+        .btn:hover { transform: translateY(-3px); background: #c6a128; }
+
+        /* Enhanced Bottom Button Container */
+        .bottom-actions {
+            background: rgba(20, 28, 40, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 80px;
+            padding: 1.5rem 2.5rem;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem auto 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            max-width: 90%;
+        }
+        .bottom-actions p {
+            color: #e8dbbc;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        .bottom-buttons {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .bottom-actions .btn {
+            margin: 0;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #05080e;
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid #d4af3720;
+        }
+        .footer-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        .footer-col h4 {
+            color: #d4af37;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .footer-col p, .footer-col a {
+            color: #aab3c2;
+            text-decoration: none;
+            display: block;
+            margin: 0.6rem 0;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .footer-col a:hover { color: #d4af37; }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #1e2a3a;
+            font-size: 0.8rem;
+            color: #7a8698;
+        }
+        
+        /* Free Banner */
+        .free-banner {
+            background: linear-gradient(135deg, #d4af37, #b88d2a);
+            color: #0a0c12;
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Services Clarify (What We Do) - Reusable */
+        .services-clarify {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem auto;
+            max-width: 1000px;
+        }
+        .service-simple {
+            background: rgba(25, 32, 45, 0.6);
+            border-radius: 28px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            flex: 1;
+            min-width: 180px;
+        }
+        .service-simple i {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Differentiator Grid */
+        .differentiator-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem auto;
+            max-width: 1100px;
+        }
+        .differentiator-card {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 28px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+        
+        /* About Page Specific Styles */
+        .mission-block {
+            background: rgba(30, 40, 55, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            text-align: center;
+            max-width: 900px;
+        }
+        .mission-block p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ccd6e0;
+            text-align: center;
+        }
+        .mission-tagline {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .origin-story {
+            background: linear-gradient(135deg, rgba(30, 40, 55, 0.8), rgba(20, 28, 40, 0.9));
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            max-width: 900px;
+        }
+        .origin-story h3 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .origin-story p {
+            text-align: center;
+        }
+        .values-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem auto;
+            max-width: 900px;
+        }
+        .value-badge {
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 60px;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+        .forward-statement {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 48px;
+            padding: 2rem;
+            margin: 2rem auto;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            max-width: 800px;
+        }
+
+        /* Portfolio Page - New Location Style Cards */
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: #1e2632;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            color: #ccd6e0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: #d4af37;
+            color: #0a0c12;
+        }
+        
+        /* Enhanced Portfolio Cards (Location Style) */
+        .portfolio-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem auto;
+        }
+        .portfolio-card {
+            background: rgba(25, 32, 45, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 32px;
+            overflow: hidden;
+            width: 340px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: left;
+            cursor: pointer;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            border-color: #d4af37;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5);
+        }
+        .portfolio-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .category-badge-portfolio {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #d4af37;
+            color: #0a0c12;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+        }
+        .portfolio-details {
+            padding: 1.5rem;
+        }
+        .portfolio-details h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            color: #d4af37;
+            font-family: 'Playfair Display', serif;
+        }
+        .business-type {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 30px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            color: #d4af37;
+        }
+        .portfolio-address {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #b0bbd0;
+            font-size: 0.85rem;
+            margin: 0.7rem 0;
+        }
+        .portfolio-address i {
+            color: #d4af37;
+            width: 18px;
+        }
+        .portfolio-description {
+            font-size: 0.85rem;
+            margin: 0.8rem 0;
+            color: #ccd6e0;
+            line-height: 1.4;
+        }
+        .portfolio-website-btn {
+            margin-top: 1rem;
+            display: inline-block;
+            background: #d4af37;
+            color: #0a0c12;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .portfolio-website-btn:hover {
+            background: #c6a128;
+            transform: scale(0.98);
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .testimonial-card {
+            background: rgba(25, 32, 45, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 24px;
+            padding: 1.8rem;
+            max-width: 320px;
+            border: 1px solid #d4af3730;
+        }
+
+        /* Contact Info Section */
+        .contact-info-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem auto;
+            max-width: 900px;
+        }
+        .contact-info-card {
+            background: rgba(25, 32, 45, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 28px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 200px;
+            flex: 1;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            transition: 0.2s;
+        }
+        .contact-info-card:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            transform: translateY(-4px);
+        }
+        .contact-info-card i {
+            font-size: 2.5rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+        .contact-info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #d4af37;
+        }
+        .contact-info-card p, .contact-info-card a {
+            color: #ccd6e0;
+            text-decoration: none;
+            word-break: break-word;
+        }
+        .contact-info-card a:hover {
+            color: #d4af37;
+        }
+        .contact-header-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.6rem;
+        }
+        
+        /* Tooltip */
+        .globe-tooltip {
+            position: fixed;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            color: #ffdd99;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid #d4af37;
+            pointer-events: none;
+            z-index: 2000;
+            white-space: nowrap;
+            font-family: 'Inter', monospace;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 780px) {
+            h2 { font-size: 2rem; }
+            .global-reach { margin: 1rem; }
+            .footer-grid { text-align: center; }
+            .mission-block { margin: 1rem; padding: 1.5rem; }
+            .origin-story { margin: 1rem; padding: 1.5rem; }
+            .differentiator-card { min-width: 100%; max-width: 100%; }
+            .service-simple { min-width: 100%; }
+            .portfolio-card { width: 100%; max-width: 360px; }
+        }
+
+        /* ========== PROFESSIONAL ENHANCEMENTS ========== */
+
+        /* Hero ambient glow */
+        #home-page .container:first-child { position: relative; overflow: visible; }
+        .hero-ambient {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(750px, 110vw);
+            height: min(750px, 110vw);
+            background: radial-gradient(ellipse, rgba(212,175,55,0.075) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 1.6rem;
+            color: #7a8698;
+            font-size: 0.85rem;
+        }
+        .hero-trust .stars { color: #d4af37; letter-spacing: 2px; }
+        .hero-trust-divider { color: #2e3a4a; }
+
+        /* Card hover */
+        .card {
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(212, 175, 55, 0.55);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+        }
+
+        /* Trail step hover */
+        .trail-step {
+            transition: transform 0.25s ease, border-left-color 0.25s, background 0.25s;
+        }
+        .trail-step:hover {
+            transform: translateX(6px);
+            border-left-color: #ffdd99;
+            background: rgba(28, 38, 55, 0.95);
+        }
+
+        /* Service simple hover */
+        .service-simple { transition: transform 0.25s ease, border-color 0.25s, background 0.25s; }
+        .service-simple:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.55);
+            background: rgba(30, 40, 58, 0.92);
+        }
+
+        /* Differentiator card hover */
+        .differentiator-card { transition: transform 0.25s ease, border-color 0.25s; }
+        .differentiator-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.65);
+        }
+
+        /* Testimonial star rating */
+        .star-rating {
+            color: #d4af37;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: 3px;
+        }
+        .testimonial-card {
+            transition: transform 0.25s ease, border-color 0.25s;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.55);
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212,175,55,0.15);
+        }
+        .testimonial-avatar {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(212,175,55,0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            border: 1px solid rgba(212,175,55,0.3);
+            flex-shrink: 0;
+        }
+        .testimonial-name { font-weight: 600; font-size: 0.9rem; color: #eef2ff; }
+        .testimonial-role { font-size: 0.75rem; color: #7a8698; }
+
+        /* Value badge hover */
+        .value-badge { transition: background 0.2s, transform 0.2s; cursor: default; }
+        .value-badge:hover { background: rgba(212, 175, 55, 0.28); transform: scale(1.04); }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.25), transparent);
+            margin: 3rem auto;
+            max-width: 700px;
+            border: none;
+        }
+
+        /* Footer social icons */
+        .footer-social {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+        }
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(212,175,55,0.12);
+            border: 1px solid rgba(212,175,55,0.28);
+            color: #d4af37 !important;
+            font-size: 1rem;
+            transition: all 0.25s;
+            text-decoration: none !important;
+        }
+        .footer-social a:hover {
+            background: rgba(212,175,55,0.3);
+            transform: translateY(-2px);
+            border-color: rgba(212,175,55,0.6);
+        }
+
+        /* Free banner pulse */
+        .free-banner { animation: pulseBadge 2.8s ease-in-out infinite; }
+        @keyframes pulseBadge {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.12) drop-shadow(0 0 8px rgba(212,175,55,0.5)); }
+        }
+
+        /* Contact card enhancements */
+        .contact-info-card { transition: all 0.3s ease; }
+
+        /* Portfolio metric badge */
+        .portfolio-metric {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #7ecf6e;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-top: 0.6rem;
+        }
+        .portfolio-metric i { font-size: 0.75rem; }
+
+        /* Mission/origin hover */
+        .mission-block, .origin-story, .forward-statement {
+            transition: border-color 0.3s;
+        }
+        .mission-block:hover, .origin-story:hover, .forward-statement:hover {
+            border-color: rgba(212, 175, 55, 0.45);
+        }
+
+        /* Improved global impact heading */
+        .reach-text h2 { display: inline-block; }
+        .stats-row .stat-item {
+            position: relative;
+        }
+        .stats-row .stat-item::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- FULLSCREEN PRELOADER WITH LOGO ONLY -->
+<div class="preloader" id="preloader">
+    <div class="preloader-content">
+        <div class="preloader-logo">PATHWAY</div>
+    </div>
+</div>
+
+<nav id="mainNav">
+    <span class="logo">PATHWAY</span>
+    <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+    <div class="nav-links" id="navLinks">
+        <a href="#" data-page="home" class="active">Home</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="services">Services</a>
+        <a href="#" data-page="portfolio">Portfolio</a>
+        <a href="#" data-page="contact">Contact</a>
+    </div>
+    <div class="translate-container">
+        <div id="google_translate_element"></div>
+    </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home-page" class="page active-page">
+    <div class="container">
+        <div class="hero-ambient"></div>
+        <div data-aos="fade-up">
+            <h2 style="font-size: 4rem; margin-top: 0.5rem;">PATHWAY</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 1rem; color: #d4af37;">Empowering immigrant-owned businesses</p>
+            <h1 style="font-size: 2.8rem; margin-bottom: 1rem;">Your family's legacy <br>deserves a digital future</h1>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 2rem auto; color: #bcc6d4;">Pathway helps immigrant-owned businesses gain <strong>more customers, more visibility, and real growth for free</strong> — with full ownership.</p>
+            <div>
+                <a href="#" class="btn" data-page="services">Get More Customers →</a>
+                <a href="#" class="btn btn-outline" data-page="services">Explore Services</a>
+            </div>
+            <div class="hero-trust">
+                <span class="stars">★★★★★</span>
+                <span class="hero-trust-divider">|</span>
+                <span>Trusted by immigrant-owned businesses in the Bay Area</span>
+                <span class="hero-trust-divider">|</span>
+                <span>100% Free for first 20 businesses</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 3rem;">
+        <div class="grid-2" data-aos="fade-up">
+            <div class="card"><i class="fas fa-frown" style="font-size: 2rem; color: #e34d4d;"></i><h3>The Problem</h3><p>Immigrant-owned businesses are overlooked. Without support, they close — not because of poor quality, but lack of visibility and customers.</p></div>
+            <div class="card"><i class="fas fa-chart-line" style="font-size: 2rem; color: #d4af37;"></i><h3>The Result</h3><p><strong>More customers, higher revenue, lasting visibility.</strong> We've helped 30+ businesses grow an average of 150% in foot traffic and online engagement.</p></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 data-aos="fade-up">What we do</h2>
+        <div class="services-clarify" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-simple"><i class="fas fa-chart-line"></i><h3>Websites</h3><p>Custom sites that bring in customers</p></div>
+            <div class="service-simple"><i class="fas fa-map-marker-alt"></i><h3>Google visibility</h3><p>Get found when people search nearby</p></div>
+            <div class="service-simple"><i class="fab fa-instagram"></i><h3>Social media</h3><p>Instagram + TikTok that grows your audience</p></div>
+            <div class="service-simple"><i class="fas fa-chart-simple"></i><h3>Growth tracking</h3><p>See exactly how many new customers we bring</p></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 data-aos="fade-up">What makes Pathway different</h2>
+        <div class="differentiator-grid" data-aos="fade-up" data-aos-delay="150">
+            <div class="differentiator-card"><i class="fas fa-home" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">You own everything</h3><p>Full access to your website, social accounts, and data</p></div>
+            <div class="differentiator-card"><i class="fas fa-hand-peace" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">No lock-in</h3><p>Leave anytime — everything stays yours</p></div>
+            <div class="differentiator-card"><i class="fas fa-bullseye" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">Real results</h3><p>We focus on customers and visibility, not vanity metrics</p></div>
+            <div class="differentiator-card"><i class="fas fa-hand-holding-heart" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">Built for immigrant businesses</h3><p>We understand your challenges because we've lived them</p></div>
+        </div>
+    </div>
+
+    <div class="global-reach" data-aos="fade-up">
+        <div class="container">
+            <div class="reach-text">
+                <h2>🌍 Global Impact</h2>
+                <p>Each glowing marker = a business we've helped gain real customers. Hover over any point to see the business name, then click to visit their website.</p>
+                <div class="stats-row" id="statsRow">
+                    <div class="stat-item"><div class="stat-number" id="statBusinesses">0</div><div class="stat-label">Businesses Supported</div></div>
+                    <div class="stat-item"><div class="stat-number" id="statCountries">0</div><div class="stat-label">Customer Views</div></div>
+                    <div class="stat-item"><div class="stat-number" id="statCustomers">0</div><div class="stat-label">New Customers Reached</div></div>
+                </div>
+            </div>
+            <div class="globe-wrapper">
+                <canvas id="globe-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" data-aos="fade-up">
+        <h2>Real results, real families</h2>
+        <div class="testimonials-grid" id="homeTestimonials"></div>
+    </div>
+
+    <div class="bottom-actions" data-aos="fade-up">
+        <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
+        <div class="bottom-buttons">
+            <a href="#" class="btn" data-page="contact"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="#" class="btn btn-outline" data-page="services">View Services</a>
+        </div>
+    </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="about-page" class="page">
+    <div class="container" style="max-width: 1300px;">
+        <h2 data-aos="fade-up">Our Mission</h2>
+        <div class="mission-block" data-aos="fade-up">
+            <div class="mission-tagline">Help immigrant-owned businesses grow.</div>
+            <p>We bring visibility and support to immigrant-owned businesses by creating a connected community of businesses that everyone can support. The focus is measurable outcomes—more customers, stronger revenue, and sustained visibility across that network.</p>
+        </div>
+        
+        <div class="origin-story" data-aos="fade-up" data-aos-delay="100">
+            <h3>Why I started Pathway</h3>
+            <p>When I was in middle school, my friends and I spent hours at a small local restaurant. It was our spot — warm, welcoming, full of community. We felt at home there.</p>
+            <p style="margin-top: 1rem;">As we grew older, that place quietly shut down. Not because the food was bad. Not because the owner didn't care. It closed because it lacked visibility and support. No one knew it was there.</p>
+            <p style="margin-top: 1rem; font-weight: 500; color: #d4af37;">That loss inspired Pathway. No business should disappear simply because people can't find it.</p>
+        </div>
+        
+        <h2 data-aos="fade-up" data-aos-delay="350">Our values</h2>
+        <div class="values-list" data-aos="fade-up" data-aos-delay="400">
+            <span class="value-badge"><i class="fas fa-key"></i> Ownership — you keep everything</span>
+            <span class="value-badge"><i class="fas fa-eye"></i> Transparency — no hidden terms</span>
+            <span class="value-badge"><i class="fas fa-users"></i> Community — supporting local businesses</span>
+            <span class="value-badge"><i class="fas fa-chart-line"></i> Results — measurable growth only</span>
+        </div>
+        
+        <h2 data-aos="fade-up" data-aos-delay="550">Looking ahead</h2>
+        <div class="forward-statement" data-aos="fade-up" data-aos-delay="600">
+            <i class="fas fa-tree" style="font-size: 2rem; color: #d4af37;"></i>
+            <h3 style="margin: 0.5rem 0;">Building toward the future</h3>
+            <p>Expanding support to more immigrant-owned businesses. Creating a connected network of local businesses that lift each other up.</p>
+        </div>
+        
+        <div class="bottom-actions" style="margin-top: 1rem;" data-aos="fade-up">
+            <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
+            <div class="bottom-buttons">
+                <a href="#" class="btn" data-page="contact"><i class="fas fa-comment"></i> Tell me your story</a>
+                <a href="#" class="btn btn-outline" data-page="services">How we help</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SERVICES PAGE -->
+<div id="services-page" class="page">
+    <div class="container">
+        <div data-aos="fade-up">
+            <h2>We build, you own.</h2>
+            <div class="section-sub">Clear steps. Measurable results: <strong>more customers, higher visibility, full control. Everything is completely free for the first 20 business owners.</strong></div>
+            <div class="free-banner"><i class="fas fa-gift"></i> 100% FREE FOR FIRST 20 BUSINESSES — NO HIDDEN FEES</div>
+        </div>
+
+        <div class="service-trail" data-aos="fade-up" data-aos-delay="150">
+            <div class="trail-step" data-aos="fade-right"><h3>📌 Step 1: Google Maps Dominance</h3><p>We optimize your Google Business Profile, add premium photos, and help you rank #1 in your category. <strong>Result: 200% more local customers. (FREE)</strong></p></div>
+            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+            <div class="trail-step" data-aos="fade-right"><h3>🌐 Step 2: Professional Website (Real Domain)</h3><p>Custom website with real URL like <strong>yourbusiness.com</strong> (free for first 20). We communicate with you and your customers on design preferences. <strong>Result: 24/7 customer acquisition. (FREE)</strong></p></div>
+            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+            <div class="trail-step" data-aos="fade-right"><h3>📱 Step 3: Social Media Engine (IG + TikTok)</h3><p>We create and manage your Instagram & TikTok — video or slideshows, posted weekly. We discuss content strategies with you and your customers. <strong>Result: 10k+ reach per month. (FREE)</strong></p></div>
+            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+            <div class="trail-step" data-aos="fade-right"><h3>📊 Step 4: Track Growth Dashboard</h3><p>Live data: website visits, calls, map clicks, social shares through Google Business Profile and social analytics. <strong>Result: You know exactly how many new customers we bring. (FREE)</strong></p></div>
+            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+            <div class="trail-step" data-aos="fade-right"><h3>✅ You Own Everything. No lock-ins.</h3><p>Full access to all accounts. If you leave, we respect your decision. <strong>Result: Peace of mind + real growth.</strong></p></div>
+        </div>
+    </div>
+    <div class="bottom-actions" data-aos="fade-up">
+        <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
+        <div class="bottom-buttons">
+            <a href="#" class="btn" data-page="contact"><i class="fas fa-calendar-check"></i> Start your growth</a>
+            <a href="#" class="btn btn-outline" data-page="portfolio">See success stories</a>
+        </div>
+    </div>
+</div>
+
+<!-- PORTFOLIO PAGE -->
+<div id="portfolio-page" class="page">
+    <div class="container">
+        <h2 data-aos="fade-up">Successful Businesses</h2>
+        <p class="section-sub" data-aos="fade-up">Explore the immigrant-owned businesses we've helped, serving their communities with excellence.</p>
+        <div class="filter-buttons" data-aos="fade-up" data-aos-delay="50" id="filterButtons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="childcare">Childcare</button>
+            <button class="filter-btn" data-filter="wellness">Wellness</button>
+            <button class="filter-btn" data-filter="wellness">More Businesses coming soon!</button>
+        </div>
+        <div class="portfolio-grid" id="portfolioGrid" data-aos="fade-up" data-aos-delay="150"></div>
+    </div>
+    <div class="bottom-actions" data-aos="fade-up">
+        <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
+        <div class="bottom-buttons">
+            <a href="#" class="btn" data-page="contact"><i class="fas fa-star"></i> Become our next success</a>
+            <a href="#" class="btn btn-outline" data-page="services">View our process</a>
+        </div>
+    </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="contact-page" class="page">
+    <div class="container">
+        <div data-aos="fade-up">
+            <div class="contact-header-row">
+                <h2>Ready to get more customers?</h2>
+                <div class="free-banner"><i class="fas fa-gift"></i> FIRST 20 BUSINESSES GET EVERYTHING FREE</div>
+            </div>
+            <div class="card" style="max-width: 600px; margin: 2rem auto;" data-aos="fade-up" data-aos-delay="200">
+                <h3 style="color:#d4af37; margin-bottom: 0.8rem;">Get Support for Your Business</h3>
+                <i class="fas fa-calendar-check" style="font-size: 2.5rem; color: #d4af37;"></i>
+                <p style="margin: 1.5rem 0;">No vague promises. Just a clear plan to increase your visibility and bring new customers — <strong>completely free for the first 20 businesses</strong>. Schedule a free consultation and we'll respond within 24 hours.</p>
+                <a href="https://calendly.com/erkhesenkh9/new-meeting" target="_blank" rel="noopener noreferrer" class="btn" id="calendlyBtn"><i class="fas fa-calendar-alt"></i> Schedule Free Consultation</a>
+            </div>
+            <h2 data-aos="fade-up" style="margin-top: 3rem;">Have questions or need help?</h2>
+            <div class="contact-info-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="contact-info-card"><i class="fab fa-instagram"></i><h3>Instagram</h3><a href="https://www.instagram.com/pathway_for_all" target="_blank" rel="noopener noreferrer">@pathway_for_all</a></div>
+                <div class="contact-info-card"><i class="fas fa-envelope"></i><h3>Email</h3><a href="mailto:pathwayforall9@gmail.com">pathwayforall9@gmail.com</a></div>
+                <div class="contact-info-card"><i class="fab fa-tiktok"></i><h3>TikTok</h3><a href="https://www.tiktok.com/@pathway384" target="_blank" rel="noopener noreferrer">@pathway384</a></div>
+            </div>
+            <h2 data-aos="fade-up" style="margin-top: 3rem;">Frequently Asked Questions</h2>
+            <div class="faq-grid" data-aos="fade-up">
+                <div class="faq-item"><div class="faq-question">How is this free? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We're currently offering completely free services to the first 20 immigrant-owned businesses as part of our launch initiative. There are no hidden fees or future charges — you keep everything forever.</div></div>
+                <div class="faq-item"><div class="faq-question">Do I own my website and social accounts? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Yes! You get full administrative access to everything we create — your Google Business Profile, website, Instagram, TikTok, and all analytics. You can change anything anytime.</div></div>
+                <div class="faq-item"><div class="faq-question">What if I want to stop working with Pathway? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">You can leave anytime — no contracts, no hard feelings. Everything we built stays yours forever. We'd love to have you back if you ever need support again.</div></div>
+                <div class="faq-item"><div class="faq-question">What types of businesses do you help? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We specialize in immigrant-owned family businesses: restaurants, salons, daycare centers, retail shops, and service providers. If you have a physical location or local service, we can help you get more customers.</div></div>
+                <div class="faq-item"><div class="faq-question">How long does the process take? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Most businesses see results within 2-3 weeks. Website launch takes 7-10 days, and social media growth starts immediately. We work at your pace.</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col"><h4>PATHWAY</h4><p>Empowering immigrant entrepreneurs worldwide with clear results: more customers, more visibility.</p></div>
+        <div class="footer-col"><h4>Explore</h4><a href="#" data-page="home">Home</a><a href="#" data-page="about">About</a><a href="#" data-page="services">Services</a><a href="#" data-page="portfolio">Portfolio</a><a href="#" data-page="contact">Contact</a></div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="mailto:pathwayforall9@gmail.com">pathwayforall9@gmail.com</a>
+            <a href="https://www.instagram.com/pathway_for_all" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> @pathway_for_all</a>
+            <a href="https://www.tiktok.com/@pathway384" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i> @pathway384</a>
+            <div class="footer-social">
+                <a href="https://www.instagram.com/pathway_for_all" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@pathway384" target="_blank" rel="noopener noreferrer" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="mailto:pathwayforall9@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://calendly.com/erkhesenkh9/new-meeting" target="_blank" rel="noopener noreferrer" title="Schedule a call"><i class="fas fa-calendar-alt"></i></a>
+            </div>
+        </div>
+        <div class="footer-col"><h4>Location</h4><p>Global remote team</p><p>Serving businesses worldwide</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Pathway — Every immigrant-owned business deserves to thrive. Built with empathy and purpose.</p></div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,es,zh-CN,zh-TW,vi,tl,ko,ja,fr,de,it,pt,ru,ar,hi',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+    }
+</script>
+
+<script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    
+    // Initialize AOS with once: true so animations only happen once
+    AOS.init({ 
+        duration: 800, 
+        once: true,      // <-- THIS ENSURES ANIMATIONS ONLY HAPPEN ONCE
+        mirror: false, 
+        offset: 40, 
+        easing: 'ease-out-cubic' 
+    });
+    
+    // Hide preloader and reveal content after a short delay
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.classList.add('hide');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 800);
+            }
+            const nav = document.getElementById('mainNav');
+            if (nav) nav.classList.add('visible');
+        }, 1000);
+    });
+    
+    // Counter Animation
+    function animateCounter(element, target, duration = 3800) {
+        let start = 0;
+        const stepTime = 25;
+        const steps = duration / stepTime;
+        const increment = target / steps;
+        let current = 0;
+        let count = 0;
+        const timer = setInterval(() => {
+            count++;
+            current += increment;
+            if (count >= steps) {
+                element.innerText = target.toLocaleString() + '+';
+                clearInterval(timer);
+            } else {
+                element.innerText = Math.floor(current).toLocaleString() + '+';
+            }
+        }, stepTime);
+    }
+    
+    const businessCountElem = document.getElementById('statBusinesses');
+    const countryCountElem = document.getElementById('statCountries');
+    const customerCountElem = document.getElementById('statCustomers');
+    if (businessCountElem) {
+        animateCounter(businessCountElem, 2, 7000);
+        animateCounter(countryCountElem, 3000, 7000);
+        animateCounter(customerCountElem, 2000, 7000);
+    }
+    
+    // Globe Setup
+    const canvas = document.getElementById('globe-canvas');
+    if(canvas && typeof THREE !== 'undefined') {
+        // Compute camera Z so the globe (radius=1) is fully visible for any aspect ratio
+        const FOV_DEG = 42;
+        function idealCameraZ(aspect) {
+            const vFov = (FOV_DEG / 2) * Math.PI / 180;
+            const hFov = Math.atan(Math.tan(vFov) * aspect);
+            const constrainingFov = Math.min(vFov, hFov);
+            return (1.0 / Math.tan(constrainingFov)) * 1.22; // 22% padding around globe
+        }
+        const initGlobe = () => {
+            const parent = canvas.parentElement;
+            if (!parent) return;
+            const width = parent.clientWidth;
+            const height = parent.clientHeight || parent.offsetHeight || 520;
+            if (width < 10 || height < 10) return;
+            const aspect = width / height;
+            try {
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(width, height);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                const scene = new THREE.Scene();
+                scene.background = null;
+                scene.fog = new THREE.FogExp2(0x03070f, 0.006);
+                const camera = new THREE.PerspectiveCamera(FOV_DEG, aspect, 0.1, 1000);
+                camera.position.set(0, 0.05, idealCameraZ(aspect));
+                const controls = new OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.06;
+                controls.rotateSpeed = 0.8;
+                controls.enableZoom = true;
+                controls.zoomSpeed = 0.5;
+                controls.enablePan = false;
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = 0.85;
+                controls.target.set(0, 0, 0);
+                controls.minDistance = 1.5;
+                controls.maxDistance = 7;
+                let timeoutId;
+                controls.addEventListener('start', () => { controls.autoRotate = false; if(timeoutId) clearTimeout(timeoutId); });
+                controls.addEventListener('end', () => { timeoutId = setTimeout(() => { controls.autoRotate = true; }, 5000); });
+                const textureLoader = new THREE.TextureLoader();
+                const earthMap = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+                const earthMat = new THREE.MeshPhongMaterial({ map: earthMap, shininess: 8, emissive: 0x112233, emissiveIntensity: 0.25, transparent: true, opacity: 0.92 });
+                const earth = new THREE.Mesh(new THREE.SphereGeometry(1.0, 128, 128), earthMat);
+                scene.add(earth);
+                const wireMat = new THREE.MeshBasicMaterial({ color: 0x44aaff, wireframe: true, transparent: true, opacity: 0.12 });
+                const wireframe = new THREE.Mesh(new THREE.SphereGeometry(1.008, 96, 96), wireMat);
+                scene.add(wireframe);
+                const ringGlow = new THREE.Mesh(new THREE.TorusGeometry(1.095, 0.008, 64, 800), new THREE.MeshStandardMaterial({ color: 0x88ccff, emissive: 0x2266aa, transparent: true, opacity: 0.4 }));
+                scene.add(ringGlow);
+                const starGeo = new THREE.BufferGeometry();
+                const starCount = 1500;
+                const starPos = new Float32Array(starCount * 3);
+                for (let i = 0; i < starCount; i++) {
+                    starPos[i*3] = (Math.random() - 0.5) * 600;
+                    starPos[i*3+1] = (Math.random() - 0.5) * 600;
+                    starPos[i*3+2] = (Math.random() - 0.5) * 150 - 50;
+                }
+                starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+                const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xaaddff, size: 0.13, transparent: true, opacity: 0.65 }));
+                scene.add(stars);
+                const ambientLight = new THREE.AmbientLight(0x1a2a3a);
+                scene.add(ambientLight);
+                const mainLight = new THREE.DirectionalLight(0xffeedd, 1.1);
+                mainLight.position.set(3, 2, 2.5);
+                scene.add(mainLight);
+                const businessMarkers = [
+                    { name: "Sunny Bay Daycare", lat: 37.7776, lng: -122.3893, url: "https://sunnybaydaycare.com", country: "USA" },
+                    { name: "Jenara Wellness", lat: 37.2946, lng: -121.9440, url: "https://jenarawellness.netlify.app", country: "USA" }
+                ];
+                function latLngToVec(lat, lng, r=1.022) {
+                    const phi = (90 - lat) * Math.PI/180;
+                    const theta = -lng * Math.PI/180;
+                    return new THREE.Vector3(r * Math.sin(phi) * Math.cos(theta), r * Math.cos(phi), r * Math.sin(phi) * Math.sin(theta));
+                }
+                const markers = [];
+                const tooltip = document.createElement('div');
+                tooltip.className = 'globe-tooltip';
+                tooltip.style.display = 'none';
+                document.body.appendChild(tooltip);
+                businessMarkers.forEach(biz => {
+                    const pos = latLngToVec(biz.lat, biz.lng, 1.022);
+                    const markerMat = new THREE.MeshStandardMaterial({ color: 0xffaa66, emissive: 0xff5533, emissiveIntensity: 0.9 });
+                    const marker = new THREE.Mesh(new THREE.SphereGeometry(0.018, 24, 24), markerMat);
+                    marker.position.copy(pos);
+                    marker.userData = { url: biz.url, name: biz.name, country: biz.country };
+                    scene.add(marker);
+                    markers.push(marker);
+                });
+                const raycaster = new THREE.Raycaster();
+                const mouse = new THREE.Vector2();
+                renderer.domElement.addEventListener('mousemove', (event) => {
+                    const rect = renderer.domElement.getBoundingClientRect();
+                    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObjects(markers);
+                    if (intersects.length > 0) {
+                        const hit = intersects[0].object;
+                        tooltip.style.display = 'block';
+                        tooltip.innerHTML = `<i class="fas fa-store"></i> ${hit.userData.name}<br><small>📍 ${hit.userData.country} • Click to visit</small>`;
+                        tooltip.style.left = (event.clientX + 15) + 'px';
+                        tooltip.style.top = (event.clientY - 35) + 'px';
+                        renderer.domElement.style.cursor = 'pointer';
+                    } else {
+                        tooltip.style.display = 'none';
+                        renderer.domElement.style.cursor = 'default';
+                    }
+                });
+                renderer.domElement.addEventListener('click', (event) => {
+                    const rect = renderer.domElement.getBoundingClientRect();
+                    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObjects(markers);
+                    if(intersects.length) window.open(intersects[0].object.userData.url, '_blank');
+                });
+                function animateGlobe() {
+                    requestAnimationFrame(animateGlobe);
+                    ringGlow.rotation.z += 0.0035;
+                    wireframe.rotation.y += 0.0004;
+                    stars.rotation.y += 0.00015;
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animateGlobe();
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        const w = parent.clientWidth;
+                        const h = parent.clientHeight || parent.offsetHeight || 520;
+                        if (w > 0 && h > 0) {
+                            const newAspect = w / h;
+                            camera.aspect = newAspect;
+                            camera.updateProjectionMatrix();
+                            camera.position.z = idealCameraZ(newAspect);
+                            renderer.setSize(w, h);
+                        }
+                    }, 150);
+                });
+            } catch (error) {
+                console.warn('WebGL Globe error:', error);
+            }
+        };
+        setTimeout(initGlobe, 100);
+    }
+    
+    // Page Navigation
+    const pages = ['home', 'about', 'services', 'portfolio', 'contact'];
+    function showPage(pageId) {
+        pages.forEach(p => document.getElementById(`${p}-page`).classList.remove('active-page'));
+        document.getElementById(`${pageId}-page`).classList.add('active-page');
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if(link.getAttribute('data-page') === pageId) link.classList.add('active');
+            else link.classList.remove('active');
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Refresh AOS to ensure new page elements are animated
+        AOS.refresh();
+    }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage(link.getAttribute('data-page'));
+            document.getElementById('navLinks')?.classList.remove('show');
+        });
+    });
+    document.querySelectorAll('[data-page]').forEach(el => {
+        if(el.classList && (el.classList.contains('btn') || el.tagName === 'A')) {
+            el.addEventListener('click', (e) => {
+                const page = el.getAttribute('data-page');
+                if(page) { e.preventDefault(); showPage(page); }
+            });
+        }
+    });
+    document.getElementById('menuBtn')?.addEventListener('click', () => {
+        document.getElementById('navLinks')?.classList.toggle('show');
+    });
+    
+    // FAQ Accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => { item.classList.toggle('active'); });
+    });
+    
+    // Portfolio Data
+    const portfolioItems = [
+        { name: "Sunny Bay Daycare", url: "https://sunnybaydaycare.com", category: "childcare", type: "Bay Area | Childcare", address: "400 China Basin St, Mission Bay, San Francisco, CA", description: "Immigrant-owned daycare providing a safe bilingual environment for children. Pathway boosted their Google visibility and brought in new enrollments.", image: "sunny.png", metric: "130% more Google visibility" },
+        { name: "Jenara Wellness", url: "https://jenarawellness.netlify.app", category: "wellness", type: "Bay Area | Wellness & Spa", address: "197 E Hamilton Ave #101, Campbell, CA 95008", description: "Holistic wellness studio specializing in rejuvenation therapies. Now ranking competitively for wellness searches across the South Bay.", image: "jen.png", metric: "Top 3 in local wellness search" }
+    ];
+    
+    function renderPortfolio(filter = 'all') {
+        const grid = document.getElementById('portfolioGrid');
+        if(!grid) return;
+        grid.innerHTML = '';
+        const filtered = portfolioItems.filter(i => filter === 'all' || i.category === filter);
+        filtered.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'portfolio-card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.innerHTML = `
+                <div class="portfolio-img" style="background-image: url('${item.image}'); background-size: cover;">
+                    <div class="category-badge-portfolio"><i class="fas fa-tag"></i> Bay Area</div>
+                </div>
+                <div class="portfolio-details">
+                    <h3>${item.name}</h3>
+                    <div class="business-type"><i class="fas fa-star"></i> ${item.type}</div>
+                    <div class="portfolio-address"><i class="fas fa-map-pin"></i> ${item.address}</div>
+                    <div class="portfolio-description">${item.description}</div>
+                    <div class="portfolio-metric"><i class="fas fa-arrow-trend-up"></i> ${item.metric}</div>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="portfolio-website-btn"><i class="fas fa-external-link-alt"></i> Visit Website</a>
+                </div>
+            `;
+            card.addEventListener('click', (e) => {
+                if(!e.target.closest('.portfolio-website-btn')) {
+                    window.open(item.url, '_blank');
+                }
+            });
+            grid.appendChild(card);
+        });
+        // Re-initialize AOS for the new cards
+        AOS.refresh();
+    }
+    
+    var testimonialsData = [
+        { name: "Elena Mendez", role: "Mama Bakery, San Jose", text: "Pathway brought us 200% more foot traffic in just 3 weeks. Our social media finally shines and customers keep coming back!", avatar: "EM" },
+        { name: "Jenara Wellness", role: "Wellness Studio, Campbell CA", text: "They built our website and got us on the map. Now customers line up for our services. Pathway changed everything!", avatar: "JW" },
+        { name: "Sunny Bay Daycare", role: "Childcare Center, San Francisco", text: "Our Google visibility exploded. We went from invisible to the top daycare in our area. Truly life-changing!", avatar: "SB" }
+    ];
+    const homeTesti = document.getElementById('homeTestimonials');
+    if(homeTesti) {
+        testimonialsData.forEach((t, i) => {
+            const card = document.createElement('div');
+            card.className = 'testimonial-card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', String(i * 100));
+            card.innerHTML = `
+                <div class="star-rating">★★★★★</div>
+                <i class="fas fa-quote-left" style="color:#d4af37; opacity:0.6; font-size:1.2rem;"></i>
+                <p style="margin:0.8rem 0; line-height:1.6; color:#ccd6e0;">"${t.text}"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">${t.avatar}</div>
+                    <div>
+                        <div class="testimonial-name">${t.name}</div>
+                        <div class="testimonial-role">${t.role}</div>
+                    </div>
+                </div>
+            `;
+            homeTesti.appendChild(card);
+        });
+        AOS.refresh();
+    }
+    
+    renderPortfolio('all');
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderPortfolio(btn.getAttribute('data-filter'));
+        });
+    });
+</script>
+</body>
+</html>
