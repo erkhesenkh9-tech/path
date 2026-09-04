@@ -2464,68 +2464,175 @@
             white-space: nowrap;
         }
 
-        .dir-grid {
+        /* ================== BUSINESS CARDS ==================
+           One card component for every business in the directory. Entries with
+           a screenshot show it; the rest get a tinted panel carrying the site's
+           icon and domain, so the whole grid reads as one set. */
+        .biz-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
-            gap: 0.85rem;
+            grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+            gap: 1.1rem;
         }
-        .dir-card {
-            display: grid;
-            grid-template-columns: 46px 1fr auto;
-            gap: 0.9rem;
-            align-items: center;
-            padding: 0.95rem 1.05rem;
+        .biz-card {
+            display: flex;
+            flex-direction: column;
             background: var(--panel);
             border: 1px solid var(--line-soft);
-            border-radius: 16px;
+            border-radius: 20px;
+            overflow: hidden;
+            text-align: left;
             text-decoration: none;
             color: inherit;
-            text-align: left;
-            transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+            transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
         }
-        .dir-card:hover,
-        .dir-card:focus-visible {
+        .biz-card:hover,
+        .biz-card:focus-visible {
+            transform: translateY(-4px);
             border-color: rgba(227, 188, 74, 0.42);
-            background: var(--panel-strong);
-            transform: translateY(-2px);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
         }
-        .dir-mono {
-            width: 46px; height: 46px;
-            border-radius: 13px;
-            display: grid;
-            place-items: center;
-            font-size: 0.95rem;
-            font-weight: 750;
-            letter-spacing: -0.02em;
-            color: #0b0d12;
+
+        .biz-shot {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            background-size: cover;
+            background-position: center top;
+            overflow: hidden;
+        }
+        /* Fake browser bar: it carries the real domain, so the card says which
+           site it is without pretending to be a screenshot of it. */
+        .biz-chrome {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 27px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0 0.7rem;
+            background: rgba(9, 11, 17, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        .biz-chrome i {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.32);
             flex-shrink: 0;
         }
-        .dir-body { min-width: 0; }
-        .dir-name {
-            display: block;
-            font-size: 0.98rem;
-            font-weight: 650;
+        .biz-chrome span {
+            margin-left: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.82);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .biz-mark {
+            position: absolute;
+            inset: 27px 0 0 0;
+            display: grid;
+            place-items: center;
+        }
+        .biz-initials {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: rgba(255, 255, 255, 0.18);
+        }
+        .biz-mark img {
+            position: absolute;
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 8px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+        }
+        .biz-badge {
+            position: absolute;
+            left: 0.7rem;
+            bottom: 0.7rem;
+            font-size: 0.68rem;
+            font-weight: 750;
+            letter-spacing: 0.02em;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(9, 11, 17, 0.72);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: var(--gold-light);
+            border: 1px solid rgba(227, 188, 74, 0.32);
+        }
+        .biz-badge.is-ours {
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+            color: #14100a;
+            border-color: transparent;
+        }
+
+        .biz-body {
+            padding: 1.1rem 1.25rem 1.35rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .biz-body h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
             color: var(--text-primary);
-            letter-spacing: -0.01em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            letter-spacing: -0.015em;
+            margin-bottom: 0.25rem;
         }
-        .dir-meta {
-            display: block;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 0.15rem;
-        }
-        .dir-go {
-            color: var(--text-muted);
+        .biz-where {
             font-size: 0.85rem;
-            transition: color 0.18s ease;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
         }
-        .dir-card:hover .dir-go { color: var(--gold); }
+        .biz-address {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.45rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin-bottom: 0.7rem;
+        }
+        .biz-address i {
+            color: var(--gold);
+            font-size: 0.75rem;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+        .biz-body p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin: 0 0 0.8rem;
+        }
+        .biz-result {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.84rem;
+            font-weight: 650;
+            color: var(--ok);
+            margin-bottom: 0.85rem;
+        }
+        .biz-link {
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            font-weight: 650;
+            color: var(--gold-light);
+        }
+
+        @media (max-width: 700px) {
+            .biz-grid { grid-template-columns: 1fr; }
+        }
 
         .dir-empty {
             padding: 3rem 1.5rem;
@@ -2533,92 +2640,6 @@
             font-size: 1rem;
         }
         .dir-empty b { color: var(--text-primary); }
-
-        /* --- Client cards (real Pathway builds) --- */
-        .client-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 1.25rem;
-        }
-        .client-card {
-            display: flex;
-            flex-direction: column;
-            background: var(--panel);
-            border: 1px solid var(--line-soft);
-            border-radius: 22px;
-            overflow: hidden;
-            text-align: left;
-            text-decoration: none;
-            color: inherit;
-            transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
-        }
-        .client-card:hover,
-        .client-card:focus-visible {
-            transform: translateY(-4px);
-            border-color: rgba(227, 188, 74, 0.42);
-            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
-        }
-        .client-photo {
-            aspect-ratio: 16 / 10;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        .client-photo::after {
-            content: attr(data-badge);
-            position: absolute;
-            left: 12px; bottom: 12px;
-            background: linear-gradient(180deg, var(--gold-light), var(--gold));
-            color: #14100a;
-            font-size: 0.7rem;
-            font-weight: 750;
-            letter-spacing: 0.02em;
-            padding: 0.3rem 0.75rem;
-            border-radius: 999px;
-        }
-        .client-body {
-            padding: 1.25rem 1.4rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-        .client-body h3 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-            letter-spacing: -0.015em;
-        }
-        .client-where {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-        }
-        .client-body p {
-            font-size: 0.94rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-            margin: 0 0 0.9rem;
-        }
-        .client-result {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            font-size: 0.86rem;
-            font-weight: 650;
-            color: var(--ok);
-            margin-bottom: 1rem;
-        }
-        .client-link {
-            margin-top: auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            font-size: 0.9rem;
-            font-weight: 650;
-            color: var(--gold-light);
-        }
 
         /* --- FAQ: real buttons, no clipped answers --- */
         .faq-question {
@@ -2709,7 +2730,6 @@
         }
         @media (max-width: 700px) {
             .hero { padding-bottom: 9rem; }
-            .dir-grid { grid-template-columns: 1fr; }
             .filter-btn { padding: 0.5rem 0.85rem; font-size: 0.85rem; }
             .filter-buttons { gap: 0.4rem; }
             /* Page body and section padding stack on a phone and were
@@ -2907,7 +2927,7 @@
             <h2 data-reveal="line">Businesses we built for</h2>
             <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Three immigrant-owned businesses. Three websites we built and handed over.</p>
         </div>
-        <div class="client-grid" id="homeFeatured" data-reveal="glass-up" data-reveal-stagger></div>
+        <div class="biz-grid" id="homeFeatured" data-reveal="glass-up" data-reveal-stagger></div>
         <div style="margin-top: 1.75rem;" data-reveal="glass-up" data-reveal-delay="150">
             <a href="#" class="btn btn-secondary" data-page="portfolio"><i class="fas fa-list"></i> See the full directory</a>
         </div>
@@ -3825,7 +3845,7 @@
     ];
 
     const directory = [
-        ...clientItems.map(c => ({ group: 'pathway', name: c.name, url: c.url, domain: c.domain, meta: c.cat + ' · ' + c.area, address: c.address, lat: c.lat, lng: c.lng })),
+        ...clientItems.map(c => ({ group: 'pathway', name: c.name, url: c.url, domain: c.domain, meta: c.cat + ' · ' + c.area, address: c.address, lat: c.lat, lng: c.lng, image: c.image, description: c.description, metric: c.metric })),
         ...sfLocal.map(([name, domain, cat, area, address, lat, lng]) => ({ group: 'sf', name, url: 'https://' + domain, domain, meta: cat + ' · ' + area, address, lat, lng })),
         ...exampleSites.map(([name, domain, type]) => ({ group: 'example', name, url: 'https://' + domain, domain, meta: type }))
     ];
@@ -3865,52 +3885,71 @@
         for (let i = 0; i < plain.length; i++) hash = (hash * 31 + plain.charCodeAt(i)) % 360;
         return {
             initials,
-            style: `background: linear-gradient(160deg, hsl(${hash}, 62%, 76%), hsl(${(hash + 26) % 360}, 54%, 58%));`
+            style: `background: linear-gradient(155deg, hsl(${hash}, 34%, 23%), hsl(${(hash + 22) % 360}, 42%, 12%));`
         };
     }
 
-    function buildDirCard(item) {
-        const m = monogram(item.name);
-        const a = document.createElement('a');
-        a.className = 'dir-card';
-        a.href = item.url;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.innerHTML = `
-            <span class="dir-mono" style="${m.style}" aria-hidden="true">${esc(m.initials)}</span>
-            <span class="dir-body">
-                <span class="dir-name">${item.name}</span>
-                <span class="dir-meta">${item.meta}</span>
-            </span>
-            <span class="dir-go" aria-hidden="true"><i class="fas fa-external-link-alt"></i></span>
-        `;
-        return a;
-    }
+    const groupBadge = {
+        pathway: 'Built by Pathway',
+        sf: 'San Francisco',
+        example: 'Featured build'
+    };
 
-    function buildClientCard(item) {
-        const a = document.createElement('a');
-        a.className = 'client-card';
-        a.href = item.url;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.innerHTML = `
-            <div class="client-photo" data-badge="Built by Pathway" style="background-image: url('${item.image}');" role="img" aria-label="${item.name}"></div>
-            <div class="client-body">
-                <h3>${item.name}</h3>
-                <div class="client-where">${item.cat} · ${item.area}</div>
-                <p>${item.description}</p>
-                <div class="client-result"><i class="fas fa-arrow-trend-up"></i> ${item.metric}</div>
-                <span class="client-link">Visit website <i class="fas fa-external-link-alt"></i></span>
-            </div>
-        `;
-        return a;
+    function buildBizCard(item) {
+        const mono = monogram(item.name);
+        const card = document.createElement('a');
+        card.className = 'biz-card';
+        card.href = item.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+
+        const badge = '<span class="biz-badge' + (item.group === 'pathway' ? ' is-ours' : '') + '">' +
+            groupBadge[item.group] + '</span>';
+
+        const head = item.image
+            ? '<div class="biz-shot" style="background-image: url(\'' + item.image + '\');">' + badge + '</div>'
+            : '<div class="biz-shot" style="' + mono.style + '">' +
+              '<div class="biz-chrome"><i></i><i></i><i></i><span>' + esc(item.domain) + '</span></div>' +
+              '<div class="biz-mark">' +
+                  '<span class="biz-initials">' + esc(mono.initials) + '</span>' +
+                  '<img alt="" loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?sz=128&amp;domain=' +
+                      encodeURIComponent(item.domain) + '">' +
+              '</div>' + badge +
+              '</div>';
+
+        const detail = item.address
+            ? '<div class="biz-address"><i class="fas fa-map-pin"></i> ' + esc(item.address) + '</div>'
+            : '<div class="biz-address"><i class="fas fa-link"></i> ' + esc(item.domain) + '</div>';
+
+        card.innerHTML = head +
+            '<div class="biz-body">' +
+                '<h3>' + item.name + '</h3>' +
+                '<div class="biz-where">' + item.meta + '</div>' +
+                detail +
+                (item.description ? '<p>' + item.description + '</p>' : '') +
+                (item.metric ? '<div class="biz-result"><i class="fas fa-arrow-trend-up"></i> ' + item.metric + '</div>' : '') +
+                '<span class="biz-link">Visit website <i class="fas fa-external-link-alt"></i></span>' +
+            '</div>';
+
+        // The icon sits on top of the initials; drop the initials only once a
+        // real icon has actually loaded.
+        const icon = card.querySelector('.biz-mark img');
+        if (icon) {
+            const initials = card.querySelector('.biz-initials');
+            icon.addEventListener('load', () => { if (initials) initials.style.display = 'none'; });
+            icon.addEventListener('error', () => icon.remove());
+        }
+
+        return card;
     }
 
     function renderHomeFeatured() {
         const container = document.getElementById('homeFeatured');
         if (!container) return;
         container.innerHTML = '';
-        clientItems.forEach(item => container.appendChild(buildClientCard(item)));
+        clientItems.forEach(item => container.appendChild(buildBizCard(
+            Object.assign({ group: 'pathway', meta: item.cat + ' · ' + item.area }, item)
+        )));
     }
 
     let dirFilter = 'all';
@@ -3955,17 +3994,10 @@
             `;
             section.appendChild(head);
 
-            if (group === 'pathway' && !q) {
-                const grid = document.createElement('div');
-                grid.className = 'client-grid';
-                clientItems.forEach(item => grid.appendChild(buildClientCard(item)));
-                section.appendChild(grid);
-            } else {
-                const grid = document.createElement('div');
-                grid.className = 'dir-grid';
-                items.forEach(item => grid.appendChild(buildDirCard(item)));
-                section.appendChild(grid);
-            }
+            const grid = document.createElement('div');
+            grid.className = 'biz-grid';
+            items.forEach(item => grid.appendChild(buildBizCard(item)));
+            section.appendChild(grid);
 
             results.appendChild(section);
         });
