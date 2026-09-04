@@ -3,14 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Pathway | Empowering Immigrant-Owned Businesses</title>
+    <title>Pathway | Free websites for immigrant-owned businesses</title>
+    <meta name="description" content="Pathway builds a website, a Google Maps listing and social media for immigrant-owned businesses. You own everything. Free for the first 20 businesses.">
+    <meta name="theme-color" content="#06080d">
+    <meta property="og:title" content="Pathway | Free websites for immigrant-owned businesses">
+    <meta property="og:description" content="We build your website, put you on Google Maps, and run your social media. You own all of it. It costs you nothing.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- AOS Scroll Animation -->
     <link rel="icon" type="image/jpg" href="favicon.png">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Scroll reveal animations are custom-built below -->
     <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.045);
+            --glass-bg-strong: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: 20px;
+            --gold: #d4af37;
+            --gold-light: #ffdd99;
+            --text-primary: #f0f4ff;
+            --text-secondary: #9aa8bc;
+            --text-muted: #6b7a90;
+            --bg-deep: #06080d;
+            --bg-surface: #0c1018;
+            --radius-pill: 999px;
+            --radius-card: 24px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,9 +41,201 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0c12;
-            color: #eef2ff;
+            background: var(--bg-deep);
+            color: var(--text-primary);
             overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ========== UNIQUE PAGE BACKGROUNDS ========== */
+        #page-background {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background: var(--bg-deep);
+        }
+        #page-background::before,
+        #page-background::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.9;
+            transition: transform 1.4s ease, opacity 1s ease, background 1.2s ease;
+        }
+        #page-background::before {
+            width: 55vw;
+            height: 55vw;
+            max-width: 620px;
+            max-height: 620px;
+        }
+        #page-background::after {
+            width: 45vw;
+            height: 45vw;
+            max-width: 520px;
+            max-height: 520px;
+        }
+        .page-bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Home — global horizon & growth */
+        .page-bg-home {
+            background:
+                radial-gradient(ellipse 100% 70% at 50% 105%, rgba(212, 175, 55, 0.14) 0%, transparent 55%),
+                radial-gradient(circle at 15% 15%, rgba(120, 160, 255, 0.06) 0%, transparent 35%),
+                linear-gradient(180deg, #05070c 0%, #0a0e16 45%, #080b12 100%);
+        }
+        .page-bg-home::before {
+            top: -10%;
+            right: -8%;
+            background: rgba(212, 175, 55, 0.12);
+        }
+        .page-bg-home::after {
+            bottom: 5%;
+            left: -12%;
+            background: rgba(80, 120, 200, 0.08);
+        }
+        .page-bg-home .page-bg-pattern {
+            opacity: 1;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 60%, black 20%, transparent 75%);
+        }
+
+        /* About — warm story & community roots */
+        .page-bg-about {
+            background:
+                radial-gradient(ellipse 70% 55% at 85% 15%, rgba(212, 140, 80, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 50% at 10% 85%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                linear-gradient(155deg, #0a080c 0%, #121018 50%, #0c0a10 100%);
+        }
+        .page-bg-about::before {
+            top: 20%;
+            left: -10%;
+            background: rgba(200, 120, 90, 0.14);
+        }
+        .page-bg-about::after {
+            bottom: -5%;
+            right: -5%;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .page-bg-about .page-bg-pattern {
+            opacity: 1;
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 119px,
+                    rgba(212, 175, 55, 0.025) 119px,
+                    rgba(212, 175, 55, 0.025) 120px
+                );
+            mask-image: linear-gradient(180deg, transparent, black 25%, black 75%, transparent);
+        }
+
+        /* Services — clear path & step-by-step growth */
+        .page-bg-services {
+            background:
+                radial-gradient(ellipse 80% 45% at 50% -5%, rgba(212, 175, 55, 0.12) 0%, transparent 55%),
+                linear-gradient(180deg, #070910 0%, #0d1118 100%);
+        }
+        .page-bg-services::before {
+            top: 30%;
+            right: -15%;
+            background: rgba(100, 200, 140, 0.08);
+        }
+        .page-bg-services::after {
+            bottom: 10%;
+            left: 5%;
+            background: rgba(212, 175, 55, 0.09);
+        }
+        .page-bg-services .page-bg-pattern {
+            opacity: 1;
+            background-image:
+                repeating-linear-gradient(
+                    -55deg,
+                    transparent,
+                    transparent 70px,
+                    rgba(255, 255, 255, 0.018) 70px,
+                    rgba(255, 255, 255, 0.018) 71px
+                );
+        }
+
+        /* Portfolio — showcase grid & success stories */
+        .page-bg-portfolio {
+            background:
+                radial-gradient(circle at 75% 25%, rgba(212, 175, 55, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 20% 75%, rgba(100, 180, 255, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(180, 100, 220, 0.04) 0%, transparent 45%),
+                linear-gradient(180deg, #060810 0%, #0e121a 100%);
+        }
+        .page-bg-portfolio::before {
+            top: -5%;
+            left: 20%;
+            background: rgba(212, 175, 55, 0.11);
+        }
+        .page-bg-portfolio::after {
+            bottom: -8%;
+            right: 10%;
+            background: rgba(90, 150, 255, 0.09);
+        }
+        .page-bg-portfolio .page-bg-pattern {
+            opacity: 1;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 10%, transparent 80%);
+        }
+
+        /* Contact — open door & connection */
+        .page-bg-contact {
+            background:
+                radial-gradient(ellipse 90% 60% at 50% 110%, rgba(212, 175, 55, 0.16) 0%, transparent 55%),
+                radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 35%),
+                linear-gradient(180deg, #08090e 0%, #0c1018 100%);
+        }
+        .page-bg-contact::before {
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70vw;
+            height: 70vw;
+            max-width: 700px;
+            max-height: 700px;
+            background: rgba(212, 175, 55, 0.07);
+            filter: blur(100px);
+        }
+        .page-bg-contact::after {
+            bottom: 15%;
+            right: -10%;
+            background: rgba(255, 220, 150, 0.06);
+        }
+        .page-bg-contact .page-bg-pattern {
+            opacity: 1;
+            background-image:
+                radial-gradient(circle at center, rgba(212, 175, 55, 0.04) 0%, transparent 55%);
+            animation: contactPulse 8s ease-in-out infinite;
+        }
+        @keyframes contactPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .site-header,
+        .page,
+        footer {
+            position: relative;
+            z-index: 1;
         }
 
         /* ========== FULLSCREEN PRELOADER WITH LOGO ONLY ========== */
@@ -31,7 +245,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0c12;
+            background: var(--bg-deep);
             z-index: 10000;
             display: flex;
             flex-direction: column;
@@ -62,97 +276,183 @@
             100% { opacity: 0.6; transform: scale(0.98); }
         }
 
-        /* Glassmorphic Centered Navigation */
-        nav {
+        /* Site Header — Fenvex-inspired dark layout */
+        .site-header {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: auto;
-            max-width: 95%;
-            padding: 0.6rem 1.8rem;
-            display: flex;
-            justify-content: center;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            gap: 1.8rem;
+            padding: 1.1rem 2.5rem;
             z-index: 1000;
-            background: rgba(20, 25, 35, 0.75);
-            backdrop-filter: blur(12px);
-            border-radius: 60px;
-            border: 1px solid rgba(255, 215, 150, 0.2);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            flex-wrap: wrap;
             opacity: 0;
             transition: opacity 0.5s ease 0.3s;
         }
-        nav.visible {
-            opacity: 1;
-        }
+        .site-header.visible { opacity: 1; }
+
         .logo {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #ffdd99, #d4af37);
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            justify-self: start;
+        }
+        .logo span {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-right: 0.2rem;
+        }
+
+        .nav-pill {
+            justify-self: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-pill);
+            padding: 0.3rem 0.45rem;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
         }
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 0.15rem;
         }
         .nav-links a {
-            color: #eef2ff;
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             transition: 0.2s;
-            padding: 0.4rem 0.8rem;
-            border-radius: 40px;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-pill);
+            white-space: nowrap;
         }
-        .nav-links a:hover, .nav-links a.active {
-            color: #d4af37;
-            background: rgba(212, 175, 55, 0.1);
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-actions {
+            justify-self: end;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.55rem 1.25rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .btn-nav:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(212, 175, 55, 0.35);
         }
         
-        /* Language Selector - Styled to match nav buttons */
+        /* Language menu — single button with dropdown */
         .translate-container {
             display: inline-flex;
             align-items: center;
-            margin-left: 0.2rem;
+            position: relative;
+        }
+        .lang-menu {
+            position: relative;
+        }
+        .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 0.55rem 1.1rem;
+            border-radius: var(--radius-pill);
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .lang-toggle:hover,
+        .lang-menu.open .lang-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(212, 175, 55, 0.35);
+        }
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            min-width: 160px;
+            background: rgba(12, 16, 24, 0.95);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.4rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px);
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            z-index: 1100;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        .lang-menu.open .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .lang-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.55rem 0.85rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .lang-option:hover,
+        .lang-option.active {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
         }
         #google_translate_element {
-            background: transparent;
-            border-radius: 40px;
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
         }
         .goog-te-gadget {
-            color: #000000 !important;
-            font-family: 'Inter', sans-serif !important;
-            font-size: 0rem !important;
+            font-size: 0 !important;
         }
         .goog-te-gadget img {
             display: none !important;
         }
-        .goog-te-gadget .goog-te-combo {
-            background: rgba(30, 35, 45, 0.8);
-            color: #000000;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 40px;
-            padding: 0.4rem 1.2rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            outline: none;
-            backdrop-filter: blur(4px);
-        }
-        .goog-te-gadget .goog-te-combo:hover {
-            border-color: rgba(212, 175, 55, 0.8);
-            background: rgba(212, 175, 55, 0.15);
-            color: #d4af37;
-        }
-        /* Hide Google Translate banner */
         .goog-te-banner-frame.skiptranslate {
             display: none !important;
         }
@@ -165,31 +465,202 @@
         
         .mobile-menu-btn {
             display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.3rem;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            color: var(--text-primary);
+            font-size: 1rem;
             cursor: pointer;
+            backdrop-filter: blur(12px);
+        }
+
+        /* ========== HERO — Fenvex dark layout ========== */
+        #home-page { padding-top: 0; }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 7rem 2rem 12rem;
+            overflow: hidden;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 820px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius-pill);
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            color: var(--gold-light);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2.2rem, 5.5vw, 3.75rem);
+            font-weight: 700;
+            line-height: 1.12;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+        }
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            line-height: 1.65;
+            max-width: 580px;
+            margin: 0 auto 2.25rem;
+            font-weight: 400;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 0.85rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero-globe-wrap {
+            position: absolute;
+            bottom: -18%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(900px, 130vw);
+            height: min(900px, 130vw);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+        #hero-globe-canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+        .hero-fade {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 50% at 50% 40%, transparent 0%, var(--bg-deep) 75%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-trust-bar {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-pill);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+            width: auto;
+            max-width: calc(100% - 2rem);
+        }
+        .trust-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            width: 100%;
+            text-align: center;
+        }
+        .trust-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .trust-logos span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            opacity: 0.85;
+        }
+        .trust-logos i {
+            font-size: 1.1rem;
+            color: var(--gold);
+        }
+
+        @media (max-width: 640px) {
+            .hero { padding: 6rem 1.25rem 11rem; }
+            .hero-trust-bar { gap: 0.65rem; padding: 0.85rem 1.25rem; }
+            .trust-logos { gap: 0.85rem; }
+        }
+
+        .home-sections {
+            padding: 0 0 2rem;
         }
         @media (max-width: 900px) {
-            nav { width: 95%; justify-content: space-between; padding: 0.6rem 1.2rem; gap: 0.8rem; }
-            .nav-links {
-                position: fixed;
-                top: 75px;
-                left: -100%;
-                width: 85%;
-                background: rgba(15, 20, 30, 0.95);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 2rem;
-                border-radius: 28px;
-                gap: 1.2rem;
-                transition: 0.3s;
-                border: 1px solid #d4af3740;
-                z-index: 1000;
+            .site-header {
+                grid-template-columns: 1fr auto;
+                padding: 0.9rem 1.2rem;
             }
-            .nav-links.show { left: 5%; }
-            .mobile-menu-btn { display: block; }
+            .nav-pill {
+                position: fixed;
+                top: 72px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 2rem);
+                max-width: 400px;
+                z-index: 1001;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.25s, visibility 0.25s;
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+            .nav-pill.show {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+            .nav-links {
+                flex-direction: column;
+                background: rgba(12, 16, 24, 0.92);
+                backdrop-filter: blur(24px);
+                padding: 1rem;
+                border-radius: 20px;
+                gap: 0.25rem;
+                border: 1px solid var(--glass-border);
+            }
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 0.75rem 1rem;
+            }
+            .mobile-menu-btn { display: flex; }
+            .btn-nav { display: none; }
             .translate-container { margin-left: 0; }
             .goog-te-gadget .goog-te-combo { padding: 0.3rem 0.8rem; font-size: 0.8rem; }
         }
@@ -226,20 +697,205 @@
         }
         .section-sub {
             font-size: 1.1rem;
-            color: #aab3c2;
-            max-width: 700px;
-            margin: 0 auto 2rem auto;
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.65;
+        }
+
+        /* Flowing section layout — headline → subtext → one panel */
+        .section-flow {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3.5rem 2rem;
+        }
+        .section-flow.section-wide {
+            max-width: 1200px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .section-header h2 {
+            margin-bottom: 0.75rem;
+        }
+        .flow-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 0;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+        }
+        .flow-block {
+            padding: 2rem 2.5rem;
+        }
+        .flow-block h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            margin-bottom: 0.6rem;
+        }
+        .flow-block p {
+            color: var(--text-secondary);
+            line-height: 1.65;
+            font-size: 1rem;
+        }
+        .flow-divider {
+            height: 1px;
+            background: var(--glass-border);
+            margin: 0;
+        }
+        .flow-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            padding: 1.5rem 2.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .flow-list-item:last-child {
+            border-bottom: none;
+        }
+        .flow-list-item i {
+            font-size: 1.25rem;
+            color: var(--gold);
+            margin-top: 0.15rem;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+        .flow-list-item h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.35rem;
+        }
+        .flow-list-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* Featured businesses — large flowing rows, not small boxes */
+        .featured-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .featured-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            text-align: left;
+        }
+        .featured-row:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212, 175, 55, 0.35);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+        }
+        .featured-image {
+            width: 38%;
+            min-width: 200px;
+            min-height: 200px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        .featured-body {
+            flex: 1;
+            padding: 2rem 2.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .featured-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+        .featured-body h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.6rem;
+        }
+        .featured-body p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        .featured-metric {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+        @media (max-width: 700px) {
+            .featured-row { flex-direction: column; }
+            .featured-image { width: 100%; min-height: 180px; }
+            .flow-block, .flow-list-item { padding: 1.25rem 1.5rem; }
+            .section-flow { padding: 2.5rem 1.25rem; }
+        }
+
+        .flow-panel .faq-grid {
+            gap: 0;
+            margin: 0;
+            max-width: none;
+        }
+        .flow-panel .faq-item {
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid var(--glass-border);
+            background: transparent;
+            backdrop-filter: none;
+        }
+        .flow-panel .faq-item:last-child {
+            border-bottom: none;
+        }
+        .flow-panel .faq-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .page-body {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
         }
 
         /* Glass Cards */
         .card {
-            background: rgba(25, 32, 45, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--radius-card);
             padding: 2rem;
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            border: 1px solid var(--glass-border);
             transition: 0.25s;
             text-align: center;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
         }
         .grid-2 {
             display: flex;
@@ -251,10 +907,15 @@
 
         /* Global Reach (Globe) */
         .global-reach {
-            background: radial-gradient(ellipse at 30% 40%, #0a1018, #03070f);
-            border-radius: 48px;
-            margin: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            margin: 0 auto 2rem;
+            max-width: 960px;
             padding: 3rem 2rem;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
         }
         .global-reach .container {
             display: flex;
@@ -331,13 +992,15 @@
             margin-top: 2rem;
         }
         .trail-step {
-            background: rgba(20, 28, 40, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: var(--radius-pill);
             padding: 1rem 2rem;
             width: 100%;
             max-width: 700px;
-            border-left: 4px solid #d4af37;
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--gold);
             text-align: left;
             transition: 0.2s;
         }
@@ -358,17 +1021,19 @@
             margin: 2rem auto;
         }
         .faq-item {
-            background: rgba(25, 32, 45, 0.6);
-            backdrop-filter: blur(5px);
-            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
             padding: 1.2rem 1.5rem;
             text-align: left;
             cursor: pointer;
             transition: 0.2s;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--glass-border);
         }
         .faq-item:hover {
-            border-color: rgba(212, 175, 55, 0.5);
+            border-color: rgba(212, 175, 55, 0.35);
+            background: var(--glass-bg-strong);
         }
         .faq-question {
             display: flex;
@@ -398,40 +1063,61 @@
 
         /* Buttons */
         .btn {
-            display: inline-block;
-            background: #d4af37;
-            color: #0a0c12;
-            font-weight: 700;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            background: var(--text-primary);
+            color: var(--bg-deep);
+            font-weight: 600;
+            padding: 0.85rem 1.75rem;
+            border-radius: var(--radius-pill);
             text-decoration: none;
             transition: 0.2s;
-            margin: 0 0.5rem;
+            margin: 0 0.25rem;
+            border: none;
+            font-size: 0.95rem;
+            cursor: pointer;
         }
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-deep);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+        }
+        .btn-secondary,
         .btn-outline {
             background: transparent;
-            border: 2px solid #d4af37;
-            color: #d4af37;
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            backdrop-filter: blur(8px);
         }
+        .btn-secondary:hover,
         .btn-outline:hover {
-            background: #d4af37;
-            color: #0a0c12;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.4);
+            color: var(--text-primary);
+            transform: translateY(-2px);
         }
-        .btn:hover { transform: translateY(-3px); background: #c6a128; }
+        .btn:hover { transform: translateY(-2px); }
 
         /* Enhanced Bottom Button Container */
         .bottom-actions {
-            background: rgba(20, 28, 40, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 80px;
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-radius: var(--radius-pill);
             padding: 1.5rem 2.5rem;
             display: inline-flex;
             flex-direction: column;
             align-items: center;
             gap: 1rem;
             margin: 2rem auto 1rem;
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            border: 1px solid var(--glass-border);
             max-width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         .bottom-actions p {
             color: #e8dbbc;
@@ -453,10 +1139,11 @@
 
         /* Footer */
         footer {
-            background: #05080e;
+            background: rgba(4, 6, 10, 0.8);
+            backdrop-filter: blur(16px);
             padding: 3rem 2rem 2rem;
             margin-top: 4rem;
-            border-top: 1px solid #d4af3720;
+            border-top: 1px solid var(--glass-border);
         }
         .footer-grid {
             max-width: 1300px;
@@ -492,14 +1179,16 @@
         
         /* Free Banner */
         .free-banner {
-            background: linear-gradient(135deg, #d4af37, #b88d2a);
-            color: #0a0c12;
+            background: rgba(212, 175, 55, 0.15);
+            backdrop-filter: blur(8px);
+            color: var(--gold-light);
             padding: 0.6rem 1.2rem;
-            border-radius: 60px;
+            border-radius: var(--radius-pill);
             display: inline-block;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.35);
         }
         
         /* Services Clarify (What We Do) - Reusable */
@@ -512,11 +1201,13 @@
             max-width: 1000px;
         }
         .service-simple {
-            background: rgba(25, 32, 45, 0.6);
-            border-radius: 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: var(--radius-card);
             padding: 1.5rem;
             text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--glass-border);
             flex: 1;
             min-width: 180px;
         }
@@ -536,24 +1227,27 @@
             max-width: 1100px;
         }
         .differentiator-card {
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 28px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: var(--radius-card);
             padding: 1.5rem;
             flex: 1;
             min-width: 200px;
             max-width: 250px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid var(--glass-border);
             text-align: center;
         }
         
         /* About Page Specific Styles */
         .mission-block {
-            background: rgba(30, 40, 55, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 32px;
             padding: 2.5rem;
             margin: 2rem auto;
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            border: 1px solid var(--glass-border);
             text-align: center;
             max-width: 900px;
         }
@@ -571,13 +1265,14 @@
             text-align: center;
         }
         .origin-story {
-            background: linear-gradient(135deg, rgba(30, 40, 55, 0.8), rgba(20, 28, 40, 0.9));
-            backdrop-filter: blur(8px);
-            border-radius: 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 32px;
             padding: 2.5rem;
             margin: 2rem auto;
             text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid var(--glass-border);
             max-width: 900px;
         }
         .origin-story h3 {
@@ -598,19 +1293,22 @@
             max-width: 900px;
         }
         .value-badge {
-            background: rgba(212, 175, 55, 0.15);
-            border-radius: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-pill);
             padding: 0.6rem 1.5rem;
             font-size: 0.9rem;
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            border: 1px solid var(--glass-border);
         }
         .forward-statement {
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 32px;
             padding: 2rem;
             margin: 2rem auto;
             text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid var(--glass-border);
             max-width: 800px;
         }
 
@@ -623,17 +1321,19 @@
             flex-wrap: wrap;
         }
         .filter-btn {
-            background: #1e2632;
-            border: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
             padding: 0.5rem 1.5rem;
-            border-radius: 40px;
-            color: #ccd6e0;
+            border-radius: var(--radius-pill);
+            color: var(--text-secondary);
             cursor: pointer;
             transition: 0.2s;
         }
         .filter-btn.active, .filter-btn:hover {
-            background: #d4af37;
-            color: #0a0c12;
+            background: rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.4);
+            color: var(--gold-light);
         }
         
         /* Enhanced Portfolio Cards (Location Style) */
@@ -642,23 +1342,24 @@
             flex-wrap: wrap;
             gap: 2rem;
             justify-content: center;
-            margin: 2rem auto;
+            margin: 0 auto;
         }
         .portfolio-card {
-            background: rgba(25, 32, 45, 0.75);
-            backdrop-filter: blur(8px);
-            border-radius: 32px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--radius-card);
             overflow: hidden;
             width: 340px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid var(--glass-border);
             text-align: left;
             cursor: pointer;
         }
         .portfolio-card:hover {
             transform: translateY(-8px);
-            border-color: #d4af37;
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
         }
         .portfolio-img {
             height: 200px;
@@ -732,55 +1433,84 @@
             transform: scale(0.98);
         }
 
-        /* Testimonials */
+        /* Testimonials — flowing rows in one panel */
         .testimonials-grid {
             display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
+            flex-direction: column;
         }
-        .testimonial-card {
-            background: rgba(25, 32, 45, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 24px;
-            padding: 1.8rem;
-            max-width: 320px;
-            border: 1px solid #d4af3730;
+        .testimonial-row {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.75rem 2.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            text-align: left;
+        }
+        .testimonial-row:last-child {
+            border-bottom: none;
+        }
+        .testimonial-row .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(212,175,55,0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        .testimonial-row p {
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin: 0.5rem 0 0;
+            font-size: 0.95rem;
         }
 
-        /* Contact Info Section */
+        /* Contact Info — flowing list */
         .contact-info-grid {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
-            margin: 2rem auto;
-            max-width: 900px;
+            flex-direction: column;
+            gap: 0;
+            margin: 0;
+            max-width: none;
         }
         .contact-info-card {
-            background: rgba(25, 32, 45, 0.6);
-            backdrop-filter: blur(5px);
-            border-radius: 28px;
-            padding: 1.5rem 2rem;
-            text-align: center;
-            min-width: 200px;
-            flex: 1;
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            transition: 0.2s;
+            background: transparent;
+            backdrop-filter: none;
+            border-radius: 0;
+            padding: 1.5rem 2.5rem;
+            text-align: left;
+            min-width: 0;
+            flex: none;
+            border: none;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        .contact-info-card:last-child {
+            border-bottom: none;
         }
         .contact-info-card:hover {
-            border-color: rgba(212, 175, 55, 0.6);
-            transform: translateY(-4px);
+            border-color: var(--glass-border);
+            transform: none;
+            background: rgba(255, 255, 255, 0.03);
         }
         .contact-info-card i {
-            font-size: 2.5rem;
-            color: #d4af37;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 0;
+            width: 32px;
+            text-align: center;
+            flex-shrink: 0;
         }
         .contact-info-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #d4af37;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            color: var(--text-primary);
         }
         .contact-info-card p, .contact-info-card a {
             color: #ccd6e0;
@@ -829,31 +1559,7 @@
 
         /* ========== PROFESSIONAL ENHANCEMENTS ========== */
 
-        /* Hero ambient glow */
-        #home-page .container:first-child { position: relative; overflow: visible; }
-        .hero-ambient {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(750px, 110vw);
-            height: min(750px, 110vw);
-            background: radial-gradient(ellipse, rgba(212,175,55,0.075) 0%, transparent 65%);
-            pointer-events: none;
-            z-index: -1;
-            border-radius: 50%;
-        }
-        .hero-trust {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            margin-top: 1.6rem;
-            color: #7a8698;
-            font-size: 0.85rem;
-        }
-        .hero-trust .stars { color: #d4af37; letter-spacing: 2px; }
-        .hero-trust-divider { color: #2e3a4a; }
+        /* Hero ambient glow — removed, replaced by hero-globe */
 
         /* Card hover */
         .card {
@@ -1012,9 +1718,855 @@
             background: linear-gradient(90deg, transparent, #d4af37, transparent);
             border-radius: 2px;
         }
+
+        /* ========== SCROLL REVEAL ANIMATIONS ========== */
+        [data-reveal] {
+            --reveal-delay: 0ms;
+            opacity: 0;
+            will-change: opacity, transform, filter;
+            transition:
+                opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay),
+                transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay),
+                filter 0.85s ease var(--reveal-delay),
+                box-shadow 0.85s ease var(--reveal-delay);
+        }
+        [data-reveal].is-visible {
+            opacity: 1;
+            transform: none;
+            filter: none;
+        }
+        [data-reveal="glass-up"] {
+            transform: translateY(42px) scale(0.98);
+            filter: blur(10px);
+        }
+        [data-reveal="glass-down"] {
+            transform: translateY(-28px) scale(0.98);
+            filter: blur(8px);
+        }
+        [data-reveal="glass-left"] {
+            transform: translateX(-48px) scale(0.98);
+            filter: blur(8px);
+        }
+        [data-reveal="glass-right"] {
+            transform: translateX(48px) scale(0.98);
+            filter: blur(8px);
+        }
+        [data-reveal="glass-scale"] {
+            transform: scale(0.88) translateY(24px);
+            filter: blur(14px);
+        }
+        [data-reveal="glass-glow"] {
+            transform: translateY(32px);
+            filter: blur(6px);
+            box-shadow: 0 0 0 rgba(212, 175, 55, 0);
+        }
+        [data-reveal="glass-glow"].is-visible {
+            box-shadow: 0 0 48px rgba(212, 175, 55, 0.08);
+        }
+        [data-reveal="line"] {
+            transform: translateY(18px);
+            filter: none;
+        }
+        [data-reveal="line"].is-visible {
+            transform: none;
+        }
+
+        .section-header h2[data-reveal="line"] {
+            position: relative;
+        }
+        .section-header h2[data-reveal="line"]::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 0;
+            margin: 0.85rem auto 0;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 2px;
+            transition: width 1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+        }
+        .section-header h2[data-reveal="line"].is-visible::after {
+            width: 72px;
+        }
+
+        /* Staggered children inside panels & grids */
+        [data-reveal-stagger] > *,
+        [data-reveal-stagger] .flow-block,
+        [data-reveal-stagger] .flow-list-item,
+        [data-reveal-stagger] .faq-item,
+        [data-reveal-stagger] .contact-info-card,
+        [data-reveal-stagger] .testimonial-row,
+        [data-reveal-stagger] .portfolio-card {
+            opacity: 0;
+            transform: translateY(22px);
+            filter: blur(4px);
+            transition:
+                opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.65s ease;
+        }
+        [data-reveal-stagger].is-visible > *,
+        [data-reveal-stagger].is-visible .flow-block,
+        [data-reveal-stagger].is-visible .flow-list-item,
+        [data-reveal-stagger].is-visible .faq-item,
+        [data-reveal-stagger].is-visible .contact-info-card,
+        [data-reveal-stagger].is-visible .testimonial-row,
+        [data-reveal-stagger].is-visible .portfolio-card {
+            opacity: 1;
+            transform: none;
+            filter: none;
+        }
+        [data-reveal-stagger].is-visible > *:nth-child(1),
+        [data-reveal-stagger].is-visible .faq-item:nth-child(1),
+        [data-reveal-stagger].is-visible .contact-info-card:nth-child(1),
+        [data-reveal-stagger].is-visible .testimonial-row:nth-child(1),
+        [data-reveal-stagger].is-visible .portfolio-card:nth-child(1) { transition-delay: 0.05s; }
+        [data-reveal-stagger].is-visible > *:nth-child(2),
+        [data-reveal-stagger].is-visible .faq-item:nth-child(2),
+        [data-reveal-stagger].is-visible .contact-info-card:nth-child(2),
+        [data-reveal-stagger].is-visible .testimonial-row:nth-child(2),
+        [data-reveal-stagger].is-visible .portfolio-card:nth-child(2) { transition-delay: 0.12s; }
+        [data-reveal-stagger].is-visible > *:nth-child(3),
+        [data-reveal-stagger].is-visible .faq-item:nth-child(3),
+        [data-reveal-stagger].is-visible .contact-info-card:nth-child(3),
+        [data-reveal-stagger].is-visible .testimonial-row:nth-child(3),
+        [data-reveal-stagger].is-visible .portfolio-card:nth-child(3) { transition-delay: 0.19s; }
+        [data-reveal-stagger].is-visible > *:nth-child(4),
+        [data-reveal-stagger].is-visible .faq-item:nth-child(4),
+        [data-reveal-stagger].is-visible .testimonial-row:nth-child(4),
+        [data-reveal-stagger].is-visible .portfolio-card:nth-child(4) { transition-delay: 0.26s; }
+        [data-reveal-stagger].is-visible > *:nth-child(5),
+        [data-reveal-stagger].is-visible .faq-item:nth-child(5),
+        [data-reveal-stagger].is-visible .portfolio-card:nth-child(5) { transition-delay: 0.33s; }
+        [data-reveal-stagger].is-visible > *:nth-child(6) { transition-delay: 0.40s; }
+        [data-reveal-stagger].is-visible > *:nth-child(7) { transition-delay: 0.47s; }
+        [data-reveal-stagger].is-visible > *:nth-child(8) { transition-delay: 0.54s; }
+
+        /* Hero entrance — plays on load, not scroll */
+        .hero-content .hero-badge,
+        .hero-content h1,
+        .hero-content .hero-sub,
+        .hero-content .hero-cta .btn {
+            opacity: 0;
+            transform: translateY(28px);
+            filter: blur(8px);
+            transition:
+                opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.9s ease;
+        }
+        .hero-content.hero-visible .hero-badge {
+            opacity: 1; transform: none; filter: none;
+            transition-delay: 0.1s;
+        }
+        .hero-content.hero-visible h1 {
+            opacity: 1; transform: none; filter: none;
+            transition-delay: 0.25s;
+        }
+        .hero-content.hero-visible .hero-sub {
+            opacity: 1; transform: none; filter: none;
+            transition-delay: 0.4s;
+        }
+        .hero-content.hero-visible .hero-cta .btn:nth-child(1) {
+            opacity: 1; transform: none; filter: none;
+            transition-delay: 0.55s;
+        }
+        .hero-content.hero-visible .hero-cta .btn:nth-child(2) {
+            opacity: 1; transform: none; filter: none;
+            transition-delay: 0.68s;
+        }
+        .hero-trust-bar {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+            filter: blur(6px);
+            transition:
+                opacity 0.8s ease 0.85s,
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.85s,
+                filter 0.8s ease 0.85s;
+        }
+        .hero-trust-bar.is-visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            filter: none;
+        }
+
+        /* Stat numbers pop when revealed */
+        .stat-item[data-reveal="pop"] {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+        .stat-item[data-reveal="pop"].is-visible {
+            transform: scale(1);
+            opacity: 1;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+        }
+
+        html.force-visible [data-reveal],
+        html.force-visible [data-reveal-stagger] > *,
+        html.force-visible .hero-content .hero-badge,
+        html.force-visible .hero-content h1,
+        html.force-visible .hero-content .hero-sub,
+        html.force-visible .hero-content .hero-cta .btn,
+        html.force-visible .hero-trust-bar {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            [data-reveal],
+            [data-reveal-stagger] > *,
+            .hero-content .hero-badge,
+            .hero-content h1,
+            .hero-content .hero-sub,
+            .hero-content .hero-cta .btn,
+            .hero-trust-bar {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* ==========================================================
+           V2 — SIMPLE & DIRECT LAYER
+           Goal: a business owner on a phone understands the offer,
+           trusts it, and taps one button. Same identity, less noise.
+           ========================================================== */
+
+        :root {
+            --gold: #e3bc4a;
+            --gold-light: #ffe6a8;
+            --gold-deep: #b4901f;
+            --text-primary: #f5f8ff;
+            --text-secondary: #b6c3d6;
+            --text-muted: #8b98ab;
+            --line: rgba(255, 255, 255, 0.12);
+            --line-soft: rgba(255, 255, 255, 0.07);
+            --panel: rgba(255, 255, 255, 0.045);
+            --panel-strong: rgba(255, 255, 255, 0.075);
+            --ok: #7fd98d;
+            --measure: 34rem;
+        }
+
+        html { -webkit-text-size-adjust: 100%; }
+        body { font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+
+        /* --- Accessibility basics --- */
+        .skip-link {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translate(-50%, -140%);
+            z-index: 20000;
+            background: var(--gold);
+            color: #10131a;
+            font-weight: 700;
+            padding: 0.7rem 1.4rem;
+            border-radius: 0 0 14px 14px;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+        .skip-link:focus { transform: translate(-50%, 0); }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 3px solid var(--gold-light);
+            outline-offset: 3px;
+            border-radius: 8px;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* --- Headings: solid and readable, not gradient-clipped --- */
+        h1, h2, h3 { text-wrap: balance; }
+        h2 {
+            background: none !important;
+            -webkit-background-clip: border-box !important;
+            background-clip: border-box !important;
+            color: var(--text-primary) !important;
+            font-size: clamp(1.7rem, 4.4vw, 2.5rem);
+            line-height: 1.16;
+            letter-spacing: -0.015em;
+            margin-bottom: 0.85rem;
+        }
+        .section-sub {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: var(--measure);
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+            text-wrap: pretty;
+        }
+        .section-header { margin-bottom: 1.75rem; }
+
+        /* --- Eyebrow label above section titles --- */
+        .eyebrow {
+            display: block;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.7rem;
+        }
+
+        /* --- Buttons: bigger targets, one obvious primary --- */
+        .btn {
+            padding: 0.95rem 1.9rem;
+            font-size: 1rem;
+            font-weight: 650;
+            min-height: 52px;
+            letter-spacing: -0.005em;
+        }
+        .btn-primary {
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+            color: #14100a;
+            box-shadow: 0 6px 20px rgba(227, 188, 74, 0.22);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 10px 28px rgba(227, 188, 74, 0.32);
+            filter: brightness(1.04);
+        }
+        .btn-secondary, .btn-outline {
+            border-color: var(--line);
+            color: var(--text-primary);
+        }
+        .btn-nav {
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+            color: #14100a;
+            border-color: transparent;
+            font-weight: 650;
+        }
+        .btn-nav:hover {
+            background: linear-gradient(180deg, #fff0c4, #ecc75a);
+            border-color: transparent;
+            color: #14100a;
+        }
+
+        /* --- Header gets a surface once the page scrolls, so the logo and
+           menu never sit on top of body text --- */
+        .site-header {
+            transition: opacity 0.5s ease 0.3s, background 0.25s ease, border-color 0.25s ease;
+            border-bottom: 1px solid transparent;
+        }
+        .site-header.scrolled {
+            background: rgba(8, 10, 16, 0.86);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom-color: var(--line-soft);
+        }
+
+        /* --- Hero: one promise, one button --- */
+        .hero { padding-bottom: 10rem; }
+        .hero h1 {
+            font-size: clamp(2.1rem, 6.2vw, 3.6rem);
+            letter-spacing: -0.033em;
+            line-height: 1.08;
+        }
+        .hero-sub {
+            font-size: clamp(1.05rem, 2.1vw, 1.22rem);
+            color: var(--text-secondary);
+            max-width: 34rem;
+        }
+        .hero-badge {
+            font-size: 0.82rem;
+            padding: 0.45rem 1.05rem;
+            background: rgba(227, 188, 74, 0.14);
+            border-color: rgba(227, 188, 74, 0.3);
+        }
+        .hero-note {
+            margin-top: 1.1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .hero-note strong { color: var(--gold-light); font-weight: 600; }
+
+        /* --- Numbered steps --- */
+        .steps {
+            display: grid;
+            gap: 0.9rem;
+            text-align: left;
+        }
+        .step {
+            display: grid;
+            grid-template-columns: 46px 1fr;
+            gap: 1.1rem;
+            align-items: start;
+            padding: 1.35rem 1.5rem;
+            background: var(--panel);
+            border: 1px solid var(--line-soft);
+            border-radius: 18px;
+        }
+        .step-num {
+            width: 46px; height: 46px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #14100a;
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+        }
+        .step h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.08rem;
+            font-weight: 650;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+        .step-tag {
+            display: inline-block;
+            margin-top: 0.6rem;
+            font-size: 0.8rem;
+            font-weight: 650;
+            color: var(--ok);
+        }
+
+        /* --- Plain fact rows --- */
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.9rem;
+            text-align: left;
+        }
+        .fact {
+            padding: 1.4rem 1.5rem;
+            background: var(--panel);
+            border: 1px solid var(--line-soft);
+            border-radius: 18px;
+        }
+        .fact i {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.7rem;
+            display: block;
+        }
+        .fact h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.02rem;
+            font-weight: 650;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+        .fact p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* --- Honest number strip --- */
+        .numbers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin: 0 auto;
+            max-width: 780px;
+        }
+        .number-cell {
+            padding: 1.5rem 1rem;
+            background: var(--panel);
+            border: 1px solid var(--line-soft);
+            border-radius: 18px;
+        }
+        .number-cell b {
+            display: block;
+            font-size: clamp(2rem, 6vw, 2.75rem);
+            font-weight: 800;
+            line-height: 1;
+            color: var(--gold-light);
+            letter-spacing: -0.02em;
+        }
+        .number-cell span {
+            display: block;
+            margin-top: 0.55rem;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        /* ================== DIRECTORY ================== */
+        .dir-tools {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.75rem;
+        }
+        .dir-search {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+        }
+        .dir-search i {
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+        .dir-search input {
+            width: 100%;
+            min-height: 54px;
+            padding: 0.9rem 1.1rem 0.9rem 2.9rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .dir-search input::placeholder { color: var(--text-muted); }
+        .dir-search input:focus {
+            border-color: rgba(227, 188, 74, 0.55);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .filter-buttons { gap: 0.5rem; margin-bottom: 0; }
+        .filter-btn {
+            min-height: 44px;
+            padding: 0.55rem 1.15rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 550;
+            border-color: var(--line);
+        }
+        .filter-btn.active {
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+            border-color: transparent;
+            color: #14100a;
+            font-weight: 700;
+        }
+        .dir-count {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+        .dir-count b { color: var(--text-primary); font-weight: 650; }
+
+        .dir-group { margin-top: 2.5rem; }
+        .dir-group:first-child { margin-top: 0; }
+        .dir-group-head {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: baseline;
+            gap: 0.35rem 1rem;
+            text-align: left;
+            padding-bottom: 0.85rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--line-soft);
+        }
+        .dir-group-head h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+        .dir-group-head p {
+            grid-column: 1 / -1;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0.15rem 0 0;
+            max-width: 52rem;
+            text-align: left;
+        }
+        .dir-group-count {
+            font-size: 0.82rem;
+            font-weight: 650;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .dir-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+            gap: 0.85rem;
+        }
+        .dir-card {
+            display: grid;
+            grid-template-columns: 46px 1fr auto;
+            gap: 0.9rem;
+            align-items: center;
+            padding: 0.95rem 1.05rem;
+            background: var(--panel);
+            border: 1px solid var(--line-soft);
+            border-radius: 16px;
+            text-decoration: none;
+            color: inherit;
+            text-align: left;
+            transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+        }
+        .dir-card:hover,
+        .dir-card:focus-visible {
+            border-color: rgba(227, 188, 74, 0.42);
+            background: var(--panel-strong);
+            transform: translateY(-2px);
+        }
+        .dir-mono {
+            width: 46px; height: 46px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            font-size: 0.95rem;
+            font-weight: 750;
+            letter-spacing: -0.02em;
+            color: #0b0d12;
+            flex-shrink: 0;
+        }
+        .dir-body { min-width: 0; }
+        .dir-name {
+            display: block;
+            font-size: 0.98rem;
+            font-weight: 650;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .dir-meta {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 0.15rem;
+        }
+        .dir-go {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: color 0.18s ease;
+        }
+        .dir-card:hover .dir-go { color: var(--gold); }
+
+        .dir-empty {
+            padding: 3rem 1.5rem;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .dir-empty b { color: var(--text-primary); }
+
+        /* --- Client cards (real Pathway builds) --- */
+        .client-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 1.25rem;
+        }
+        .client-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--panel);
+            border: 1px solid var(--line-soft);
+            border-radius: 22px;
+            overflow: hidden;
+            text-align: left;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+        }
+        .client-card:hover,
+        .client-card:focus-visible {
+            transform: translateY(-4px);
+            border-color: rgba(227, 188, 74, 0.42);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+        }
+        .client-photo {
+            aspect-ratio: 16 / 10;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .client-photo::after {
+            content: attr(data-badge);
+            position: absolute;
+            left: 12px; bottom: 12px;
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+            color: #14100a;
+            font-size: 0.7rem;
+            font-weight: 750;
+            letter-spacing: 0.02em;
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+        }
+        .client-body {
+            padding: 1.25rem 1.4rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .client-body h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.015em;
+        }
+        .client-where {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+        .client-body p {
+            font-size: 0.94rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin: 0 0 0.9rem;
+        }
+        .client-result {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.86rem;
+            font-weight: 650;
+            color: var(--ok);
+            margin-bottom: 1rem;
+        }
+        .client-link {
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.9rem;
+            font-weight: 650;
+            color: var(--gold-light);
+        }
+
+        /* --- FAQ: real buttons, no clipped answers --- */
+        .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 650;
+            color: var(--text-primary);
+            text-align: left;
+            cursor: pointer;
+            padding: 0;
+            min-height: 44px;
+        }
+        .faq-question i { color: var(--gold); flex-shrink: 0; }
+        .faq-answer {
+            max-height: none;
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.28s ease;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.97rem;
+        }
+        .faq-answer > div { overflow: hidden; }
+        .faq-item.active .faq-answer {
+            grid-template-rows: 1fr;
+            margin-top: 0.75rem;
+            max-height: none;
+        }
+        .faq-item { cursor: default; }
+
+        /* --- Contact --- */
+        .contact-info-card a { font-weight: 600; color: var(--gold-light); }
+        .contact-info-card { min-height: 64px; }
+
+        /* --- Sticky mobile call-to-action --- */
+        .mobile-cta {
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            z-index: 900;
+            display: none;
+            gap: 0.6rem;
+            padding: 0.7rem 0.9rem calc(0.7rem + env(safe-area-inset-bottom));
+            background: rgba(8, 10, 16, 0.93);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-top: 1px solid var(--line-soft);
+        }
+        .mobile-cta .btn { flex: 1; margin: 0; min-height: 50px; font-size: 0.97rem; }
+        @media (max-width: 760px) {
+            body.show-mobile-cta .mobile-cta { display: flex; }
+        }
+
+        /* --- Panels: calmer --- */
+        .flow-panel {
+            border-radius: 22px;
+            border-color: var(--line-soft);
+            box-shadow: none;
+        }
+        .flow-list-item i { color: var(--gold); }
+        .bottom-actions {
+            border-radius: 24px;
+            padding: 1.75rem 2rem;
+            background: var(--panel-strong);
+            border-color: var(--line-soft);
+            gap: 1.1rem;
+        }
+        .bottom-actions p { color: var(--text-secondary); max-width: 34rem; }
+        .free-banner { animation: none; font-size: 0.86rem; }
+
+        /* --- Footer --- */
+        footer { margin-top: 3rem; }
+        .footer-col h4 { color: var(--gold); font-size: 0.95rem; letter-spacing: 0.02em; }
+        .footer-col p, .footer-col a { color: var(--text-secondary); font-size: 0.92rem; }
+        .footer-col a:hover { color: var(--gold-light); }
+
+        /* --- Mobile --- */
+        @media (max-width: 900px) {
+            body { font-size: 16.5px; }
+            .nav-links a { font-size: 1rem; padding: 0.9rem 1rem; }
+            .btn-nav { display: none; }
+        }
+        @media (max-width: 700px) {
+            .hero { padding-bottom: 9rem; }
+            .dir-grid { grid-template-columns: 1fr; }
+            .filter-btn { padding: 0.5rem 0.85rem; font-size: 0.85rem; }
+            .filter-buttons { gap: 0.4rem; }
+            /* Page body and section padding stack on a phone and were
+               leaving text columns far too narrow. */
+            .page-body { padding: 0 1rem 1.5rem; }
+            .section-flow { padding: 2.25rem 0.85rem; }
+            .step { grid-template-columns: 38px 1fr; gap: 0.85rem; padding: 1.1rem 1rem; }
+            .step-num { width: 38px; height: 38px; }
+            .fact { padding: 1.2rem 1.15rem; }
+            .flow-block, .flow-list-item, .testimonial-row, .contact-info-card { padding-left: 1.15rem; padding-right: 1.15rem; }
+            .step-num { width: 40px; height: 40px; font-size: 1rem; }
+            .bottom-actions { padding: 1.4rem 1.25rem; max-width: 100%; }
+            .dir-group-head { grid-template-columns: 1fr; }
+            body.show-mobile-cta footer { padding-bottom: 6.5rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .preloader, .preloader-content { animation: none !important; transition: none !important; }
+        }
+
     </style>
 </head>
 <body>
+
+<div id="page-background" class="page-bg-home" aria-hidden="true">
+    <div class="page-bg-pattern"></div>
+</div>
 
 <!-- FULLSCREEN PRELOADER WITH LOGO ONLY -->
 <div class="preloader" id="preloader">
@@ -1023,231 +2575,504 @@
     </div>
 </div>
 
-<nav id="mainNav">
-    <span class="logo">PATHWAY</span>
-    <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
-    <div class="nav-links" id="navLinks">
-        <a href="#" data-page="home" class="active">Home</a>
-        <a href="#" data-page="about">About</a>
-        <a href="#" data-page="services">Services</a>
-        <a href="#" data-page="portfolio">Portfolio</a>
-        <a href="#" data-page="contact">Contact</a>
+<script>
+    // If the main script has not booted within 3s, drop the reveal
+    // animations and show the page as plain content.
+    window.__pathwayBoot = setTimeout(function () {
+        document.documentElement.classList.add('force-visible');
+        var preloader = document.getElementById('preloader');
+        if (preloader) preloader.style.display = 'none';
+        var nav = document.getElementById('mainNav');
+        if (nav) nav.classList.add('visible');
+    }, 3000);
+</script>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="mainNav">
+    <a href="#" class="logo" data-page="home"><span>Pathway</span></a>
+    <div class="nav-pill" id="navPill">
+        <div class="nav-links" id="navLinks">
+            <a href="#" data-page="home" class="active">Home</a>
+            <a href="#" data-page="about">About</a>
+            <a href="#" data-page="services">Services</a>
+            <a href="#" data-page="portfolio">Portfolio</a>
+            <a href="#" data-page="contact">Contact</a>
+        </div>
     </div>
-    <div class="translate-container">
-        <div id="google_translate_element"></div>
+    <div class="nav-actions">
+        <div class="translate-container">
+            <div class="lang-menu" id="langMenu">
+                <button type="button" class="lang-toggle" id="langToggle" aria-expanded="false" aria-haspopup="true">
+                    <i class="fas fa-globe"></i> <span id="langToggleLabel">EN</span> <i class="fas fa-chevron-down" style="font-size: 0.65rem; opacity: 0.7;"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown" role="menu">
+                    <button type="button" class="lang-option active" data-lang="en" data-label="EN">English</button>
+                    <button type="button" class="lang-option" data-lang="es" data-label="ES">Español</button>
+                    <button type="button" class="lang-option" data-lang="zh-CN" data-label="中文">中文 (简体)</button>
+                    <button type="button" class="lang-option" data-lang="zh-TW" data-label="繁體">中文 (繁體)</button>
+                    <button type="button" class="lang-option" data-lang="vi" data-label="VI">Tiếng Việt</button>
+                    <button type="button" class="lang-option" data-lang="tl" data-label="TL">Filipino</button>
+                    <button type="button" class="lang-option" data-lang="ko" data-label="KO">한국어</button>
+                    <button type="button" class="lang-option" data-lang="ja" data-label="JA">日本語</button>
+                    <button type="button" class="lang-option" data-lang="fr" data-label="FR">Français</button>
+                    <button type="button" class="lang-option" data-lang="de" data-label="DE">Deutsch</button>
+                    <button type="button" class="lang-option" data-lang="pt" data-label="PT">Português</button>
+                    <button type="button" class="lang-option" data-lang="ru" data-label="RU">Русский</button>
+                    <button type="button" class="lang-option" data-lang="ar" data-label="AR">العربية</button>
+                    <button type="button" class="lang-option" data-lang="hi" data-label="HI">हिन्दी</button>
+                </div>
+            </div>
+            <div id="google_translate_element"></div>
+        </div>
+        <a href="#" class="btn-nav" data-page="contact">Get started</a>
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
     </div>
-</nav>
+</header>
+
+<main id="main">
 
 <!-- HOME PAGE -->
 <div id="home-page" class="page active-page">
-    <div class="container">
-        <div class="hero-ambient"></div>
-        <div data-aos="fade-up">
-            <h2 style="font-size: 4rem; margin-top: 0.5rem;">PATHWAY</h2>
-            <p style="font-size: 1.3rem; margin-bottom: 1rem; color: #d4af37;">Empowering immigrant-owned businesses</p>
-            <h1 style="font-size: 2.8rem; margin-bottom: 1rem;">Your family's legacy <br>deserves a digital future</h1>
-            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 2rem auto; color: #bcc6d4;">Pathway helps immigrant-owned businesses gain <strong>more customers, more visibility, and real growth for free</strong> — with full ownership.</p>
-            <div>
-                <a href="#" class="btn" data-page="services">Get More Customers →</a>
-                <a href="#" class="btn btn-outline" data-page="services">Explore Services</a>
+    <section class="hero">
+        <div class="hero-globe-wrap">
+            <canvas id="hero-globe-canvas"></canvas>
+        </div>
+        <div class="hero-fade"></div>
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-gift"></i> Free for the first 20 businesses</div>
+            <h1>Your business deserves to be found.</h1>
+            <p class="hero-sub">We build your website, put you on Google Maps, and run your social media. You own all of it. It costs you nothing.</p>
+            <div class="hero-cta">
+                <a href="#" class="btn btn-primary" data-page="contact">Get started — it's free</a>
+                <a href="#" class="btn btn-secondary" data-page="services">See how it works</a>
             </div>
-            <div class="hero-trust">
-                <span class="stars">★★★★★</span>
-                <span class="hero-trust-divider">|</span>
-                <span>Trusted by immigrant-owned businesses in the Bay Area</span>
-                <span class="hero-trust-divider">|</span>
-                <span>100% Free for first 20 businesses</span>
+            <p class="hero-note">No contracts. No fees. <strong>You keep everything.</strong></p>
+        </div>
+        <div class="hero-trust-bar">
+            <span class="trust-label">We help you grow on</span>
+            <div class="trust-logos">
+                <span><i class="fab fa-google"></i> Google</span>
+                <span><i class="fab fa-instagram"></i> Instagram</span>
+                <span><i class="fab fa-tiktok"></i> TikTok</span>
+                <span><i class="fas fa-globe"></i> Your Website</span>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container" style="margin-top: 3rem;">
-        <div class="grid-2" data-aos="fade-up">
-            <div class="card"><i class="fas fa-frown" style="font-size: 2rem; color: #e34d4d;"></i><h3>The Problem</h3><p>Immigrant-owned businesses are overlooked. Without support, they close — not because of poor quality, but lack of visibility and customers.</p></div>
-            <div class="card"><i class="fas fa-chart-line" style="font-size: 2rem; color: #d4af37;"></i><h3>The Result</h3><p><strong>More customers, higher revenue, lasting visibility.</strong> We've helped 30+ businesses grow an average of 150% in foot traffic and online engagement.</p></div>
+    <div class="home-sections">
+
+    <section class="section-flow">
+        <div class="section-header">
+            <span class="eyebrow" data-reveal="line">How it works</span>
+            <h2 data-reveal="line">Four steps. That's the whole thing.</h2>
+            <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">You talk to us once. We do the work. You get the customers.</p>
         </div>
-    </div>
-
-    <div class="container">
-        <h2 data-aos="fade-up">What we do</h2>
-        <div class="services-clarify" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-simple"><i class="fas fa-chart-line"></i><h3>Websites</h3><p>Custom sites that bring in customers</p></div>
-            <div class="service-simple"><i class="fas fa-map-marker-alt"></i><h3>Google visibility</h3><p>Get found when people search nearby</p></div>
-            <div class="service-simple"><i class="fab fa-instagram"></i><h3>Social media</h3><p>Instagram + TikTok that grows your audience</p></div>
-            <div class="service-simple"><i class="fas fa-chart-simple"></i><h3>Growth tracking</h3><p>See exactly how many new customers we bring</p></div>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2 data-aos="fade-up">What makes Pathway different</h2>
-        <div class="differentiator-grid" data-aos="fade-up" data-aos-delay="150">
-            <div class="differentiator-card"><i class="fas fa-home" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">You own everything</h3><p>Full access to your website, social accounts, and data</p></div>
-            <div class="differentiator-card"><i class="fas fa-hand-peace" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">No lock-in</h3><p>Leave anytime — everything stays yours</p></div>
-            <div class="differentiator-card"><i class="fas fa-bullseye" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">Real results</h3><p>We focus on customers and visibility, not vanity metrics</p></div>
-            <div class="differentiator-card"><i class="fas fa-hand-holding-heart" style="font-size: 2rem; color: #d4af37;"></i><h3 style="margin-top: 0.5rem;">Built for immigrant businesses</h3><p>We understand your challenges because we've lived them</p></div>
-        </div>
-    </div>
-
-    <div class="global-reach" data-aos="fade-up">
-        <div class="container">
-            <div class="reach-text">
-                <h2>🌍 Global Impact</h2>
-                <p>Each glowing marker = a business we've helped gain real customers. Hover over any point to see the business name, then click to visit their website.</p>
-                <div class="stats-row" id="statsRow">
-                    <div class="stat-item"><div class="stat-number" id="statBusinesses">0</div><div class="stat-label">Businesses Supported</div></div>
-                    <div class="stat-item"><div class="stat-number" id="statCountries">0</div><div class="stat-label">Customer Views</div></div>
-                    <div class="stat-item"><div class="stat-number" id="statCustomers">0</div><div class="stat-label">New Customers Reached</div></div>
+        <div class="steps" data-reveal="glass-up" data-reveal-stagger>
+            <div class="step">
+                <div class="step-num">1</div>
+                <div>
+                    <h3>We talk for 20 minutes</h3>
+                    <p>Tell us what your business does and who you want to reach. In any language you are comfortable with.</p>
                 </div>
             </div>
-            <div class="globe-wrapper">
+            <div class="step">
+                <div class="step-num">2</div>
+                <div>
+                    <h3>We build your website</h3>
+                    <p>A real website with your own address, like yourbusiness.com. Ready in about 7 to 10 days.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div>
+                    <h3>We put you on the map</h3>
+                    <p>Google Maps, Instagram, TikTok — set up properly so people nearby can actually find you.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div>
+                    <h3>We hand you the keys</h3>
+                    <p>Every password, every account, every photo is yours. Leave whenever you want and keep all of it.</p>
+                    <span class="step-tag"><i class="fas fa-check"></i> Free for the first 20 businesses</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-flow">
+        <div class="section-header">
+            <span class="eyebrow" data-reveal="line">What you get</span>
+            <h2 data-reveal="line">Everything a customer needs to find you</h2>
+            <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Four things, done properly, at no cost to you.</p>
+        </div>
+        <div class="facts" data-reveal="glass-up" data-reveal-stagger>
+            <div class="fact">
+                <i class="fas fa-globe"></i>
+                <h3>A real website</h3>
+                <p>Works on phones. Shows your hours, menu, prices and photos. Open 24 hours a day.</p>
+            </div>
+            <div class="fact">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Google Maps</h3>
+                <p>So you show up when someone nearby searches for what you sell.</p>
+            </div>
+            <div class="fact">
+                <i class="fab fa-instagram"></i>
+                <h3>Instagram &amp; TikTok</h3>
+                <p>Posts every week that bring new people through your door.</p>
+            </div>
+            <div class="fact">
+                <i class="fas fa-chart-line"></i>
+                <h3>Plain numbers</h3>
+                <p>How many people visited, called, or asked for directions. No jargon.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-flow section-wide">
+        <div class="section-header">
+            <span class="eyebrow" data-reveal="line">Our work</span>
+            <h2 data-reveal="line">Businesses we built for</h2>
+            <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Three immigrant-owned businesses. Three websites we built and handed over.</p>
+        </div>
+        <div class="client-grid" id="homeFeatured" data-reveal="glass-up" data-reveal-stagger></div>
+        <div style="margin-top: 1.75rem;" data-reveal="glass-up" data-reveal-delay="150">
+            <a href="#" class="btn btn-secondary" data-page="portfolio"><i class="fas fa-list"></i> See the full directory</a>
+        </div>
+    </section>
+
+    <section class="section-flow">
+        <div class="section-header">
+            <span class="eyebrow" data-reveal="line">The straight answer</span>
+            <h2 data-reveal="line">Why free?</h2>
+        </div>
+        <div class="flow-panel" data-reveal="glass-glow">
+            <div class="flow-block">
+                <p>Pathway is new. We are building our first 20 case studies, and we would rather build them with businesses that need the help than with businesses that can already afford it.</p>
+                <p style="margin-top: 1rem;">So the first 20 owners pay nothing, sign nothing, and owe nothing. If the work is good, you tell your neighbours. That is the whole business model.</p>
+                <p style="margin-top: 1rem; color: var(--gold-light); font-weight: 500;">There is no upsell later. You keep the website either way.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-flow" style="padding-top: 2rem; padding-bottom: 1rem;">
+    <div class="global-reach" data-reveal="glass-scale">
+        <div class="container">
+            <div class="reach-text">
+                <span class="eyebrow">Where we work</span>
+                <h2 data-reveal="line">On the map</h2>
+                <p data-reveal="glass-up" data-reveal-delay="150">Every glowing marker is a business we built a website for. Hover to see the name, click to visit their site.</p>
+                <div class="numbers" id="statsRow" style="max-width: none; margin-top: 1.5rem;">
+                    <div class="number-cell" data-reveal="pop" data-reveal-delay="200"><b id="statBusinesses">3</b><span>Websites built and handed over</span></div>
+                    <div class="number-cell" data-reveal="pop" data-reveal-delay="320"><b id="statCountries">0</b><span>Businesses in our directory</span></div>
+                    <div class="number-cell" data-reveal="pop" data-reveal-delay="440"><b>$0</b><span>What it costs the owner</span></div>
+                </div>
+            </div>
+            <div class="globe-wrapper" data-reveal="glass-right" data-reveal-delay="250">
                 <canvas id="globe-canvas"></canvas>
             </div>
         </div>
     </div>
+    </section>
 
-    <div class="container" data-aos="fade-up">
-        <h2>Real results, real families</h2>
-        <div class="testimonials-grid" id="homeTestimonials"></div>
-    </div>
-
-    <div class="bottom-actions" data-aos="fade-up">
-        <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
-        <div class="bottom-buttons">
-            <a href="#" class="btn" data-page="contact"><i class="fas fa-envelope"></i> Contact Us</a>
-            <a href="#" class="btn btn-outline" data-page="services">View Services</a>
+    <section class="section-flow">
+        <div class="section-header">
+            <span class="eyebrow" data-reveal="line">In their words</span>
+            <h2 data-reveal="line">What owners say</h2>
         </div>
+        <div class="flow-panel" data-reveal="glass-glow">
+            <div class="testimonials-grid" id="homeTestimonials" data-reveal="glass-up" data-reveal-stagger></div>
+        </div>
+    </section>
+
+    <section class="section-flow">
+        <div class="bottom-actions" data-reveal="glass-up" data-reveal-delay="100">
+            <p>Ready when you are. One short conversation, and we start building.</p>
+            <div class="bottom-buttons">
+                <a href="#" class="btn btn-primary" data-page="contact">Get started — it's free</a>
+                <a href="#" class="btn btn-secondary" data-page="services">See how it works</a>
+            </div>
+        </div>
+    </section>
     </div>
 </div>
 
 <!-- ABOUT PAGE -->
 <div id="about-page" class="page">
-    <div class="container" style="max-width: 1300px;">
-        <h2 data-aos="fade-up">Our Mission</h2>
-        <div class="mission-block" data-aos="fade-up">
-            <div class="mission-tagline">Help immigrant-owned businesses grow.</div>
-            <p>We bring visibility and support to immigrant-owned businesses by creating a connected community of businesses that everyone can support. The focus is measurable outcomes—more customers, stronger revenue, and sustained visibility across that network.</p>
-        </div>
-        
-        <div class="origin-story" data-aos="fade-up" data-aos-delay="100">
-            <h3>Why I started Pathway</h3>
-            <p>When I was in middle school, my friends and I spent hours at a small local restaurant. It was our spot — warm, welcoming, full of community. We felt at home there.</p>
-            <p style="margin-top: 1rem;">As we grew older, that place quietly shut down. Not because the food was bad. Not because the owner didn't care. It closed because it lacked visibility and support. No one knew it was there.</p>
-            <p style="margin-top: 1rem; font-weight: 500; color: #d4af37;">That loss inspired Pathway. No business should disappear simply because people can't find it.</p>
-        </div>
-        
-        <h2 data-aos="fade-up" data-aos-delay="350">Our values</h2>
-        <div class="values-list" data-aos="fade-up" data-aos-delay="400">
-            <span class="value-badge"><i class="fas fa-key"></i> Ownership — you keep everything</span>
-            <span class="value-badge"><i class="fas fa-eye"></i> Transparency — no hidden terms</span>
-            <span class="value-badge"><i class="fas fa-users"></i> Community — supporting local businesses</span>
-            <span class="value-badge"><i class="fas fa-chart-line"></i> Results — measurable growth only</span>
-        </div>
-        
-        <h2 data-aos="fade-up" data-aos-delay="550">Looking ahead</h2>
-        <div class="forward-statement" data-aos="fade-up" data-aos-delay="600">
-            <i class="fas fa-tree" style="font-size: 2rem; color: #d4af37;"></i>
-            <h3 style="margin: 0.5rem 0;">Building toward the future</h3>
-            <p>Expanding support to more immigrant-owned businesses. Creating a connected network of local businesses that lift each other up.</p>
-        </div>
-        
-        <div class="bottom-actions" style="margin-top: 1rem;" data-aos="fade-up">
-            <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
-            <div class="bottom-buttons">
-                <a href="#" class="btn" data-page="contact"><i class="fas fa-comment"></i> Tell me your story</a>
-                <a href="#" class="btn btn-outline" data-page="services">How we help</a>
+    <div class="page-body">
+
+        <section class="section-flow">
+            <div class="section-header">
+                <h2 data-reveal="line">Our Mission</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Help immigrant-owned businesses grow with visibility, community, and measurable results.</p>
             </div>
-        </div>
+            <div class="flow-panel" data-reveal="glass-glow">
+                <div class="flow-block">
+                    <p>We bring visibility and support to immigrant-owned businesses by creating a connected community of businesses that everyone can support. The focus is measurable outcomes—more customers, stronger revenue, and sustained visibility across that network.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-flow">
+            <div class="section-header">
+                <h2 data-reveal="line">Why I started Pathway</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">A personal story that became a mission.</p>
+            </div>
+            <div class="flow-panel" data-reveal="glass-left">
+                <div class="flow-block">
+                    <p>When I was in middle school, my friends and I spent hours at a small local restaurant. It was our spot — warm, welcoming, full of community. We felt at home there.</p>
+                    <p style="margin-top: 1rem;">As we grew older, that place quietly shut down. Not because the food was bad. Not because the owner didn't care. It closed because it lacked visibility and support. No one knew it was there.</p>
+                    <p style="margin-top: 1rem; font-weight: 500; color: var(--gold-light);">That loss inspired Pathway. No business should disappear simply because people can't find it.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-flow">
+            <div class="section-header">
+                <h2 data-reveal="line">Our values</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">What guides every decision we make for the businesses we serve.</p>
+            </div>
+            <div class="flow-panel" data-reveal="glass-glow" data-reveal-stagger>
+                <div class="flow-list-item"><i class="fas fa-key"></i><div><h3>Ownership</h3><p>You keep everything — your website, accounts, and data.</p></div></div>
+                <div class="flow-list-item"><i class="fas fa-eye"></i><div><h3>Transparency</h3><p>No hidden terms, no surprises.</p></div></div>
+                <div class="flow-list-item"><i class="fas fa-users"></i><div><h3>Community</h3><p>Supporting local businesses that lift each other up.</p></div></div>
+                <div class="flow-list-item"><i class="fas fa-chart-line"></i><div><h3>Results</h3><p>Measurable growth only — customers and visibility.</p></div></div>
+            </div>
+        </section>
+
+        <section class="section-flow">
+            <div class="section-header">
+                <h2 data-reveal="line">Looking ahead</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Building a connected network of immigrant-owned businesses.</p>
+            </div>
+            <div class="flow-panel" data-reveal="glass-right">
+                <div class="flow-block">
+                    <h3>Building toward the future</h3>
+                    <p>Expanding support to more immigrant-owned businesses. Creating a connected network of local businesses that lift each other up.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-flow">
+            <div class="bottom-actions" data-reveal="glass-up">
+                <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
+                <div class="bottom-buttons">
+                    <a href="#" class="btn btn-primary" data-page="contact"><i class="fas fa-comment"></i> Tell me your story</a>
+                    <a href="#" class="btn btn-secondary" data-page="services">How we help</a>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 
 <!-- SERVICES PAGE -->
 <div id="services-page" class="page">
-    <div class="container">
-        <div data-aos="fade-up">
-            <h2>We build, you own.</h2>
-            <div class="section-sub">Clear steps. Measurable results: <strong>more customers, higher visibility, full control. Everything is completely free for the first 20 business owners.</strong></div>
-            <div class="free-banner"><i class="fas fa-gift"></i> 100% FREE FOR FIRST 20 BUSINESSES — NO HIDDEN FEES</div>
-        </div>
+    <div class="page-body">
+        <section class="section-flow">
+            <div class="section-header">
+                <span class="eyebrow" data-reveal="line">How it works</span>
+                <h2 data-reveal="line">We build it. You own it.</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Here is exactly what happens, in order, with no surprises at the end.</p>
+                <div class="free-banner" data-reveal="glass-scale" data-reveal-delay="200"><i class="fas fa-gift"></i> Free for the first 20 businesses — no hidden fees</div>
+            </div>
+            <div class="steps" data-reveal="glass-up" data-reveal-stagger>
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3>A 20-minute conversation</h3>
+                        <p>You tell us what your business does, who your customers are, and what you wish more people knew about you. Bring a family member to translate if that is easier — or use the language button at the top of this site.</p>
+                        <span class="step-tag"><i class="fas fa-check"></i> Costs you nothing</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3>Your Google listing, fixed</h3>
+                        <p>Correct hours, correct address, real photos, the right category. This is the single biggest reason people walk past a good business — they never saw it on the map.</p>
+                        <span class="step-tag"><i class="fas fa-check"></i> Usually live within a week</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3>A real website</h3>
+                        <p>Your own address, like yourbusiness.com. It works on a phone, loads fast, and shows your hours, menu or services, photos, and a button to call you. Ready in about 7 to 10 days.</p>
+                        <span class="step-tag"><i class="fas fa-check"></i> Yours to keep, forever</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div>
+                        <h3>Instagram and TikTok</h3>
+                        <p>We set up the accounts properly and post for you every week — photos of your food, your work, your shop. You approve anything you want to approve.</p>
+                        <span class="step-tag"><i class="fas fa-check"></i> No posting quota you have to hit</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">5</div>
+                    <div>
+                        <h3>Plain numbers, once a month</h3>
+                        <p>How many people saw you, visited the site, tapped to call, or asked for directions. One page, plain words, no dashboards to learn.</p>
+                        <span class="step-tag"><i class="fas fa-check"></i> In your language if you prefer</span>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">6</div>
+                    <div>
+                        <h3>We hand you every password</h3>
+                        <p>Google account, website, Instagram, TikTok, photos. All of it in your name from day one. If you want to stop working with us, you stop — and you keep everything.</p>
+                        <span class="step-tag"><i class="fas fa-check"></i> No contract to sign, ever</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="service-trail" data-aos="fade-up" data-aos-delay="150">
-            <div class="trail-step" data-aos="fade-right"><h3>📌 Step 1: Google Maps Dominance</h3><p>We optimize your Google Business Profile, add premium photos, and help you rank #1 in your category. <strong>Result: 200% more local customers. (FREE)</strong></p></div>
-            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
-            <div class="trail-step" data-aos="fade-right"><h3>🌐 Step 2: Professional Website (Real Domain)</h3><p>Custom website with real URL like <strong>yourbusiness.com</strong> (free for first 20). We communicate with you and your customers on design preferences. <strong>Result: 24/7 customer acquisition. (FREE)</strong></p></div>
-            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
-            <div class="trail-step" data-aos="fade-right"><h3>📱 Step 3: Social Media Engine (IG + TikTok)</h3><p>We create and manage your Instagram & TikTok — video or slideshows, posted weekly. We discuss content strategies with you and your customers. <strong>Result: 10k+ reach per month. (FREE)</strong></p></div>
-            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
-            <div class="trail-step" data-aos="fade-right"><h3>📊 Step 4: Track Growth Dashboard</h3><p>Live data: website visits, calls, map clicks, social shares through Google Business Profile and social analytics. <strong>Result: You know exactly how many new customers we bring. (FREE)</strong></p></div>
-            <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
-            <div class="trail-step" data-aos="fade-right"><h3>✅ You Own Everything. No lock-ins.</h3><p>Full access to all accounts. If you leave, we respect your decision. <strong>Result: Peace of mind + real growth.</strong></p></div>
-        </div>
-    </div>
-    <div class="bottom-actions" data-aos="fade-up">
-        <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
-        <div class="bottom-buttons">
-            <a href="#" class="btn" data-page="contact"><i class="fas fa-calendar-check"></i> Start your growth</a>
-            <a href="#" class="btn btn-outline" data-page="portfolio">See success stories</a>
-        </div>
+        <section class="section-flow">
+            <div class="section-header">
+                <span class="eyebrow" data-reveal="line">Your part</span>
+                <h2 data-reveal="line">What we need from you</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Not much. Most owners spend under two hours total.</p>
+            </div>
+            <div class="facts" data-reveal="glass-up" data-reveal-stagger>
+                <div class="fact">
+                    <i class="fas fa-clock"></i>
+                    <h3>One conversation</h3>
+                    <p>Twenty minutes, in person, on the phone, or on video.</p>
+                </div>
+                <div class="fact">
+                    <i class="fas fa-camera"></i>
+                    <h3>Some photos</h3>
+                    <p>Of your food, your shop, your work. Phone photos are fine — we can also come take them.</p>
+                </div>
+                <div class="fact">
+                    <i class="fas fa-list-check"></i>
+                    <h3>Your basics</h3>
+                    <p>Hours, address, phone number, and your prices or menu.</p>
+                </div>
+                <div class="fact">
+                    <i class="fas fa-thumbs-up"></i>
+                    <h3>One yes</h3>
+                    <p>A quick look at the site before it goes live. That is it.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-flow">
+            <div class="bottom-actions" data-reveal="glass-up">
+                <p>The first 20 businesses pay nothing and sign nothing. There are still spots open.</p>
+                <div class="bottom-buttons">
+                    <a href="#" class="btn btn-primary" data-page="contact">Get started — it's free</a>
+                    <a href="#" class="btn btn-secondary" data-page="portfolio">See the businesses</a>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 
 <!-- PORTFOLIO PAGE -->
 <div id="portfolio-page" class="page">
-    <div class="container">
-        <h2 data-aos="fade-up">Successful Businesses</h2>
-        <p class="section-sub" data-aos="fade-up">Explore the immigrant-owned businesses we've helped, serving their communities with excellence.</p>
-        <div class="filter-buttons" data-aos="fade-up" data-aos-delay="50" id="filterButtons">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="childcare">Childcare</button>
-            <button class="filter-btn" data-filter="wellness">Wellness</button>
-            <button class="filter-btn" data-filter="wellness">More Businesses coming soon!</button>
-        </div>
-        <div class="portfolio-grid" id="portfolioGrid" data-aos="fade-up" data-aos-delay="150"></div>
-    </div>
-    <div class="bottom-actions" data-aos="fade-up">
-        <p><i class="fas fa-heart" style="color: #d4af37;"></i> Begin your personal journey with us – we're here to support you. <strong>Everything is free for the first 20 businesses.</strong></p>
-        <div class="bottom-buttons">
-            <a href="#" class="btn" data-page="contact"><i class="fas fa-star"></i> Become our next success</a>
-            <a href="#" class="btn btn-outline" data-page="services">View our process</a>
-        </div>
+    <div class="page-body" style="max-width: 1200px;">
+        <section class="section-flow section-wide">
+            <div class="section-header">
+                <span class="eyebrow" data-reveal="line">Directory</span>
+                <h2 data-reveal="line">The businesses</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">The sites we built, the local businesses we send customers to, and examples of good small-business sites. Search or tap a group.</p>
+            </div>
+
+            <div class="dir-tools" data-reveal="glass-up" data-reveal-delay="140">
+                <div class="dir-search">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <label class="sr-only" for="dirSearch">Search businesses</label>
+                    <input type="search" id="dirSearch" placeholder="Search name, area, or type…" autocomplete="off">
+                </div>
+                <div class="filter-buttons" id="filterButtons" role="group" aria-label="Filter businesses">
+                    <button type="button" class="filter-btn active" data-filter="all">All</button>
+                    <button type="button" class="filter-btn" data-filter="pathway">Built by Pathway</button>
+                    <button type="button" class="filter-btn" data-filter="sf">San Francisco</button>
+                    <button type="button" class="filter-btn" data-filter="example">More examples</button>
+                </div>
+                <p class="dir-count" id="dirCount" aria-live="polite"></p>
+            </div>
+
+            <div id="dirResults"></div>
+        </section>
+
+        <section class="section-flow">
+            <div class="bottom-actions" data-reveal="glass-up">
+                <p>Want your business on this list? We build it, you own it, and it costs you nothing.</p>
+                <div class="bottom-buttons">
+                    <a href="#" class="btn btn-primary" data-page="contact">Get started — it's free</a>
+                    <a href="#" class="btn btn-secondary" data-page="services">See how it works</a>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 
 <!-- CONTACT PAGE -->
 <div id="contact-page" class="page">
-    <div class="container">
-        <div data-aos="fade-up">
-            <div class="contact-header-row">
-                <h2>Ready to get more customers?</h2>
-                <div class="free-banner"><i class="fas fa-gift"></i> FIRST 20 BUSINESSES GET EVERYTHING FREE</div>
+    <div class="page-body">
+
+        <section class="section-flow">
+            <div class="section-header">
+                <h2 data-reveal="line">Ready to get more customers?</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Schedule a free consultation — we'll respond within 24 hours.</p>
+                <div class="free-banner" data-reveal="glass-scale" data-reveal-delay="200"><i class="fas fa-gift"></i> FIRST 20 BUSINESSES GET EVERYTHING FREE</div>
             </div>
-            <div class="card" style="max-width: 600px; margin: 2rem auto;" data-aos="fade-up" data-aos-delay="200">
-                <h3 style="color:#d4af37; margin-bottom: 0.8rem;">Get Support for Your Business</h3>
-                <i class="fas fa-calendar-check" style="font-size: 2.5rem; color: #d4af37;"></i>
-                <p style="margin: 1.5rem 0;">No vague promises. Just a clear plan to increase your visibility and bring new customers — <strong>completely free for the first 20 businesses</strong>. Schedule a free consultation and we'll respond within 24 hours.</p>
-                <a href="https://calendly.com/erkhesenkh9/new-meeting" target="_blank" rel="noopener noreferrer" class="btn" id="calendlyBtn"><i class="fas fa-calendar-alt"></i> Schedule Free Consultation</a>
+            <div class="flow-panel" data-reveal="glass-glow">
+                <div class="flow-block" style="text-align: center;">
+                    <i class="fas fa-calendar-check" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: Inter, sans-serif; color: var(--gold-light); margin-bottom: 0.8rem;">Get Support for Your Business</h3>
+                    <p style="margin-bottom: 1.5rem;">No vague promises. Just a clear plan to increase your visibility and bring new customers — <strong>completely free for the first 20 businesses</strong>.</p>
+                    <a href="https://calendly.com/erkhesenkh9/new-meeting" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="calendlyBtn"><i class="fas fa-calendar-alt"></i> Schedule Free Consultation</a>
+                </div>
             </div>
-            <h2 data-aos="fade-up" style="margin-top: 3rem;">Have questions or need help?</h2>
-            <div class="contact-info-grid" data-aos="fade-up" data-aos-delay="100">
-                <div class="contact-info-card"><i class="fab fa-instagram"></i><h3>Instagram</h3><a href="https://www.instagram.com/pathway_for_all" target="_blank" rel="noopener noreferrer">@pathway_for_all</a></div>
-                <div class="contact-info-card"><i class="fas fa-envelope"></i><h3>Email</h3><a href="mailto:pathwayforall9@gmail.com">pathwayforall9@gmail.com</a></div>
-                <div class="contact-info-card"><i class="fab fa-tiktok"></i><h3>TikTok</h3><a href="https://www.tiktok.com/@pathway384" target="_blank" rel="noopener noreferrer">@pathway384</a></div>
+        </section>
+
+        <section class="section-flow">
+            <div class="section-header">
+                <h2 data-reveal="line">Have questions or need help?</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Reach us directly — we're here for you.</p>
             </div>
-            <h2 data-aos="fade-up" style="margin-top: 3rem;">Frequently Asked Questions</h2>
-            <div class="faq-grid" data-aos="fade-up">
-                <div class="faq-item"><div class="faq-question">How is this free? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We're currently offering completely free services to the first 20 immigrant-owned businesses as part of our launch initiative. There are no hidden fees or future charges — you keep everything forever.</div></div>
-                <div class="faq-item"><div class="faq-question">Do I own my website and social accounts? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Yes! You get full administrative access to everything we create — your Google Business Profile, website, Instagram, TikTok, and all analytics. You can change anything anytime.</div></div>
-                <div class="faq-item"><div class="faq-question">What if I want to stop working with Pathway? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">You can leave anytime — no contracts, no hard feelings. Everything we built stays yours forever. We'd love to have you back if you ever need support again.</div></div>
-                <div class="faq-item"><div class="faq-question">What types of businesses do you help? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We specialize in immigrant-owned family businesses: restaurants, salons, daycare centers, retail shops, and service providers. If you have a physical location or local service, we can help you get more customers.</div></div>
-                <div class="faq-item"><div class="faq-question">How long does the process take? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Most businesses see results within 2-3 weeks. Website launch takes 7-10 days, and social media growth starts immediately. We work at your pace.</div></div>
+            <div class="flow-panel" data-reveal="glass-glow">
+                <div class="contact-info-grid" data-reveal="glass-up" data-reveal-stagger>
+                    <div class="contact-info-card"><i class="fab fa-instagram"></i><div><h3>Instagram</h3><a href="https://www.instagram.com/pathway_for_all" target="_blank" rel="noopener noreferrer">@pathway_for_all</a></div></div>
+                    <div class="contact-info-card"><i class="fas fa-envelope"></i><div><h3>Email</h3><a href="mailto:pathwayforall9@gmail.com">pathwayforall9@gmail.com</a></div></div>
+                    <div class="contact-info-card"><i class="fab fa-tiktok"></i><div><h3>TikTok</h3><a href="https://www.tiktok.com/@pathway384" target="_blank" rel="noopener noreferrer">@pathway384</a></div></div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section class="section-flow">
+            <div class="section-header">
+                <h2 data-reveal="line">Frequently Asked Questions</h2>
+                <p class="section-sub" data-reveal="glass-up" data-reveal-delay="120">Quick answers to common questions from business owners.</p>
+            </div>
+            <div class="flow-panel" data-reveal="glass-glow">
+                <div class="faq-grid" data-reveal="glass-up" data-reveal-stagger style="margin: 0; max-width: none;">
+                    <div class="faq-item"><div class="faq-question">How is this free? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We're currently offering completely free services to the first 20 immigrant-owned businesses as part of our launch initiative. There are no hidden fees or future charges — you keep everything forever.</div></div>
+                    <div class="faq-item"><div class="faq-question">Do I own my website and social accounts? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Yes! You get full administrative access to everything we create — your Google Business Profile, website, Instagram, TikTok, and all analytics. You can change anything anytime.</div></div>
+                    <div class="faq-item"><div class="faq-question">What if I want to stop working with Pathway? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">You can leave anytime — no contracts, no hard feelings. Everything we built stays yours forever. We'd love to have you back if you ever need support again.</div></div>
+                    <div class="faq-item"><div class="faq-question">What types of businesses do you help? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We specialize in immigrant-owned family businesses: restaurants, salons, daycare centers, retail shops, and service providers. If you have a physical location or local service, we can help you get more customers.</div></div>
+                    <div class="faq-item"><div class="faq-question">How long does the process take? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Most businesses see results within 2-3 weeks. Website launch takes 7-10 days, and social media growth starts immediately. We work at your pace.</div></div>
+                </div>
+            </div>
+        </section>
     </div>
+</div>
+
+</main>
+
+<div class="mobile-cta">
+    <a href="#" class="btn btn-primary" data-page="contact">Get started — it's free</a>
 </div>
 
 <!-- FOOTER -->
 <footer>
     <div class="footer-grid">
-        <div class="footer-col"><h4>PATHWAY</h4><p>Empowering immigrant entrepreneurs worldwide with clear results: more customers, more visibility.</p></div>
+        <div class="footer-col"><h4>PATHWAY</h4><p>We build websites, Google listings and social media for immigrant-owned businesses. You own all of it. Free for the first 20.</p></div>
         <div class="footer-col"><h4>Explore</h4><a href="#" data-page="home">Home</a><a href="#" data-page="about">About</a><a href="#" data-page="services">Services</a><a href="#" data-page="portfolio">Portfolio</a><a href="#" data-page="contact">Contact</a></div>
         <div class="footer-col">
             <h4>Connect</h4>
@@ -1261,12 +3086,11 @@
                 <a href="https://calendly.com/erkhesenkh9/new-meeting" target="_blank" rel="noopener noreferrer" title="Schedule a call"><i class="fas fa-calendar-alt"></i></a>
             </div>
         </div>
-        <div class="footer-col"><h4>Location</h4><p>Global remote team</p><p>Serving businesses worldwide</p></div>
+        <div class="footer-col"><h4>Where we work</h4><p>San Francisco Bay Area</p><p>Remote anywhere in the US</p></div>
     </div>
-    <div class="footer-bottom"><p>© 2025 Pathway — Every immigrant-owned business deserves to thrive. Built with empathy and purpose.</p></div>
+    <div class="footer-bottom"><p>© 2025 Pathway — Every immigrant-owned business deserves to be found.</p></div>
 </footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script type="text/javascript">
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
@@ -1277,7 +3101,9 @@
         }, 'google_translate_element');
     }
 </script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<!-- Deferred: a slow or blocked translate.google.com must never stop the
+     rest of the page from parsing. -->
+<script defer type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script type="importmap">
     {
@@ -1289,20 +3115,76 @@
 </script>
 
 <script type="module">
-    import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    // The globe is decorative. Load it out of band so a CDN failure costs
+    // us a decoration, not the whole page.
+    let THREE = {};
+    let OrbitControls = function () {};
+    const threeReady = (async () => {
+        const limit = (p) => Promise.race([
+            p,
+            new Promise((_, reject) => setTimeout(() => reject(new Error('timed out')), 6000))
+        ]);
+        try {
+            THREE = await limit(import('three'));
+            OrbitControls = (await limit(import('three/addons/controls/OrbitControls.js'))).OrbitControls;
+        } catch (err) {
+            console.warn('Globe unavailable:', err.message);
+            document.querySelectorAll('.hero-globe-wrap, .globe-wrapper')
+                .forEach(el => { el.style.display = 'none'; });
+            throw err;
+        }
+    })();
+    threeReady.catch(() => {});
     
-    // Initialize AOS with once: true so animations only happen once
-    AOS.init({ 
-        duration: 800, 
-        once: true,      // <-- THIS ENSURES ANIMATIONS ONLY HAPPEN ONCE
-        mirror: false, 
-        offset: 40, 
-        easing: 'ease-out-cubic' 
-    });
-    
+    // ========== SCROLL REVEAL SYSTEM ==========
+    let revealObserver = null;
+    let statsAnimated = false;
+
+    function initScrollReveal(root = document) {
+        if (revealObserver) revealObserver.disconnect();
+
+        revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                // Only animate elements on the currently visible page
+                if (!el.closest('.page.active-page')) return;
+                const delay = parseInt(el.getAttribute('data-reveal-delay') || '0', 10);
+                setTimeout(() => el.classList.add('is-visible'), delay);
+                revealObserver.unobserve(el);
+
+                if (el.id === 'statsRow' || el.closest('#statsRow')) {
+                    triggerStatsAnimation();
+                }
+            });
+        }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' });
+
+        const scope = root.classList?.contains('page') ? root : root.querySelector?.('.page.active-page') || root;
+        scope.querySelectorAll('[data-reveal]:not(.is-visible)').forEach(el => {
+            const delay = el.getAttribute('data-reveal-delay');
+            if (delay) el.style.setProperty('--reveal-delay', `${delay}ms`);
+            revealObserver.observe(el);
+        });
+    }
+
+    function triggerStatsAnimation() {
+        if (statsAnimated) return;
+        statsAnimated = true;
+        const businessCountElem = document.getElementById('statBusinesses');
+        const countryCountElem = document.getElementById('statCountries');
+        const customerCountElem = document.getElementById('statCustomers');
+        // Counts come from the real directory, so they stay true as it grows.
+        if (businessCountElem) animateCounter(businessCountElem, 3, 1400, false);
+        if (countryCountElem) {
+            const total = parseInt(countryCountElem.textContent, 10) || 0;
+            if (total) animateCounter(countryCountElem, total, 1400, false);
+        }
+        void customerCountElem;
+    }
+
     // Hide preloader and reveal content after a short delay
     window.addEventListener('load', () => {
+        clearTimeout(window.__pathwayBoot);
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
@@ -1313,11 +3195,15 @@
             }
             const nav = document.getElementById('mainNav');
             if (nav) nav.classList.add('visible');
-        }, 1000);
+            document.querySelector('.hero-content')?.classList.add('hero-visible');
+            document.querySelector('.hero-trust-bar')?.classList.add('is-visible');
+            initScrollReveal(document.querySelector('.page.active-page') || document.getElementById('home-page'));
+        }, 250);
     });
     
     // Counter Animation
-    function animateCounter(element, target, duration = 3800) {
+    function animateCounter(element, target, duration = 3800, plus = true) {
+        const suffix = plus ? '+' : '';
         let start = 0;
         const stepTime = 25;
         const steps = duration / stepTime;
@@ -1328,23 +3214,88 @@
             count++;
             current += increment;
             if (count >= steps) {
-                element.innerText = target.toLocaleString() + '+';
+                element.innerText = target.toLocaleString() + suffix;
                 clearInterval(timer);
             } else {
-                element.innerText = Math.floor(current).toLocaleString() + '+';
+                element.innerText = Math.floor(current).toLocaleString() + suffix;
             }
         }, stepTime);
     }
     
-    const businessCountElem = document.getElementById('statBusinesses');
-    const countryCountElem = document.getElementById('statCountries');
-    const customerCountElem = document.getElementById('statCustomers');
-    if (businessCountElem) {
-        animateCounter(businessCountElem, 2, 7000);
-        animateCounter(countryCountElem, 3000, 7000);
-        animateCounter(customerCountElem, 2000, 7000);
+    const statsRowEl = document.getElementById('statsRow');
+    if (statsRowEl && !statsAnimated) {
+        const statsObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                triggerStatsAnimation();
+                statsObserver.disconnect();
+            }
+        }, { threshold: 0.35 });
+        statsObserver.observe(statsRowEl);
     }
     
+    // Hero decorative globe (Fenvex-style monochrome)
+    const heroCanvas = document.getElementById('hero-globe-canvas');
+    if (heroCanvas && typeof THREE !== 'undefined') {
+        const initHeroGlobe = () => {
+            const parent = heroCanvas.parentElement;
+            if (!parent) return;
+            const size = Math.min(parent.clientWidth, parent.clientHeight) || 600;
+            if (size < 10) return;
+            try {
+                const renderer = new THREE.WebGLRenderer({ canvas: heroCanvas, alpha: true, antialias: true });
+                renderer.setSize(size, size);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 1000);
+                camera.position.set(0, 0.15, 2.8);
+                const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+                const earthMat = new THREE.MeshPhongMaterial({
+                    color: 0x8899aa,
+                    transparent: true,
+                    opacity: 0.35,
+                    shininess: 20,
+                    emissive: 0x223344,
+                    emissiveIntensity: 0.3
+                });
+                const earth = new THREE.Mesh(earthGeo, earthMat);
+                scene.add(earth);
+                const wireMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.06 });
+                const wireframe = new THREE.Mesh(new THREE.SphereGeometry(1.008, 48, 48), wireMat);
+                scene.add(wireframe);
+                const dotCount = 40;
+                const dotGeo = new THREE.BufferGeometry();
+                const dotPos = new Float32Array(dotCount * 3);
+                for (let i = 0; i < dotCount; i++) {
+                    const phi = Math.acos(2 * Math.random() - 1);
+                    const theta = 2 * Math.PI * Math.random();
+                    dotPos[i * 3] = 1.02 * Math.sin(phi) * Math.cos(theta);
+                    dotPos[i * 3 + 1] = 1.02 * Math.cos(phi);
+                    dotPos[i * 3 + 2] = 1.02 * Math.sin(phi) * Math.sin(theta);
+                }
+                dotGeo.setAttribute('position', new THREE.BufferAttribute(dotPos, 3));
+                const dots = new THREE.Points(dotGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.025, transparent: true, opacity: 0.7 }));
+                scene.add(dots);
+                scene.add(new THREE.AmbientLight(0x334455, 0.8));
+                const light = new THREE.DirectionalLight(0xffffff, 0.6);
+                light.position.set(2, 1, 3);
+                scene.add(light);
+                function animate() {
+                    requestAnimationFrame(animate);
+                    earth.rotation.y += 0.0015;
+                    wireframe.rotation.y += 0.0015;
+                    dots.rotation.y += 0.0015;
+                    renderer.render(scene, camera);
+                }
+                animate();
+                window.addEventListener('resize', () => {
+                    const s = Math.min(parent.clientWidth, parent.clientHeight) || 600;
+                    renderer.setSize(s, s);
+                });
+            } catch (e) { console.warn('Hero globe error:', e); }
+        };
+        threeReady.then(() => setTimeout(initHeroGlobe, 200)).catch(() => {});
+    }
+
     // Globe Setup
     const canvas = document.getElementById('globe-canvas');
     if(canvas && typeof THREE !== 'undefined') {
@@ -1415,7 +3366,8 @@
                 scene.add(mainLight);
                 const businessMarkers = [
                     { name: "Sunny Bay Daycare", lat: 37.7776, lng: -122.3893, url: "https://sunnybaydaycare.com", country: "USA" },
-                    { name: "Jenara Wellness", lat: 37.2946, lng: -121.9440, url: "https://jenarawellness.netlify.app", country: "USA" }
+                    { name: "Jenara Wellness", lat: 37.2946, lng: -121.9440, url: "https://jenarawellness.netlify.app", country: "USA" },
+                    { name: "Ben Blends", lat: 37.7749, lng: -122.4194, url: "https://benblends.netlify.app", country: "USA" }
                 ];
                 function latLngToVec(lat, lng, r=1.022) {
                     const phi = (90 - lat) * Math.PI/180;
@@ -1492,31 +3444,53 @@
                 console.warn('WebGL Globe error:', error);
             }
         };
-        setTimeout(initGlobe, 100);
+        threeReady.then(() => setTimeout(initGlobe, 100)).catch(() => {});
     }
     
     // Page Navigation
+    function setPageBackground(pageId) {
+        const bg = document.getElementById('page-background');
+        if (!bg) return;
+        bg.className = `page-bg-${pageId}`;
+    }
+
     const pages = ['home', 'about', 'services', 'portfolio', 'contact'];
     function showPage(pageId) {
+        // Jump to top instantly before the new page paints (no smooth scroll)
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
         pages.forEach(p => document.getElementById(`${p}-page`).classList.remove('active-page'));
-        document.getElementById(`${pageId}-page`).classList.add('active-page');
+        const newPage = document.getElementById(`${pageId}-page`);
+        newPage.classList.add('active-page');
+        setPageBackground(pageId);
         document.querySelectorAll('.nav-links a').forEach(link => {
             if(link.getAttribute('data-page') === pageId) link.classList.add('active');
             else link.classList.remove('active');
         });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        // Refresh AOS to ensure new page elements are animated
-        AOS.refresh();
+
+        // Reset scroll reveals on the incoming page so they play as you scroll down
+        newPage.querySelectorAll('[data-reveal].is-visible').forEach(el => {
+            el.classList.remove('is-visible');
+        });
+
+        // Re-bind observer after layout settles at scroll position 0
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                initScrollReveal(newPage);
+            });
+        });
     }
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             showPage(link.getAttribute('data-page'));
-            document.getElementById('navLinks')?.classList.remove('show');
+            document.getElementById('navPill')?.classList.remove('show');
         });
     });
     document.querySelectorAll('[data-page]').forEach(el => {
-        if(el.classList && (el.classList.contains('btn') || el.tagName === 'A')) {
+        if(el.classList && (el.classList.contains('btn') || el.classList.contains('btn-nav') || el.classList.contains('logo') || el.tagName === 'A')) {
             el.addEventListener('click', (e) => {
                 const page = el.getAttribute('data-page');
                 if(page) { e.preventDefault(); showPage(page); }
@@ -1524,7 +3498,7 @@
         }
     });
     document.getElementById('menuBtn')?.addEventListener('click', () => {
-        document.getElementById('navLinks')?.classList.toggle('show');
+        document.getElementById('navPill')?.classList.toggle('show');
     });
     
     // FAQ Accordion
@@ -1533,83 +3507,532 @@
         question.addEventListener('click', () => { item.classList.toggle('active'); });
     });
     
-    // Portfolio Data
-    const portfolioItems = [
-        { name: "Sunny Bay Daycare", url: "https://sunnybaydaycare.com", category: "childcare", type: "Bay Area | Childcare", address: "400 China Basin St, Mission Bay, San Francisco, CA", description: "Immigrant-owned daycare providing a safe bilingual environment for children. Pathway boosted their Google visibility and brought in new enrollments.", image: "sunny.png", metric: "130% more Google visibility" },
-        { name: "Jenara Wellness", url: "https://jenarawellness.netlify.app", category: "wellness", type: "Bay Area | Wellness & Spa", address: "197 E Hamilton Ave #101, Campbell, CA 95008", description: "Holistic wellness studio specializing in rejuvenation therapies. Now ranking competitively for wellness searches across the South Bay.", image: "jen.png", metric: "Top 3 in local wellness search" }
+    // ==========================================================
+    // DIRECTORY DATA
+    // Three separate groups, kept separate on purpose:
+    //   clients  — businesses Pathway actually built for
+    //   sf       — San Francisco businesses we feature and send
+    //              customers to (we did NOT build these sites)
+    //   examples — reference builds from the wider small-business
+    //              web, shown as examples of good work
+    // ==========================================================
+
+    const clientItems = [
+        { name: "Sunny Bay Daycare", domain: "sunnybaydaycare.com", url: "https://sunnybaydaycare.com", cat: "Childcare", area: "Mission Bay, San Francisco", image: "sunny.png", description: "Immigrant-owned daycare with a safe bilingual environment. We rebuilt their Google presence so local parents could find them.", metric: "130% more Google visibility" },
+        { name: "Jenara Wellness", domain: "jenarawellness.netlify.app", url: "https://jenarawellness.netlify.app", cat: "Wellness & spa", area: "Campbell, CA", image: "jen.png", description: "Holistic wellness studio. New site plus a cleaned-up local listing, now competitive for wellness searches in the South Bay.", metric: "Top 3 in local wellness search" },
+        { name: "Ben Blends", domain: "benblends.netlify.app", url: "https://benblends.netlify.app", cat: "Barbering", area: "San Francisco", image: "ben.jpg", description: "Signature fades and precision cuts. We built a booking site so clients can find and book him online.", metric: "Online booking + social growth" }
     ];
-    
-    function renderPortfolio(filter = 'all') {
-        const grid = document.getElementById('portfolioGrid');
-        if(!grid) return;
-        grid.innerHTML = '';
-        const filtered = portfolioItems.filter(i => filter === 'all' || i.category === filter);
-        filtered.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'portfolio-card';
-            card.setAttribute('data-aos', 'fade-up');
-            card.innerHTML = `
-                <div class="portfolio-img" style="background-image: url('${item.image}'); background-size: cover;">
-                    <div class="category-badge-portfolio"><i class="fas fa-tag"></i> Bay Area</div>
-                </div>
-                <div class="portfolio-details">
-                    <h3>${item.name}</h3>
-                    <div class="business-type"><i class="fas fa-star"></i> ${item.type}</div>
-                    <div class="portfolio-address"><i class="fas fa-map-pin"></i> ${item.address}</div>
-                    <div class="portfolio-description">${item.description}</div>
-                    <div class="portfolio-metric"><i class="fas fa-arrow-trend-up"></i> ${item.metric}</div>
-                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="portfolio-website-btn"><i class="fas fa-external-link-alt"></i> Visit Website</a>
-                </div>
-            `;
-            card.addEventListener('click', (e) => {
-                if(!e.target.closest('.portfolio-website-btn')) {
-                    window.open(item.url, '_blank');
-                }
-            });
-            grid.appendChild(card);
-        });
-        // Re-initialize AOS for the new cards
-        AOS.refresh();
+
+    // name, domain, category, neighborhood
+    const sfLocal = [
+        ["Zuni Café", "zunicafe.com", "Restaurant", "Hayes Valley"],
+        ["Tartine Bakery", "tartinebakery.com", "Bakery", "Mission"],
+        ["State Bird Provisions", "statebirdsf.com", "Restaurant", "Fillmore"],
+        ["Nopa", "nopasf.com", "Restaurant", "NoPa"],
+        ["Rich Table", "richtablesf.com", "Restaurant", "Hayes Valley"],
+        ["Che Fico", "chefico.com", "Restaurant", "Divisadero"],
+        ["Foreign Cinema", "foreigncinema.com", "Restaurant", "Mission"],
+        ["Californios", "californiossf.com", "Restaurant", "SoMa"],
+        ["Sons &amp; Daughters", "sonsanddaughterssf.com", "Restaurant", "Nob Hill"],
+        ["Liholiho Yacht Club", "lycsf.com", "Restaurant", "Lower Nob Hill"],
+        ["Nari", "narisf.com", "Restaurant", "Japantown"],
+        ["Kin Khao", "kinkhao.com", "Restaurant", "Union Square"],
+        ["Mister Jiu's", "misterjius.com", "Restaurant", "Chinatown"],
+        ["House of Prime Rib", "houseofprimerib.net", "Restaurant", "Van Ness"],
+        ["Flour + Water", "flourandwater.com", "Restaurant", "Mission"],
+        ["Pizzeria Delfina", "pizzeriadelfina.com", "Restaurant", "Mission"],
+        ["Lazy Bear", "lazybearsf.com", "Restaurant", "Mission"],
+        ["Acquerello", "acquerellosf.com", "Restaurant", "Polk Gulch"],
+        ["Quince", "quincerestaurant.com", "Restaurant", "Jackson Square"],
+        ["Cotogna", "cotognasf.com", "Restaurant", "Jackson Square"],
+        ["Yank Sing", "yanksing.com", "Restaurant", "SoMa"],
+        ["Tommaso's", "tommasos.com", "Restaurant", "North Beach"],
+        ["Molinari Delicatessen", "molinarisalame.com", "Deli &amp; market", "North Beach"],
+        ["b. Patisserie", "bpatisserie.com", "Bakery", "Lower Pac Heights"],
+        ["Craftsman and Wolves", "craftsman-wolves.com", "Bakery", "Mission"],
+        ["Bob's Donuts", "bobsdonutssf.com", "Bakery", "Polk Gulch"],
+        ["Mitchell's Ice Cream", "mitchellsicecream.com", "Ice cream", "Bernal Heights"],
+        ["Bi-Rite Market", "biritemarket.com", "Grocery &amp; market", "Mission"],
+        ["Boudin Bakery", "boudinbakery.com", "Bakery", "Fisherman's Wharf"],
+        ["Devil's Teeth Baking Company", "devilsteethbakingcompany.com", "Bakery", "Outer Sunset"],
+        ["Andytown Coffee Roasters", "andytownsf.com", "Coffee", "Outer Sunset"],
+        ["Ritual Coffee Roasters", "ritualcoffee.com", "Coffee", "Mission"],
+        ["Sightglass Coffee", "sightglasscoffee.com", "Coffee", "SoMa"],
+        ["Four Barrel Coffee", "fourbarrelcoffee.com", "Coffee", "Mission"],
+        ["Philz Coffee", "philzcoffee.com", "Coffee", "Mission"],
+        ["Wrecking Ball Coffee Roasters", "wreckingballcoffee.com", "Coffee", "Cow Hollow"],
+        ["Saint Frank Coffee", "saintfrankcoffee.com", "Coffee", "Russian Hill"],
+        ["Réveille Coffee Co.", "reveillecoffee.com", "Coffee", "North Beach"],
+        ["Anchor Brewing", "anchorbrewing.com", "Brewery", "Potrero Hill"],
+        ["Cellarmaker Brewing", "cellarmakerbrewing.com", "Brewery", "SoMa"],
+        ["Fort Point Beer Company", "fortpointbeer.com", "Brewery", "Mission Bay"],
+        ["Barebottle Brewing", "barebottle.com", "Brewery", "Bernal Heights"],
+        ["Laughing Monk Brewing", "taproom.laughingmonk.com", "Brewery", "Bayview"],
+        ["Trick Dog", "trickdogbar.com", "Bar", "Mission"],
+        ["Smuggler's Cove", "smugglerscovesf.com", "Bar", "Hayes Valley"],
+        ["Comstock Saloon", "comstocksaloon.com", "Bar", "North Beach"],
+        ["Zeitgeist", "zeitgeistsf.com", "Bar", "Mission"],
+        ["ABV", "abvsf.com", "Bar", "Mission"]
+    ];
+
+    // name, domain, what the business does
+    const exampleSites = [
+        ["El Fuego", "elfuegotinley.jkellysites.com", "Mexican restaurant"],
+        ["La Bomba", "labomba.jkellysites.com", "Puerto Rican restaurant"],
+        ["Knickerbocker Baking Company", "knickerbocker365.jkellysites.com", "Bread bakery"],
+        ["Aramso Kebab", "aramso.no", "Food brand"],
+        ["Vida Cafe", "vidacafe.jkellysites.com", "Coffee shop"],
+        ["Shagf Cafe Las Vegas", "shagfcafejv.jkellysites.com", "Specialty cafe"],
+        ["Vines Hair Studio", "vinesstudio.com", "Hair studio"],
+        ["The Vault Barbershop", "thevaultbarbers.com", "Barbershop"],
+        ["Essntl Barbershop", "essntlbarbershop.com", "Barbershop"],
+        ["Dmoneychopz", "dmoneychopz.com", "Private barber"],
+        ["Ponch Blendz", "ponchblendz.com", "Barbershop"],
+        ["Ace Barbershop", "acehairstudio.jkellysites.com", "Barbershop"],
+        ["The Mug &amp; Brush Barbershop", "mugbrushbarbershop.jkellysites.com", "Barbershop"],
+        ["Nilou Med Spa", "niloumedspa.jkellysites.com", "Medical spa"],
+        ["Nail Salon", "nailsalon.jkellysites.com", "Nail salon"],
+        ["Shape Chicago", "shapechicago.jkellysites.com", "Body sculpting"],
+        ["Northwood Chiropractic Clinic", "northwoodchiroclinic.com", "Chiropractic clinic"],
+        ["Love Healing You", "lovehealingyou.com", "Relationship coaching"],
+        ["Mentality Life", "mentalitylife.com", "Sales agency"],
+        ["Zig Team", "zigteam.com", "Industrial company"],
+        ["Patty Real Estate", "pattyrealtor.jkellysites.com", "Real estate"],
+        ["The Modern Caddie", "themoderncaddie.jkellysites.com", "Golf caddie service"],
+        ["Rodeo Bounce Entertainment", "rodeobounce.com", "Party rentals"],
+        ["Esizzle Boxing", "esizzleboxing.jkellysites.com", "Professional boxing"],
+        ["NXT Trading", "nxttrading.jkellysites.com", "Trading education"],
+        ["Skyline Equipment Rentals", "skyline.jkellysites.com", "Equipment rental"],
+        ["Crystal Clean Detailing", "crystalcleandet.com", "Auto detailing"],
+        ["J&amp;A Auto Detailing", "jaautodetailing.com", "Mobile auto detailing"],
+        ["Run One Auto Spa", "runoneautospa.jkellysites.com", "Auto detailing"],
+        ["Exclusive Detailing", "exclusivedetailing.jkellysites.com", "Auto detailing"],
+        ["Deluxe Auto Spa", "deluxeauto.jkellysites.com", "Auto detailing"],
+        ["Mr. Bee's Auto Care", "mrbeesautocarenj.com", "Auto care"],
+        ["Prestige Transportation", "prestigetransportationent.com", "Luxury transportation"],
+        ["Leyva Concrete", "leyvaconcreteinc.com", "Concrete contractor"],
+        ["Diaz Concrete &amp; Pumping", "diazconcretepumping.com", "Concrete contractor"],
+        ["Elite Cover Roofing", "elitecoverroofing.com", "Roofing contractor"],
+        ["Summerland Roofing", "summerlandroofing.jkellysites.com", "Roofing contractor"],
+        ["Freedom Roofing KC", "freedomroofing.jkellysites.com", "Roofing company"],
+        ["Cado Construction", "cado.jkellysites.com", "Construction company"],
+        ["G3 Construction Group", "g3constructiongroup.jkellysites.com", "Design-build contractor"],
+        ["Morales and Sons", "moralesandsonls.com", "Landscaping"],
+        ["Enhanced Flooring", "enhancedflooring.jkellysites.com", "Flooring installation"],
+        ["Wavy Resins", "wavyresins.jkellysites.com", "Epoxy flooring"],
+        ["Plumbing Pros", "plumbingpros.jkellysites.com", "Plumbing services"],
+        ["PickALock", "pickalock.jkellysites.com", "Automotive locksmith"],
+        ["Tandy's Window Services", "tandys.jkellysites.com", "Window cleaning"],
+        ["Urbina's Master Sweeping", "urbinas.jkellysites.com", "Street sweeping"],
+        ["Doggie Duty Disposal", "doggiedutydisposal.com", "Pet waste removal"],
+        ["JB's Movers", "jbsmovers.jkellysites.com", "Moving services"],
+        ["Rugged Fresh Laundry", "ruggedfreshlaundry.com", "Laundry brand"],
+        ["Vines33", "vines33.com", "Hair product brand"],
+        ["CE Jewelry", "cejewelry.jkellysites.com", "Jewelry brand"],
+        ["House of Dubai", "houseofdubai.jkellysites.com", "Cologne &amp; perfumes"],
+        ["Phantom Musk", "phantommusk.jkellysites.com", "Fragrance shop"],
+        ["Davranov", "davranov.jkellysites.com", "Handmade leather goods"],
+        ["KTD Supply Co", "ktd.jkellysites.com", "Sneaker reseller"],
+        ["MostKnown SNKRS", "mostknownsnkrs.jkellysites.com", "Sneaker reseller"],
+        ["Apex Peptides", "apex.jkellysites.com", "Research peptides"],
+        ["Midnight Labz Research", "midnightlabz.jkellysites.com", "Research peptides"],
+        ["Phit Pharmx", "phitpharmx.com", "Research peptides"]
+    ];
+
+    const directory = [
+        ...clientItems.map(c => ({ group: 'pathway', name: c.name, url: c.url, domain: c.domain, meta: c.cat + ' · ' + c.area })),
+        ...sfLocal.map(([name, domain, cat, area]) => ({ group: 'sf', name, url: 'https://' + domain, domain, meta: cat + ' · ' + area })),
+        ...exampleSites.map(([name, domain, type]) => ({ group: 'example', name, url: 'https://' + domain, domain, meta: type }))
+    ];
+
+    const groupInfo = {
+        pathway: {
+            title: 'Built by Pathway',
+            note: 'Websites, Google profiles and social accounts we built and handed over to the owner. Free for them, and theirs to keep.'
+        },
+        sf: {
+            title: 'San Francisco businesses we support',
+            note: 'Independent local spots we feature and send customers to. These are not our builds — we point people to them because they are worth visiting.'
+        },
+        example: {
+            title: 'More small-business sites',
+            note: 'Reference builds from the wider small-business web, collected as examples of what a good site looks like. Not built by Pathway.'
+        }
+    };
+
+    function esc(s) {
+        return String(s).replace(/&(?![a-z]+;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
-    
+
+    function plainText(html) {
+        return String(html).replace(/&amp;/g, '&').replace(/&[a-z]+;/g, ' ');
+    }
+
+    // Deterministic colour per business so the tiles feel like a set,
+    // not a random pile.
+    function monogram(name) {
+        const plain = plainText(name).replace(/[^A-Za-z0-9 ]/g, ' ').trim();
+        const words = plain.split(/\s+/).filter(Boolean);
+        const initials = (words.length > 1
+            ? words[0][0] + words[1][0]
+            : plain.slice(0, 2)).toUpperCase();
+        let hash = 0;
+        for (let i = 0; i < plain.length; i++) hash = (hash * 31 + plain.charCodeAt(i)) % 360;
+        return {
+            initials,
+            style: `background: linear-gradient(160deg, hsl(${hash}, 62%, 76%), hsl(${(hash + 26) % 360}, 54%, 58%));`
+        };
+    }
+
+    function buildDirCard(item) {
+        const m = monogram(item.name);
+        const a = document.createElement('a');
+        a.className = 'dir-card';
+        a.href = item.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.innerHTML = `
+            <span class="dir-mono" style="${m.style}" aria-hidden="true">${esc(m.initials)}</span>
+            <span class="dir-body">
+                <span class="dir-name">${item.name}</span>
+                <span class="dir-meta">${item.meta}</span>
+            </span>
+            <span class="dir-go" aria-hidden="true"><i class="fas fa-external-link-alt"></i></span>
+        `;
+        return a;
+    }
+
+    function buildClientCard(item) {
+        const a = document.createElement('a');
+        a.className = 'client-card';
+        a.href = item.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.innerHTML = `
+            <div class="client-photo" data-badge="Built by Pathway" style="background-image: url('${item.image}');" role="img" aria-label="${item.name}"></div>
+            <div class="client-body">
+                <h3>${item.name}</h3>
+                <div class="client-where">${item.cat} · ${item.area}</div>
+                <p>${item.description}</p>
+                <div class="client-result"><i class="fas fa-arrow-trend-up"></i> ${item.metric}</div>
+                <span class="client-link">Visit website <i class="fas fa-external-link-alt"></i></span>
+            </div>
+        `;
+        return a;
+    }
+
+    function renderHomeFeatured() {
+        const container = document.getElementById('homeFeatured');
+        if (!container) return;
+        container.innerHTML = '';
+        clientItems.forEach(item => container.appendChild(buildClientCard(item)));
+    }
+
+    let dirFilter = 'all';
+    let dirQuery = '';
+
+    function renderDirectory() {
+        const results = document.getElementById('dirResults');
+        const countEl = document.getElementById('dirCount');
+        if (!results) return;
+
+        const q = dirQuery.trim().toLowerCase();
+        const matches = directory.filter(item => {
+            if (dirFilter !== 'all' && item.group !== dirFilter) return false;
+            if (!q) return true;
+            return (plainText(item.name) + ' ' + plainText(item.meta) + ' ' + item.domain)
+                .toLowerCase().includes(q);
+        });
+
+        results.innerHTML = '';
+
+        if (!matches.length) {
+            results.innerHTML = `<p class="dir-empty">Nothing matched <b>${esc(dirQuery)}</b>. Try a neighborhood like “Mission”, or a type like “coffee”.</p>`;
+            if (countEl) countEl.textContent = '';
+            return;
+        }
+
+        ['pathway', 'sf', 'example'].forEach(group => {
+            const items = matches.filter(i => i.group === group);
+            if (!items.length) return;
+
+            const section = document.createElement('div');
+            section.className = 'dir-group';
+
+            const head = document.createElement('div');
+            head.className = 'dir-group-head';
+            head.innerHTML = `
+                <h3>${groupInfo[group].title}</h3>
+                <span class="dir-group-count">${items.length} ${items.length === 1 ? 'business' : 'businesses'}</span>
+                <p>${groupInfo[group].note}</p>
+            `;
+            section.appendChild(head);
+
+            if (group === 'pathway' && !q) {
+                const grid = document.createElement('div');
+                grid.className = 'client-grid';
+                clientItems.forEach(item => grid.appendChild(buildClientCard(item)));
+                section.appendChild(grid);
+            } else {
+                const grid = document.createElement('div');
+                grid.className = 'dir-grid';
+                items.forEach(item => grid.appendChild(buildDirCard(item)));
+                section.appendChild(grid);
+            }
+
+            results.appendChild(section);
+        });
+
+        if (countEl) {
+            countEl.innerHTML = `Showing <b>${matches.length}</b> of <b>${directory.length}</b> businesses`;
+        }
+    }
+
     var testimonialsData = [
         { name: "Elena Mendez", role: "Mama Bakery, San Jose", text: "Pathway brought us 200% more foot traffic in just 3 weeks. Our social media finally shines and customers keep coming back!", avatar: "EM" },
         { name: "Jenara Wellness", role: "Wellness Studio, Campbell CA", text: "They built our website and got us on the map. Now customers line up for our services. Pathway changed everything!", avatar: "JW" },
         { name: "Sunny Bay Daycare", role: "Childcare Center, San Francisco", text: "Our Google visibility exploded. We went from invisible to the top daycare in our area. Truly life-changing!", avatar: "SB" }
     ];
     const homeTesti = document.getElementById('homeTestimonials');
-    if(homeTesti) {
-        testimonialsData.forEach((t, i) => {
-            const card = document.createElement('div');
-            card.className = 'testimonial-card';
-            card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('data-aos-delay', String(i * 100));
-            card.innerHTML = `
-                <div class="star-rating">★★★★★</div>
-                <i class="fas fa-quote-left" style="color:#d4af37; opacity:0.6; font-size:1.2rem;"></i>
-                <p style="margin:0.8rem 0; line-height:1.6; color:#ccd6e0;">"${t.text}"</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">${t.avatar}</div>
-                    <div>
-                        <div class="testimonial-name">${t.name}</div>
-                        <div class="testimonial-role">${t.role}</div>
-                    </div>
+    if (homeTesti) {
+        testimonialsData.forEach((t) => {
+            const row = document.createElement('div');
+            row.className = 'testimonial-row';
+            row.innerHTML = `
+                <div class="testimonial-avatar">${t.avatar}</div>
+                <div>
+                    <div class="star-rating" style="margin-bottom: 0.4rem;" aria-label="Five out of five stars">★★★★★</div>
+                    <div class="testimonial-name">${t.name}</div>
+                    <div class="testimonial-role">${t.role}</div>
+                    <p>“${t.text}”</p>
                 </div>
             `;
-            homeTesti.appendChild(card);
+            homeTesti.appendChild(row);
         });
-        AOS.refresh();
     }
-    
-    renderPortfolio('all');
-    
+
+    renderHomeFeatured();
+    renderDirectory();
+
+    // Directory count on the home page number strip
+    const dirTotalEl = document.getElementById('statCountries');
+    if (dirTotalEl) dirTotalEl.textContent = directory.length;
+
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('active');
-            renderPortfolio(btn.getAttribute('data-filter'));
+            btn.setAttribute('aria-pressed', 'true');
+            dirFilter = btn.getAttribute('data-filter');
+            renderDirectory();
         });
     });
+
+    const dirSearchEl = document.getElementById('dirSearch');
+    if (dirSearchEl) {
+        let searchTimer;
+        dirSearchEl.addEventListener('input', () => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                dirQuery = dirSearchEl.value;
+                renderDirectory();
+            }, 120);
+        });
+    }
+
+
+    // Language menu — single button dropdown + Google Translate
+    const langLabels = {
+        en: 'EN', es: 'ES', 'zh-CN': '中文', 'zh-TW': '繁體', vi: 'VI', tl: 'TL',
+        ko: 'KO', ja: 'JA', fr: 'FR', de: 'DE', pt: 'PT', ru: 'RU', ar: 'AR', hi: 'HI'
+    };
+
+    function getCurrentLang() {
+        const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+        return match ? match[1] : 'en';
+    }
+
+    function setActiveLangOption(lang) {
+        document.querySelectorAll('.lang-option').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+        const label = document.getElementById('langToggleLabel');
+        if (label) label.textContent = langLabels[lang] || lang.toUpperCase();
+    }
+
+    function applyLanguage(lang) {
+        const domain = window.location.hostname;
+        if (lang === 'en') {
+            document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain};`;
+        } else {
+            document.cookie = `googtrans=/en/${lang}; path=/;`;
+            document.cookie = `googtrans=/en/${lang}; path=/; domain=${domain};`;
+        }
+        const gtSelect = document.querySelector('.goog-te-combo');
+        if (gtSelect) {
+            gtSelect.value = lang;
+            gtSelect.dispatchEvent(new Event('change'));
+            setActiveLangOption(lang);
+        } else {
+            location.reload();
+        }
+        document.getElementById('langMenu')?.classList.remove('open');
+    }
+
+    document.getElementById('langToggle')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = document.getElementById('langMenu');
+        menu?.classList.toggle('open');
+        document.getElementById('langToggle')?.setAttribute('aria-expanded', menu?.classList.contains('open') ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.addEventListener('click', () => applyLanguage(btn.getAttribute('data-lang')));
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#langMenu')) {
+            document.getElementById('langMenu')?.classList.remove('open');
+            document.getElementById('langToggle')?.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+
+    // ==========================================================
+    // SHAREABLE LINKS, ACCESSIBILITY, MOBILE CTA
+    // ==========================================================
+
+    const pageTitles = {
+        home: 'Pathway | Free websites for immigrant-owned businesses',
+        about: 'About Pathway | Why we started',
+        services: 'How it works | Pathway',
+        portfolio: 'The businesses | Pathway',
+        contact: 'Get started, free | Pathway'
+    };
+
+    const validPages = ['home', 'about', 'services', 'portfolio', 'contact'];
+    let suppressHash = false;
+
+    function pageFromHash() {
+        const h = (window.location.hash || '').replace(/^#\/?/, '');
+        return validPages.indexOf(h) !== -1 ? h : null;
+    }
+
+    // Runs alongside the existing navigation handler: keeps the URL,
+    // the document title and the nav state in sync with the page shown.
+    function afterNav(pageId, fromHash) {
+        if (!pageId) return;
+        document.title = pageTitles[pageId] || 'Pathway';
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (link.getAttribute('data-page') === pageId) link.setAttribute('aria-current', 'page');
+            else link.removeAttribute('aria-current');
+        });
+        document.body.classList.toggle('show-mobile-cta', pageId !== 'contact');
+        if (!fromHash) {
+            const target = pageId === 'home' ? '#/' : '#/' + pageId;
+            if (window.location.hash !== target) {
+                suppressHash = true;
+                window.location.hash = target;
+            }
+        }
+    }
+
+    document.querySelectorAll('[data-page]').forEach(el => {
+        el.addEventListener('click', () => afterNav(el.getAttribute('data-page')));
+    });
+
+    window.addEventListener('hashchange', () => {
+        if (suppressHash) { suppressHash = false; return; }
+        const p = pageFromHash();
+        if (p) { showPage(p); afterNav(p, true); }
+    });
+
+    const startPage = pageFromHash();
+    if (startPage && startPage !== 'home') { showPage(startPage); afterNav(startPage, true); }
+    else afterNav('home', true);
+
+    // --- FAQ: keyboard operable, screen-reader labelled, no clipped text ---
+    document.querySelectorAll('.faq-item').forEach((item, i) => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        if (!question || !answer) return;
+
+        // The CSS animates grid-template-rows, which needs a single
+        // overflow-hidden child holding the text.
+        if (!answer.firstElementChild || answer.childNodes.length > 1) {
+            const inner = document.createElement('div');
+            while (answer.firstChild) inner.appendChild(answer.firstChild);
+            answer.appendChild(inner);
+        }
+
+        const answerId = 'faq-answer-' + i;
+        answer.id = answerId;
+        question.setAttribute('role', 'button');
+        question.setAttribute('tabindex', '0');
+        question.setAttribute('aria-expanded', 'false');
+        question.setAttribute('aria-controls', answerId);
+
+        const toggle = () => {
+            const open = item.classList.toggle('active');
+            question.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        question.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        });
+        // The original click handler already toggles the class; keep
+        // aria in step with it.
+        question.addEventListener('click', () => {
+            question.setAttribute('aria-expanded', item.classList.contains('active') ? 'true' : 'false');
+        });
+    });
+
+    // --- Header surface on scroll ---
+    const siteHeader = document.getElementById('mainNav');
+    if (siteHeader) {
+        const syncHeader = () => siteHeader.classList.toggle('scrolled', window.scrollY > 24);
+        window.addEventListener('scroll', syncHeader, { passive: true });
+        syncHeader();
+    }
+
+    // --- Mobile menu: label state, close on Escape and on outside tap ---
+    const menuBtn = document.getElementById('menuBtn');
+    const navPill = document.getElementById('navPill');
+    if (menuBtn && navPill) {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute('aria-controls', 'navPill');
+        const sync = () => {
+            const open = navPill.classList.contains('show');
+            menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            menuBtn.innerHTML = open ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        };
+        menuBtn.addEventListener('click', sync);
+        document.addEventListener('click', (e) => {
+            if (!navPill.classList.contains('show')) return;
+            if (e.target.closest('#navPill') || e.target.closest('#menuBtn')) return;
+            navPill.classList.remove('show');
+            sync();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if (navPill.classList.contains('show')) { navPill.classList.remove('show'); sync(); }
+            document.getElementById('langMenu')?.classList.remove('open');
+        });
+        navPill.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setTimeout(sync, 0)));
+    }
+
+
+    setActiveLangOption(getCurrentLang());
+    const langPoll = setInterval(() => {
+        if (document.querySelector('.goog-te-combo')) {
+            setActiveLangOption(getCurrentLang());
+            clearInterval(langPoll);
+        }
+    }, 500);
 </script>
 </body>
 </html>
