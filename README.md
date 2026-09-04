@@ -40,21 +40,60 @@ No build step, no dependencies to install.
 
   The three groups are rendered under separate headings that say which is which.
   Keep them separate when adding entries — the labelling is the point.
-- **Search and filters** match on name, category, neighbourhood and domain.
+- **Search and filters** match on name, category, neighbourhood and domain, and
+  they drive the map as well as the list.
+- **The map** shows the 51 Bay Area businesses (the 3 Pathway builds plus the 48
+  San Francisco listings). See below.
 - **The globe** (three.js, loaded from a CDN) is decorative. It is imported
   dynamically with a timeout, so if the CDN is slow or blocked the globe is hidden
   and the rest of the page still works.
 - **Translation** uses Google Translate, loaded with `defer` so a slow response
   cannot stall the rest of the page.
 
+## The map
+
+The Portfolio page has a Google map of the Bay Area businesses. It works two ways
+and picks between them on its own.
+
+**With no setup (the default).** The map is Google's keyless embed. It shows San
+Francisco, and tapping a business in the list beside it moves the map to that
+business. No API key, no billing account, nothing to configure.
+
+**With an API key.** Paste a
+[Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/get-api-key)
+key into the meta tag in the `<head>`:
+
+```html
+<meta name="google-maps-key" content="YOUR_KEY_HERE">
+```
+
+The page then loads the full JavaScript API and pins every business at once, in a
+dark style that matches the site, with a details bubble on each pin. Pathway's own
+builds get a larger, lighter pin. If the key is wrong or the API fails to load,
+the map quietly falls back to the keyless embed.
+
+Note that a key is billable and should be restricted to your domain in the Google
+Cloud console.
+
+### Coordinates
+
+Each Bay Area entry carries a street address and a `lat`/`lng`. The coordinates
+place the pin; the address is what gets handed to Google when someone taps
+through, so the "open in Google Maps" links land on the right listing either way.
+The coordinates are street-level and worth spot-checking before you lean on them.
+
 ## Adding a business to the directory
 
 Find the right array in `index.html` and add a row:
 
 ```js
-// sfLocal — name, domain, category, neighbourhood
-["Zuni Café", "zunicafe.com", "Restaurant", "Hayes Valley"],
+// sfLocal — name, domain, category, neighbourhood, address, lat, lng
+["Zuni Café", "zunicafe.com", "Restaurant", "Hayes Valley",
+ "1658 Market St, San Francisco, CA 94102", 37.7726, -122.4219],
 ```
+
+Give it an address and coordinates and it appears on the map too. Leave them off
+and it stays in the list only — which is what the out-of-area reference builds do.
 
 The counts on the page (`Showing 111 of 111`, the home-page number strip) are
 derived from the arrays, so they update on their own.

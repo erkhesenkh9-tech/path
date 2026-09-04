@@ -6,6 +6,10 @@
     <title>Pathway | Free websites for immigrant-owned businesses</title>
     <meta name="description" content="Pathway builds a website, a Google Maps listing and social media for immigrant-owned businesses. You own everything. Free for the first 20 businesses.">
     <meta name="theme-color" content="#06080d">
+    <!-- Optional. Paste a Google Maps JavaScript API key here to get the full
+         interactive map with every business pinned at once. Left empty, the
+         map still works: it uses Google's keyless embed and follows the list. -->
+    <meta name="google-maps-key" content="">
     <meta property="og:title" content="Pathway | Free websites for immigrant-owned businesses">
     <meta property="og:description" content="We build your website, put you on Google Maps, and run your social media. You own all of it. It costs you nothing.">
     <meta property="og:type" content="website">
@@ -2199,6 +2203,172 @@
             color: var(--text-secondary);
         }
 
+
+        /* ================== MAP ================== */
+        .map-block {
+            margin: 0 0 2.5rem;
+            border: 1px solid var(--line-soft);
+            border-radius: 22px;
+            background: var(--panel);
+            overflow: hidden;
+            text-align: left;
+        }
+        .map-head {
+            padding: 1.15rem 1.35rem;
+            border-bottom: 1px solid var(--line-soft);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.4rem 1rem;
+        }
+        .map-head h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+        .map-head p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .map-layout {
+            display: grid;
+            grid-template-columns: 1.65fr 1fr;
+            min-height: 440px;
+        }
+        .map-stage {
+            position: relative;
+            background: #0b0e15;
+            min-height: 440px;
+        }
+        .map-stage iframe,
+        .map-stage #mapCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+        .map-list {
+            border-left: 1px solid var(--line-soft);
+            max-height: 440px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            padding: 0.4rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+        }
+        .map-list::-webkit-scrollbar { width: 10px; }
+        .map-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 999px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+        .map-item {
+            display: grid;
+            grid-template-columns: 26px 1fr;
+            gap: 0.65rem;
+            align-items: center;
+            width: 100%;
+            padding: 0.6rem 0.7rem;
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+        .map-item:hover { background: var(--panel-strong); }
+        .map-item.is-selected {
+            background: rgba(227, 188, 74, 0.14);
+            border-color: rgba(227, 188, 74, 0.4);
+        }
+        .map-item-pin {
+            display: grid;
+            place-items: center;
+            width: 26px; height: 26px;
+            border-radius: 8px;
+            background: rgba(227, 188, 74, 0.16);
+            color: var(--gold);
+            font-size: 0.72rem;
+        }
+        .map-item.is-selected .map-item-pin {
+            background: var(--gold);
+            color: #14100a;
+        }
+        .map-item-body { min-width: 0; }
+        .map-item-name {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .map-item-meta {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .map-empty {
+            padding: 1.5rem 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .map-foot {
+            padding: 0.9rem 1.35rem;
+            border-top: 1px solid var(--line-soft);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem 1rem;
+        }
+        .map-foot a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-height: 32px;
+        }
+        .map-foot a:hover { text-decoration: underline; }
+        .map-foot small { font-size: 0.78rem; color: var(--text-muted); }
+
+        /* Google's info window is light by default; keep the text legible. */
+        .map-info { color: #14100a; font-family: 'Inter', sans-serif; line-height: 1.45; }
+        .map-info strong { display: block; font-size: 0.98rem; margin-bottom: 0.15rem; }
+        .map-info span { display: block; font-size: 0.82rem; color: #4a5261; }
+        .map-info a {
+            display: inline-block;
+            margin: 0.5rem 0.75rem 0 0;
+            font-size: 0.84rem;
+            font-weight: 650;
+            color: #8a6d10;
+        }
+
+        @media (max-width: 860px) {
+            .map-layout { grid-template-columns: 1fr; min-height: 0; }
+            .map-stage { min-height: 320px; }
+            .map-list {
+                border-left: none;
+                border-top: 1px solid var(--line-soft);
+                max-height: 280px;
+            }
+        }
+
         /* ================== DIRECTORY ================== */
         .dir-tools {
             display: flex;
@@ -2996,6 +3166,21 @@
                 <p class="dir-count" id="dirCount" aria-live="polite"></p>
             </div>
 
+            <div class="map-block" data-reveal="glass-up" data-reveal-delay="160">
+                <div class="map-head">
+                    <h3><i class="fas fa-map-location-dot" aria-hidden="true"></i> On the map</h3>
+                    <p id="mapNote">Tap a business to see exactly where it is.</p>
+                </div>
+                <div class="map-layout">
+                    <div class="map-stage" id="mapStage"></div>
+                    <div class="map-list" id="mapList" role="list"></div>
+                </div>
+                <div class="map-foot">
+                    <a id="mapAllLink" href="https://www.google.com/maps/search/?api=1&amp;query=San%20Francisco%2C%20CA" target="_blank" rel="noopener noreferrer">Open San Francisco in Google Maps <i class="fas fa-external-link-alt"></i></a>
+                    <small>Pins cover our Bay Area businesses. The reference builds elsewhere are listed below.</small>
+                </div>
+            </div>
+
             <div id="dirResults"></div>
         </section>
 
@@ -3518,61 +3703,61 @@
     // ==========================================================
 
     const clientItems = [
-        { name: "Sunny Bay Daycare", domain: "sunnybaydaycare.com", url: "https://sunnybaydaycare.com", cat: "Childcare", area: "Mission Bay, San Francisco", image: "sunny.png", description: "Immigrant-owned daycare with a safe bilingual environment. We rebuilt their Google presence so local parents could find them.", metric: "130% more Google visibility" },
-        { name: "Jenara Wellness", domain: "jenarawellness.netlify.app", url: "https://jenarawellness.netlify.app", cat: "Wellness & spa", area: "Campbell, CA", image: "jen.png", description: "Holistic wellness studio. New site plus a cleaned-up local listing, now competitive for wellness searches in the South Bay.", metric: "Top 3 in local wellness search" },
-        { name: "Ben Blends", domain: "benblends.netlify.app", url: "https://benblends.netlify.app", cat: "Barbering", area: "San Francisco", image: "ben.jpg", description: "Signature fades and precision cuts. We built a booking site so clients can find and book him online.", metric: "Online booking + social growth" }
+        { name: "Sunny Bay Daycare", domain: "sunnybaydaycare.com", url: "https://sunnybaydaycare.com", cat: "Childcare", area: "Mission Bay, San Francisco", address: "400 China Basin St, San Francisco, CA 94158", lat: 37.7776, lng: -122.3893, image: "sunny.png", description: "Immigrant-owned daycare with a safe bilingual environment. We rebuilt their Google presence so local parents could find them.", metric: "130% more Google visibility" },
+        { name: "Jenara Wellness", domain: "jenarawellness.netlify.app", url: "https://jenarawellness.netlify.app", cat: "Wellness & spa", area: "Campbell, CA", address: "197 E Hamilton Ave #101, Campbell, CA 95008", lat: 37.2946, lng: -121.9440, image: "jen.png", description: "Holistic wellness studio. New site plus a cleaned-up local listing, now competitive for wellness searches in the South Bay.", metric: "Top 3 in local wellness search" },
+        { name: "Ben Blends", domain: "benblends.netlify.app", url: "https://benblends.netlify.app", cat: "Barbering", area: "San Francisco", address: "San Francisco, CA", lat: 37.7749, lng: -122.4194, image: "ben.jpg", description: "Signature fades and precision cuts. We built a booking site so clients can find and book him online.", metric: "Online booking + social growth" }
     ];
 
-    // name, domain, category, neighborhood
+    // name, domain, category, neighborhood, street address, lat, lng
     const sfLocal = [
-        ["Zuni Café", "zunicafe.com", "Restaurant", "Hayes Valley"],
-        ["Tartine Bakery", "tartinebakery.com", "Bakery", "Mission"],
-        ["State Bird Provisions", "statebirdsf.com", "Restaurant", "Fillmore"],
-        ["Nopa", "nopasf.com", "Restaurant", "NoPa"],
-        ["Rich Table", "richtablesf.com", "Restaurant", "Hayes Valley"],
-        ["Che Fico", "chefico.com", "Restaurant", "Divisadero"],
-        ["Foreign Cinema", "foreigncinema.com", "Restaurant", "Mission"],
-        ["Californios", "californiossf.com", "Restaurant", "SoMa"],
-        ["Sons &amp; Daughters", "sonsanddaughterssf.com", "Restaurant", "Nob Hill"],
-        ["Liholiho Yacht Club", "lycsf.com", "Restaurant", "Lower Nob Hill"],
-        ["Nari", "narisf.com", "Restaurant", "Japantown"],
-        ["Kin Khao", "kinkhao.com", "Restaurant", "Union Square"],
-        ["Mister Jiu's", "misterjius.com", "Restaurant", "Chinatown"],
-        ["House of Prime Rib", "houseofprimerib.net", "Restaurant", "Van Ness"],
-        ["Flour + Water", "flourandwater.com", "Restaurant", "Mission"],
-        ["Pizzeria Delfina", "pizzeriadelfina.com", "Restaurant", "Mission"],
-        ["Lazy Bear", "lazybearsf.com", "Restaurant", "Mission"],
-        ["Acquerello", "acquerellosf.com", "Restaurant", "Polk Gulch"],
-        ["Quince", "quincerestaurant.com", "Restaurant", "Jackson Square"],
-        ["Cotogna", "cotognasf.com", "Restaurant", "Jackson Square"],
-        ["Yank Sing", "yanksing.com", "Restaurant", "SoMa"],
-        ["Tommaso's", "tommasos.com", "Restaurant", "North Beach"],
-        ["Molinari Delicatessen", "molinarisalame.com", "Deli &amp; market", "North Beach"],
-        ["b. Patisserie", "bpatisserie.com", "Bakery", "Lower Pac Heights"],
-        ["Craftsman and Wolves", "craftsman-wolves.com", "Bakery", "Mission"],
-        ["Bob's Donuts", "bobsdonutssf.com", "Bakery", "Polk Gulch"],
-        ["Mitchell's Ice Cream", "mitchellsicecream.com", "Ice cream", "Bernal Heights"],
-        ["Bi-Rite Market", "biritemarket.com", "Grocery &amp; market", "Mission"],
-        ["Boudin Bakery", "boudinbakery.com", "Bakery", "Fisherman's Wharf"],
-        ["Devil's Teeth Baking Company", "devilsteethbakingcompany.com", "Bakery", "Outer Sunset"],
-        ["Andytown Coffee Roasters", "andytownsf.com", "Coffee", "Outer Sunset"],
-        ["Ritual Coffee Roasters", "ritualcoffee.com", "Coffee", "Mission"],
-        ["Sightglass Coffee", "sightglasscoffee.com", "Coffee", "SoMa"],
-        ["Four Barrel Coffee", "fourbarrelcoffee.com", "Coffee", "Mission"],
-        ["Philz Coffee", "philzcoffee.com", "Coffee", "Mission"],
-        ["Wrecking Ball Coffee Roasters", "wreckingballcoffee.com", "Coffee", "Cow Hollow"],
-        ["Saint Frank Coffee", "saintfrankcoffee.com", "Coffee", "Russian Hill"],
-        ["Réveille Coffee Co.", "reveillecoffee.com", "Coffee", "North Beach"],
-        ["Anchor Brewing", "anchorbrewing.com", "Brewery", "Potrero Hill"],
-        ["Cellarmaker Brewing", "cellarmakerbrewing.com", "Brewery", "SoMa"],
-        ["Fort Point Beer Company", "fortpointbeer.com", "Brewery", "Mission Bay"],
-        ["Barebottle Brewing", "barebottle.com", "Brewery", "Bernal Heights"],
-        ["Laughing Monk Brewing", "taproom.laughingmonk.com", "Brewery", "Bayview"],
-        ["Trick Dog", "trickdogbar.com", "Bar", "Mission"],
-        ["Smuggler's Cove", "smugglerscovesf.com", "Bar", "Hayes Valley"],
-        ["Comstock Saloon", "comstocksaloon.com", "Bar", "North Beach"],
-        ["Zeitgeist", "zeitgeistsf.com", "Bar", "Mission"],
-        ["ABV", "abvsf.com", "Bar", "Mission"]
+        ["Zuni Café", "zunicafe.com", "Restaurant", "Hayes Valley", "1658 Market St, San Francisco, CA 94102", 37.7726, -122.4219],
+        ["Tartine Bakery", "tartinebakery.com", "Bakery", "Mission", "600 Guerrero St, San Francisco, CA 94110", 37.7614, -122.4241],
+        ["State Bird Provisions", "statebirdsf.com", "Restaurant", "Fillmore", "1529 Fillmore St, San Francisco, CA 94115", 37.7838, -122.4327],
+        ["Nopa", "nopasf.com", "Restaurant", "NoPa", "560 Divisadero St, San Francisco, CA 94117", 37.7750, -122.4375],
+        ["Rich Table", "richtablesf.com", "Restaurant", "Hayes Valley", "199 Gough St, San Francisco, CA 94102", 37.7748, -122.4226],
+        ["Che Fico", "chefico.com", "Restaurant", "Divisadero", "838 Divisadero St, San Francisco, CA 94117", 37.7768, -122.4378],
+        ["Foreign Cinema", "foreigncinema.com", "Restaurant", "Mission", "2534 Mission St, San Francisco, CA 94110", 37.7561, -122.4189],
+        ["Californios", "californiossf.com", "Restaurant", "SoMa", "355 11th St, San Francisco, CA 94103", 37.7715, -122.4133],
+        ["Sons &amp; Daughters", "sonsanddaughterssf.com", "Restaurant", "Nob Hill", "708 Bush St, San Francisco, CA 94108", 37.7901, -122.4085],
+        ["Liholiho Yacht Club", "lycsf.com", "Restaurant", "Lower Nob Hill", "871 Sutter St, San Francisco, CA 94109", 37.7877, -122.4155],
+        ["Nari", "narisf.com", "Restaurant", "Japantown", "1625 Post St, San Francisco, CA 94115", 37.7856, -122.4295],
+        ["Kin Khao", "kinkhao.com", "Restaurant", "Union Square", "55 Cyril Magnin St, San Francisco, CA 94102", 37.7857, -122.4090],
+        ["Mister Jiu's", "misterjius.com", "Restaurant", "Chinatown", "28 Waverly Pl, San Francisco, CA 94108", 37.7944, -122.4070],
+        ["House of Prime Rib", "houseofprimerib.net", "Restaurant", "Van Ness", "1906 Van Ness Ave, San Francisco, CA 94109", 37.7936, -122.4224],
+        ["Flour + Water", "flourandwater.com", "Restaurant", "Mission", "2401 Harrison St, San Francisco, CA 94110", 37.7586, -122.4124],
+        ["Pizzeria Delfina", "pizzeriadelfina.com", "Restaurant", "Mission", "3611 18th St, San Francisco, CA 94110", 37.7617, -122.4248],
+        ["Lazy Bear", "lazybearsf.com", "Restaurant", "Mission", "3416 19th St, San Francisco, CA 94110", 37.7601, -122.4198],
+        ["Acquerello", "acquerellosf.com", "Restaurant", "Polk Gulch", "1722 Sacramento St, San Francisco, CA 94109", 37.7909, -122.4213],
+        ["Quince", "quincerestaurant.com", "Restaurant", "Jackson Square", "470 Pacific Ave, San Francisco, CA 94133", 37.7973, -122.4034],
+        ["Cotogna", "cotognasf.com", "Restaurant", "Jackson Square", "490 Pacific Ave, San Francisco, CA 94133", 37.7973, -122.4031],
+        ["Yank Sing", "yanksing.com", "Restaurant", "SoMa", "101 Spear St, San Francisco, CA 94105", 37.7918, -122.3938],
+        ["Tommaso's", "tommasos.com", "Restaurant", "North Beach", "1042 Kearny St, San Francisco, CA 94133", 37.7981, -122.4062],
+        ["Molinari Delicatessen", "molinarisalame.com", "Deli &amp; market", "North Beach", "373 Columbus Ave, San Francisco, CA 94133", 37.7986, -122.4075],
+        ["b. Patisserie", "bpatisserie.com", "Bakery", "Lower Pac Heights", "2821 California St, San Francisco, CA 94115", 37.7877, -122.4409],
+        ["Craftsman and Wolves", "craftsman-wolves.com", "Bakery", "Mission", "746 Valencia St, San Francisco, CA 94110", 37.7601, -122.4216],
+        ["Bob's Donuts", "bobsdonutssf.com", "Bakery", "Polk Gulch", "1621 Polk St, San Francisco, CA 94109", 37.7907, -122.4207],
+        ["Mitchell's Ice Cream", "mitchellsicecream.com", "Ice cream", "Bernal Heights", "688 San Jose Ave, San Francisco, CA 94110", 37.7420, -122.4234],
+        ["Bi-Rite Market", "biritemarket.com", "Grocery &amp; market", "Mission", "3639 18th St, San Francisco, CA 94110", 37.7616, -122.4254],
+        ["Boudin Bakery", "boudinbakery.com", "Bakery", "Fisherman's Wharf", "160 Jefferson St, San Francisco, CA 94133", 37.8080, -122.4157],
+        ["Devil's Teeth Baking Company", "devilsteethbakingcompany.com", "Bakery", "Outer Sunset", "3876 Noriega St, San Francisco, CA 94122", 37.7537, -122.5017],
+        ["Andytown Coffee Roasters", "andytownsf.com", "Coffee", "Outer Sunset", "3655 Lawton St, San Francisco, CA 94122", 37.7561, -122.5024],
+        ["Ritual Coffee Roasters", "ritualcoffee.com", "Coffee", "Mission", "1026 Valencia St, San Francisco, CA 94110", 37.7565, -122.4212],
+        ["Sightglass Coffee", "sightglasscoffee.com", "Coffee", "SoMa", "270 7th St, San Francisco, CA 94103", 37.7767, -122.4085],
+        ["Four Barrel Coffee", "fourbarrelcoffee.com", "Coffee", "Mission", "375 Valencia St, San Francisco, CA 94103", 37.7671, -122.4221],
+        ["Philz Coffee", "philzcoffee.com", "Coffee", "Mission", "3101 24th St, San Francisco, CA 94110", 37.7524, -122.4140],
+        ["Wrecking Ball Coffee Roasters", "wreckingballcoffee.com", "Coffee", "Cow Hollow", "2271 Union St, San Francisco, CA 94123", 37.7975, -122.4370],
+        ["Saint Frank Coffee", "saintfrankcoffee.com", "Coffee", "Russian Hill", "2340 Polk St, San Francisco, CA 94109", 37.7981, -122.4224],
+        ["Réveille Coffee Co.", "reveillecoffee.com", "Coffee", "North Beach", "200 Columbus Ave, San Francisco, CA 94133", 37.7975, -122.4045],
+        ["Anchor Brewing", "anchorbrewing.com", "Brewery", "Potrero Hill", "1705 Mariposa St, San Francisco, CA 94107", 37.7644, -122.4005],
+        ["Cellarmaker Brewing", "cellarmakerbrewing.com", "Brewery", "SoMa", "1150 Howard St, San Francisco, CA 94103", 37.7767, -122.4110],
+        ["Fort Point Beer Company", "fortpointbeer.com", "Brewery", "Mission Bay", "644 Mission Rock St, San Francisco, CA 94158", 37.7690, -122.3903],
+        ["Barebottle Brewing", "barebottle.com", "Brewery", "Bernal Heights", "1525 Cortland Ave, San Francisco, CA 94110", 37.7392, -122.4133],
+        ["Laughing Monk Brewing", "taproom.laughingmonk.com", "Brewery", "Bayview", "1439 Egbert Ave, San Francisco, CA 94124", 37.7260, -122.3950],
+        ["Trick Dog", "trickdogbar.com", "Bar", "Mission", "3010 20th St, San Francisco, CA 94110", 37.7594, -122.4113],
+        ["Smuggler's Cove", "smugglerscovesf.com", "Bar", "Hayes Valley", "650 Gough St, San Francisco, CA 94102", 37.7793, -122.4232],
+        ["Comstock Saloon", "comstocksaloon.com", "Bar", "North Beach", "155 Columbus Ave, San Francisco, CA 94133", 37.7975, -122.4042],
+        ["Zeitgeist", "zeitgeistsf.com", "Bar", "Mission", "199 Valencia St, San Francisco, CA 94103", 37.7699, -122.4222],
+        ["ABV", "abvsf.com", "Bar", "Mission", "3174 16th St, San Francisco, CA 94103", 37.7648, -122.4245]
     ];
 
     // name, domain, what the business does
@@ -3640,8 +3825,8 @@
     ];
 
     const directory = [
-        ...clientItems.map(c => ({ group: 'pathway', name: c.name, url: c.url, domain: c.domain, meta: c.cat + ' · ' + c.area })),
-        ...sfLocal.map(([name, domain, cat, area]) => ({ group: 'sf', name, url: 'https://' + domain, domain, meta: cat + ' · ' + area })),
+        ...clientItems.map(c => ({ group: 'pathway', name: c.name, url: c.url, domain: c.domain, meta: c.cat + ' · ' + c.area, address: c.address, lat: c.lat, lng: c.lng })),
+        ...sfLocal.map(([name, domain, cat, area, address, lat, lng]) => ({ group: 'sf', name, url: 'https://' + domain, domain, meta: cat + ' · ' + area, address, lat, lng })),
         ...exampleSites.map(([name, domain, type]) => ({ group: 'example', name, url: 'https://' + domain, domain, meta: type }))
     ];
 
@@ -3744,6 +3929,8 @@
                 .toLowerCase().includes(q);
         });
 
+        updateMapFor(matches);
+
         results.innerHTML = '';
 
         if (!matches.length) {
@@ -3810,6 +3997,270 @@
             homeTesti.appendChild(row);
         });
     }
+
+    // ==========================================================
+    // MAP
+    //
+    // Two ways to draw it, picked automatically:
+    //
+    //  * With a Google Maps API key (set it in the <meta name="google-maps-key">
+    //    tag in the <head>): a real interactive map with every business pinned
+    //    at once, click a pin for the details.
+    //
+    //  * Without a key: an embedded Google map that follows the list. Clicking
+    //    a business moves the map to it. This needs no setup and no billing
+    //    account, which is why it is the default.
+    //
+    // Either way the list, the pins and the "open in Google Maps" links all
+    // come from the same data as the directory above, and the search box
+    // filters the map along with the list.
+    // ==========================================================
+
+    const mapsKey = (document.querySelector('meta[name="google-maps-key"]')?.content || '').trim();
+    const mappable = directory.filter(item => typeof item.lat === 'number');
+
+    const mapStage = document.getElementById('mapStage');
+    const mapList = document.getElementById('mapList');
+    const mapNote = document.getElementById('mapNote');
+    const mapAllLink = document.getElementById('mapAllLink');
+
+    // Everything Google needs to find the place, whichever mode we are in.
+    function mapQuery(item) {
+        return plainText(item.name) + ', ' + (item.address || 'San Francisco, CA');
+    }
+    function mapsSearchUrl(item) {
+        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(mapQuery(item));
+    }
+    function embedSrc(item) {
+        const q = item ? mapQuery(item) : 'San Francisco, CA';
+        return 'https://www.google.com/maps?q=' + encodeURIComponent(q) +
+            '&z=' + (item ? 16 : 12) + '&hl=en&output=embed';
+    }
+
+    let mapMode = 'embed';      // 'embed' until the keyed map is ready
+    let embedKey = null;        // what the embedded frame is currently showing
+    let gMap = null;
+    let gInfo = null;
+    let gMarkers = new Map();   // domain -> google.maps.Marker
+    let mapItems = mappable;    // whatever the current filter left us
+    let selectedDomain = null;
+
+    // Replace the frame rather than assigning .src: setting src on a live
+    // iframe adds a browser history entry, which would leave the back button
+    // stepping through map moves instead of leaving the page.
+    function setEmbed(item) {
+        if (!mapStage || mapMode !== 'embed') return;
+        const key = item ? item.domain : '__all__';
+        if (key === embedKey) return;
+        embedKey = key;
+        const frame = document.createElement('iframe');
+        frame.id = 'mapFrame';
+        frame.title = item ? 'Map showing ' + plainText(item.name) : 'Map of the businesses';
+        frame.loading = 'lazy';
+        frame.referrerPolicy = 'no-referrer-when-downgrade';
+        frame.src = embedSrc(item);
+        mapStage.replaceChildren(frame);
+    }
+
+    function selectBusiness(item, fromMarker) {
+        selectedDomain = item.domain;
+
+        mapList?.querySelectorAll('.map-item').forEach(btn => {
+            const on = btn.dataset.domain === item.domain;
+            btn.classList.toggle('is-selected', on);
+            btn.setAttribute('aria-current', on ? 'true' : 'false');
+        });
+
+        if (mapAllLink) {
+            mapAllLink.href = mapsSearchUrl(item);
+            mapAllLink.innerHTML = 'Open ' + item.name + ' in Google Maps <i class="fas fa-external-link-alt"></i>';
+        }
+
+        if (mapMode === 'google' && gMap) {
+            const marker = gMarkers.get(item.domain);
+            if (marker) {
+                gMap.panTo(marker.getPosition());
+                if (gMap.getZoom() < 15) gMap.setZoom(15);
+                gInfo.setContent(infoHtml(item));
+                gInfo.open(gMap, marker);
+            }
+        } else if (!fromMarker) {
+            setEmbed(item);
+        }
+
+        if (!fromMarker) {
+            // On a phone the map sits above the list, so bring it into view
+            // rather than nudging the list entry the reader just tapped.
+            if (window.matchMedia('(max-width: 860px)').matches) {
+                mapStage?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            } else {
+                mapList?.querySelector('.map-item.is-selected')
+                    ?.scrollIntoView({ block: 'nearest' });
+            }
+        }
+    }
+
+    function infoHtml(item) {
+        return '<div class="map-info">' +
+            '<strong>' + item.name + '</strong>' +
+            '<span>' + item.meta + '</span>' +
+            (item.address ? '<span>' + esc(item.address) + '</span>' : '') +
+            '<a href="' + item.url + '" target="_blank" rel="noopener noreferrer">Visit website</a>' +
+            '<a href="' + mapsSearchUrl(item) + '" target="_blank" rel="noopener noreferrer">Directions</a>' +
+            '</div>';
+    }
+
+    function renderMapList() {
+        if (!mapList) return;
+        mapList.innerHTML = '';
+
+        if (!mapItems.length) {
+            mapList.innerHTML = '<p class="map-empty">No Bay Area businesses match that search.</p>';
+            return;
+        }
+
+        mapItems.forEach(item => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'map-item';
+            btn.dataset.domain = item.domain;
+            btn.innerHTML =
+                '<span class="map-item-pin" aria-hidden="true">' +
+                (item.group === 'pathway' ? '<i class="fas fa-star"></i>' : '<i class="fas fa-map-pin"></i>') +
+                '</span>' +
+                '<span class="map-item-body">' +
+                '<span class="map-item-name">' + item.name + '</span>' +
+                '<span class="map-item-meta">' + item.meta + '</span>' +
+                '</span>';
+            btn.addEventListener('click', () => selectBusiness(item));
+            mapList.appendChild(btn);
+        });
+    }
+
+    function fitToItems() {
+        if (mapMode !== 'google' || !gMap || !mapItems.length) return;
+        const bounds = new google.maps.LatLngBounds();
+        mapItems.forEach(item => bounds.extend({ lat: item.lat, lng: item.lng }));
+        if (mapItems.length === 1) {
+            gMap.setCenter(bounds.getCenter());
+            gMap.setZoom(15);
+        } else {
+            gMap.fitBounds(bounds, 48);
+        }
+    }
+
+    function updateMapFor(matches) {
+        mapItems = matches.filter(item => typeof item.lat === 'number');
+
+        if (mapNote) {
+            const total = mappable.length;
+            mapNote.textContent = mapItems.length === total
+                ? total + ' Bay Area businesses. Tap one to see exactly where it is.'
+                : mapItems.length + ' of ' + total + ' Bay Area businesses match your search.';
+        }
+
+        renderMapList();
+
+        if (mapMode === 'google' && gMap) {
+            const wanted = new Set(mapItems.map(i => i.domain));
+            gMarkers.forEach((marker, domain) => marker.setMap(wanted.has(domain) ? gMap : null));
+            gInfo?.close();
+            fitToItems();
+        } else {
+            if (mapItems.length === 1) setEmbed(mapItems[0]);
+            else if (!selectedDomain) setEmbed(null);
+        }
+
+        if (mapAllLink && !mapItems.some(i => i.domain === selectedDomain)) {
+            selectedDomain = null;
+            mapAllLink.href = 'https://www.google.com/maps/search/?api=1&query=' +
+                encodeURIComponent('San Francisco, CA');
+            mapAllLink.innerHTML = 'Open San Francisco in Google Maps <i class="fas fa-external-link-alt"></i>';
+        }
+    }
+
+    // --- Keyless mode: an embedded Google map that follows the list ---
+    function startEmbedMap() {
+        if (!mapStage) return;
+        mapMode = 'embed';
+        embedKey = null;
+        setEmbed(null);
+    }
+
+    // --- Keyed mode: the full Google Maps JavaScript API ---
+    function loadGoogleMaps(key) {
+        return new Promise((resolve, reject) => {
+            const timer = setTimeout(() => reject(new Error('Google Maps timed out')), 8000);
+            window.__pathwayMapsReady = () => { clearTimeout(timer); resolve(); };
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=' +
+                encodeURIComponent(key) + '&callback=__pathwayMapsReady';
+            script.onerror = () => { clearTimeout(timer); reject(new Error('Google Maps failed to load')); };
+            document.head.appendChild(script);
+        });
+    }
+
+    // Dark map so it sits in the page rather than glaring out of it.
+    const darkMapStyle = [
+        { elementType: 'geometry', stylers: [{ color: '#11141c' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#11141c' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#8b98ab' }] },
+        { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+        { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+        { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#1b2030' }] },
+        { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#6b7a90' }] },
+        { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#2a3145' }] },
+        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#080b12' }] },
+        { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: '#2a3145' }] }
+    ];
+
+    async function startGoogleMap(key) {
+        await loadGoogleMaps(key);
+        mapStage.innerHTML = '<div id="mapCanvas"></div>';
+        gMap = new google.maps.Map(document.getElementById('mapCanvas'), {
+            center: { lat: 37.7749, lng: -122.4194 },
+            zoom: 12,
+            styles: darkMapStyle,
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: true
+        });
+        gInfo = new google.maps.InfoWindow();
+
+        mappable.forEach(item => {
+            const marker = new google.maps.Marker({
+                position: { lat: item.lat, lng: item.lng },
+                map: gMap,
+                title: plainText(item.name),
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: item.group === 'pathway' ? 9 : 7,
+                    fillColor: item.group === 'pathway' ? '#ffe6a8' : '#e3bc4a',
+                    fillOpacity: 1,
+                    strokeColor: '#14100a',
+                    strokeWeight: item.group === 'pathway' ? 2.5 : 1.5
+                }
+            });
+            marker.addListener('click', () => selectBusiness(item, true));
+            gMarkers.set(item.domain, marker);
+        });
+
+        mapMode = 'google';
+        fitToItems();
+    }
+
+    if (mapStage) {
+        startEmbedMap();
+        if (mapsKey) {
+            startGoogleMap(mapsKey).catch(err => {
+                console.warn('Falling back to the keyless map:', err.message);
+                startEmbedMap();
+                mapMode = 'embed';
+            });
+        }
+    }
+
 
     renderHomeFeatured();
     renderDirectory();
