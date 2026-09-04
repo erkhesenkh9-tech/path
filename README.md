@@ -1,90 +1,74 @@
 # path
 
-Pathway — a single-page site for **Pathway**, which builds websites, Google Business
-listings and social media accounts for immigrant-owned businesses and hands every
-account over to the owner. Free for the first 20 businesses.
+The website for **Pathway**, which builds websites, Google Business listings and
+social media accounts for immigrant-owned businesses and hands every account
+over to the owner. Free for the first 20 businesses.
 
-Live pages: Home · About · How it works · The businesses · Contact.
+Five pages: Home, About, How it works, Businesses, Contact.
 
 ## Running it
 
-It is one static file. Open `index.html` in a browser, or serve the folder:
+It is a static site with no build step and no dependencies.
 
 ```
 npx serve .
 ```
 
-No build step, no dependencies to install.
+Then open the address it prints. You can also open `index.html` directly — the
+scripts are plain classic scripts rather than ES modules precisely so that
+double-clicking the file still works.
 
-## What is in the repo
+## Layout
 
-| File | Purpose |
-| --- | --- |
-| `index.html` | The whole site — markup, styles and scripts in one file |
-| `sunny.png`, `jen.png`, `ben.jpg` | Photos for the three businesses Pathway has built for |
-| `favicon.png` | Tab icon |
-
-## How the site is put together
-
-- **Five pages, one document.** Each page is a `<div class="page">`; `showPage()`
-  swaps which one is active. The URL carries the page as a fragment
-  (`#/portfolio`), so links are shareable and the browser back button works.
-- **The directory** on the Portfolio page is built from three arrays in the module
-  script near the bottom of `index.html`:
-  - `clientItems` — businesses Pathway actually built for. These get photo cards
-    and a result line.
-  - `sfLocal` — San Francisco businesses Pathway features and sends customers to.
-    **Not** Pathway builds.
-  - `exampleSites` — reference builds from the wider small-business web, shown as
-    examples of good work. **Not** Pathway builds.
-
-  The three groups are rendered under separate headings that say which is which.
-  Keep them separate when adding entries — the labelling is the point.
-- **Search and filters** match on name, category, neighbourhood and domain, and
-  they drive the map as well as the list.
-- **The map** shows the 51 Bay Area businesses (the 3 Pathway builds plus the 48
-  San Francisco listings). See below.
-- **The globe** (three.js, loaded from a CDN) is decorative. It is imported
-  dynamically with a timeout, so if the CDN is slow or blocked the globe is hidden
-  and the rest of the page still works.
-- **Translation** uses Google Translate, loaded with `defer` so a slow response
-  cannot stall the rest of the page.
-
-## The map
-
-The Portfolio page has a Google map of the Bay Area businesses. It works two ways
-and picks between them on its own.
-
-**With no setup (the default).** The map is Google's keyless embed. It shows San
-Francisco, and tapping a business in the list beside it moves the map to that
-business. No API key, no billing account, nothing to configure.
-
-**With an API key.** Paste a
-[Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/get-api-key)
-key into the meta tag in the `<head>`:
-
-```html
-<meta name="google-maps-key" content="YOUR_KEY_HERE">
+```
+index.html                     markup only
+assets/
+  css/
+    tokens.css                 colours, type scale, spacing, radii
+    base.css                   reset and base typography
+    layout.css                 header, nav, sections, footer
+    components.css             buttons, cards, directory, map, FAQ
+    pages.css                  loading screen, hero, scroll reveal
+  js/
+    data/businesses.js         every business, and the places they sit in
+    ui/preloader.js            loading screen
+    ui/reveal.js               reveal on scroll
+    ui/nav.js                  header and mobile menu
+    ui/faq.js                  disclosure rows
+    ui/router.js               #/page routing
+    ui/translate.js            language menu over Google Translate
+    features/directory.js      search, filters, business cards
+    features/map.js            the map and its place selector
+    main.js                    boots the modules
+  img/
+    clients/                   photos of the sites Pathway built
+    previews/                  captured homepage previews
+tools/
+  capture-previews.js          regenerates the preview images
+  smoke-test.js                drives the real page and checks it works
 ```
 
-The page then loads the full JavaScript API and pins every business at once, in a
-dark style that matches the site, with a details bubble on each pin. Pathway's own
-builds get a larger, lighter pin. If the key is wrong or the API fails to load,
-the map quietly falls back to the keyless embed.
+Scripts attach themselves to a single `window.Pathway` namespace and are loaded
+with `defer`, so load order is the order in `index.html`. `main.js` starts each
+module inside a try/catch: one broken feature cannot take the page down.
 
-Note that a key is billable and should be restricted to your domain in the Google
-Cloud console.
+## The data
 
-### Coordinates
+`assets/js/data/businesses.js` holds three groups, kept apart deliberately:
 
-Each Bay Area entry carries a street address and a `lat`/`lng`. The coordinates
-place the pin; the address is what gets handed to Google when someone taps
-through, so the "open in Google Maps" links land on the right listing either way.
-The coordinates are street-level and worth spot-checking before you lean on them.
+| Group | What it is |
+| --- | --- |
+| `clientItems` | Businesses Pathway built for. Ours to claim. |
+| `sfLocal` | San Francisco businesses we feature and send customers to. **Not our builds.** |
+| `exampleSites` | Reference builds from the wider small-business web. **Not ours either.** |
 
-## Adding a business to the directory
+The page prints a heading and a badge for each group saying which is which.
+Keep new entries in the right group; the labelling depends on it.
 
-Find the right array in `index.html` and add a row:
+The file works in both the browser and Node, so the tools can read the same
+data the page does.
+
+### Adding a business
 
 ```js
 // sfLocal — name, domain, category, neighbourhood, address, lat, lng
@@ -92,11 +76,67 @@ Find the right array in `index.html` and add a row:
  "1658 Market St, San Francisco, CA 94102", 37.7726, -122.4219],
 ```
 
-Give it an address and coordinates and it appears on the map too. Leave them off
-and it stays in the list only — which is what the out-of-area reference builds do.
+Counts on the page are derived from the arrays, so they update themselves. Run
+`node tools/capture-previews.js` afterwards to grab a preview image for it.
 
-The counts on the page (`Showing 111 of 111`, the home-page number strip) are
-derived from the arrays, so they update on their own.
+## The map
+
+The map groups businesses by **place** rather than dropping a hundred pins in
+one spot. It opens on the United States, and each place is a chip carrying a
+notification-style count (capped at `99+`). Choosing a place moves the map and
+filters the list; there is also a text box for typing any city or address.
+
+The directory's search box drives the map too, so the place counts always match
+the list below.
+
+Locations are honest about their precision. San Francisco entries carry a street
+address and exact coordinates. Entries elsewhere carry only the place their
+source states, so they sit at the centre of that place and are labelled
+approximate. Businesses with no stated location are left off the map and appear
+in the list only — the map footer says how many that is.
+
+### With and without an API key
+
+**No key (the default).** The map is Google's keyless embed. It needs no setup
+and no billing account.
+
+**With a key.** Paste a
+[Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/get-api-key)
+key into the meta tag in `index.html`:
+
+```html
+<meta name="google-maps-key" content="YOUR_KEY_HERE">
+```
+
+The page then loads the full JavaScript API and pins each business in the chosen
+place, dark-styled to match the site. If the key is wrong or the API fails to
+load, it falls back to the embed. A key is billable; restrict it to your domain
+in the Google Cloud console.
+
+## Preview images
+
+Every card shows a real screenshot of that business's homepage.
+
+```
+node tools/capture-previews.js            capture anything missing
+node tools/capture-previews.js --force    recapture everything
+```
+
+It drives headless Chrome, writes 640x400 JPEGs to `assets/img/previews/`, and
+skips sites that time out or refuse to load. A missing preview is harmless: the
+card falls back to the site's initials. Set `CHROME_PATH` if Chrome is not at
+the default Windows location.
+
+## Tests
+
+```
+node tools/smoke-test.js
+```
+
+Drives the real page in headless Chrome and checks what a visitor actually does:
+navigating, searching, filtering, choosing and typing a place, selecting a
+business, opening the FAQ, the back button, and that nothing overflows
+horizontally. Exits non-zero on failure.
 
 ## Contact
 

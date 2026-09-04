@@ -1,0 +1,176 @@
+/**
+ * The loading screen, the hero, and reveal-on-scroll.
+ */
+
+/* ---------- Loading screen ----------
+ * Quiet and short. A mark, a hairline that tracks real progress, and a fade
+ * that gets out of the way. It never blocks content for more than a moment.
+ */
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    transition: opacity 400ms var(--ease), visibility 400ms;
+}
+
+.loader.is-done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s-5);
+}
+
+.loader-mark {
+    width: 34px;
+    height: 34px;
+    opacity: 0;
+    animation: loader-in 500ms var(--ease) forwards;
+}
+
+.loader-word {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    opacity: 0;
+    animation: loader-in 500ms var(--ease) 80ms forwards;
+}
+
+.loader-track {
+    position: relative;
+    width: 120px;
+    height: 2px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    opacity: 0;
+    animation: loader-in 500ms var(--ease) 160ms forwards;
+}
+
+.loader-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: inherit;
+    background: var(--accent);
+    transition: width 260ms var(--ease);
+}
+
+@keyframes loader-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .loader-mark,
+    .loader-word,
+    .loader-track { animation: none; opacity: 1; }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+    position: relative;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: calc(var(--header-h) + var(--s-9)) var(--s-5) var(--s-8);
+}
+
+.hero-inner { max-width: 40rem; }
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    height: 28px;
+    padding: 0 var(--s-3);
+    margin-bottom: var(--s-5);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-pill);
+    background: var(--accent-wash);
+    font-size: var(--text-xs);
+    font-weight: 550;
+    color: var(--accent-bright);
+}
+
+.hero h1 { margin-bottom: var(--s-4); }
+
+.hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    max-width: 34rem;
+    margin-bottom: var(--s-6);
+}
+
+.hero-note {
+    margin-top: var(--s-4);
+    font-size: var(--text-sm);
+    color: var(--text-faint);
+}
+
+/* A single hairline rule of logos: no carousel, no animation. */
+.trust {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 0 var(--s-5);
+}
+
+.trust-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-3) var(--s-6);
+    padding: var(--s-5) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.trust-label {
+    font-size: var(--text-xs);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.trust-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3) var(--s-6);
+}
+
+.trust-items span {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+/* ---------- Reveal on scroll ----------
+ * Opacity and a few pixels of travel. No blur, no scale, no stagger cascade.
+ */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 420ms var(--ease), transform 420ms var(--ease);
+}
+
+[data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+/* If scripts never run, show everything rather than a blank page. */
+html.no-js [data-reveal] { opacity: 1; transform: none; }
+html.no-js .loader { display: none; }
